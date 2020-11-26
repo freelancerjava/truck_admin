@@ -6,6 +6,5 @@ import {
 
 export default {
   path: 'headers',
-  childRoutes: [
-  ],
+  childRoutes: [],
 };

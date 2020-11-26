@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
@@ -32,43 +31,45 @@ import {
   Table,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
+import messagesroute from "../messages/route";
 
 var ps;
 
 const Sidebar = ({ bgColor, routes, logo, location }) => {
-  const [collapseOpen, setcollapseOpen] = useState(false)
+  const [collapseOpen, setcollapseOpen] = useState(false);
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
+  };
   // toggles collapse between opened and closed (true/false)
   const toggleCollapse = () => {
-    setcollapseOpen(collapseOpen => !collapseOpen)
+    setcollapseOpen((collapseOpen) => !collapseOpen);
   };
   // closes the collapse
   const closeCollapse = () => {
-    setcollapseOpen(false)
+    setcollapseOpen(false);
   };
   console.log("routes", routes);
 
-  const createLinks = routes => {
+  const createLinks = (routes, path) => {
     return routes.childRoutes.map((prop, key) => {
-      if (prop.path !== "") return (
-        <NavItem key={key}>
-          <NavLink
-            to={"/" + routes.path + "/" + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-            activeClassName="active"
-          >
-            <i className={prop.icon} />
-            {prop.name}
-          </NavLink>
-        </NavItem>
-      );
+      if (prop.path !== "")
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={path + routes.path + "/" + prop.path}
+              tag={NavLinkRRD}
+              onClick={closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
     });
   };
 
@@ -76,12 +77,12 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
   if (logo && logo.innerLink) {
     navbarBrandProps = {
       to: logo.innerLink,
-      tag: Link
+      tag: Link,
     };
   } else if (logo && logo.outterLink) {
     navbarBrandProps = {
       href: logo.outterLink,
-      target: "_blank"
+      target: "_blank",
     };
   }
   return (
@@ -108,7 +109,11 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
               src={logo.imgSrc}
             />
           </NavbarBrand>
-        ) : <Link className="navbar-brand" href="/">Единая сеть Р</Link>}
+        ) : (
+          <Link className="navbar-brand" href="/">
+            RMS
+          </Link>
+        )}
         {/* User */}
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>
@@ -158,7 +163,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
                 <span>Support</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
@@ -177,10 +182,10 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
                       <img alt={logo.imgAlt} src={logo.imgSrc} />
                     </Link>
                   ) : (
-                      <a href={logo.outterLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
-                      </a>
-                    )}
+                    <a href={logo.outterLink}>
+                      <img alt={logo.imgAlt} src={logo.imgSrc} />
+                    </a>
+                  )}
                 </Col>
               ) : null}
               <Col className="collapse-close" xs="6">
@@ -213,8 +218,9 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
           </Form>
           {/* Navigation */}
           <Nav navbar>
-            {createLinks(routes)}
-            {/* {console.log("routes", routes)} */}
+            {createLinks(routes, "/")}
+            
+            {createLinks(messagesroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />
@@ -223,18 +229,18 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             <NavItem className="active-pro active">
               <NavLink href="/auth/login">
                 <i className="ni ni-spaceship" />
-                  Выход
-                </NavLink>
+                Выход
+              </NavLink>
             </NavItem>
           </Nav>
         </Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 Sidebar.defaultProps = {
-  routes: [{}]
+  routes: [{}],
 };
 
 export default Sidebar;

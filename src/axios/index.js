@@ -1,8 +1,8 @@
 import Strapi from 'strapi-sdk-javascript';
 
-export const apiUrl = 'http://network.loc'
+export const apiUrl = 'https://admin.socket.uz'
 
-export const serverPort = 1338
+export const serverPort = 443
 
 export const mapPort = 8080
 

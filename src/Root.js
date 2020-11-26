@@ -9,6 +9,11 @@ import store from './common/store';
 import routeConfig from './common/routeConfig';
 import history from './common/history';
 
+import './assets/plugins/nucleo/css/nucleo.css'
+import "@fortawesome/fontawesome-free/css/all.min.css"
+import './assets/css/argon-dashboard-react.css'
+
+
 setConfig({
   logLevel: 'debug',
 });

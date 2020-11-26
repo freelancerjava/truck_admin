@@ -18,7 +18,7 @@ export default function Header() {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Количество представленных разведданных
+                        Статистика поступления сообщений
                           </CardTitle>
                       <span className="h2 font-weight-bold mb-0">
                         350,897

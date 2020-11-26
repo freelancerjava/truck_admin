@@ -5,19 +5,16 @@ import history from './history';
 import homeReducer from '../features/home/redux/reducer';
 import commonReducer from '../features/common/redux/reducer';
 import examplesReducer from '../features/examples/redux/reducer';
-import dashboardReducer from '../features/dashboard/redux/reducer';
-import otryadReducer from '../features/otryad/redux/reducer';
-import logsReducer from '../features/logs/redux/reducer';
-import orerReducer from '../features/orer/redux/reducer';
 import headersReducer from '../features/headers/redux/reducer';
 import navbarsReducer from '../features/navbars/redux/reducer';
 import sidebarsReducer from '../features/sidebars/redux/reducer';
 import footersReducer from '../features/footers/redux/reducer';
 import authReducer from '../features/auth/redux/reducer';
-import reportReducer from '../features/report/redux/reducer';
-import operationsReducer from '../features/operations/redux/reducer';
-import recordsReducer from '../features/records/redux/reducer';
-import mapReducer from '../features/map/redux/reducer';
+import adminReducer from '../features/admin/redux/reducer';
+import messagesReducer from '../features/messages/redux/reducer';
+import analyseReducer from '../features/analyse/redux/reducer';
+import broadcastReducer from '../features/broadcast/redux/reducer';
+import profileReducer from '../features/profile/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -29,19 +26,16 @@ const reducerMap = {
   home: homeReducer,
   common: commonReducer,
   examples: examplesReducer,
-  dashboard: dashboardReducer,
-  otryad: otryadReducer,
-  logs: logsReducer,
-  orer: orerReducer,
   headers: headersReducer,
   navbars: navbarsReducer,
   sidebars: sidebarsReducer,
   footers: footersReducer,
   auth: authReducer,
-  report: reportReducer,
-  operations: operationsReducer,
-  records: recordsReducer,
-  map: mapReducer,
+  admin: adminReducer,
+  messages: messagesReducer,
+  analyse: analyseReducer,
+  broadcast: broadcastReducer,
+  profile: profileReducer,
 };
 
 export default combineReducers(reducerMap);
