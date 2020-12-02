@@ -9,7 +9,7 @@ export default {
   path: "admin",
   component: Layout,
   childRoutes: [
-    { path: "index", component: Dashboard, isIndex: true, name: "Обзор" },
+    { icon: "fa fa-home", path: "index", component: Dashboard, isIndex: true, name: "Обзор" },
     messagesroute,
   ],
 };

@@ -16,11 +16,11 @@ export default {
   name: "Сообщения",
   childRoutes: [
     {icon: "fa fa-envelope", path: "index", component: MessagesList, isIndex: true, name: "Все сообщения"},
-    {icon: "fa fa-smile", path: "complaint", component: Complaint, name: "Жалобы"},
-    {icon: "fa fa-envelope", path: "offer", component: Offer, name: "Предложения"},
-    {icon: "fa fa-envelope", path: "review", component: Review, name: "Отзывы"},
-    {icon: "fa fa-envelope", path: "question", component: Question, name: "Вопросы"},
-    {icon: "fa fa-envelope", path: "favourite", component: Favourite, name: "Избранные"},
-    {icon: "fa fa-envelope", path: "autoreply", component: Autoreply, name: "Автоответчик"},
+    {icon: "fa fa-thumbs-down", path: "complaint", component: Complaint, name: "Жалобы"},
+    {icon: "fa fa-smile", path: "offer", component: Offer, name: "Предложения"},
+    {icon: "fa fa-thumbs-up", path: "review", component: Review, name: "Отзывы"},
+    {icon: "fa fa-question-circle", path: "question", component: Question, name: "Вопросы"},
+    {icon: "fa fa-bookmark", path: "favourite", component: Favourite, name: "Избранные"},
+    {icon: "fa fa-recycle", path: "autoreply", component: Autoreply, name: "Автоответчик"},
   ],
 };

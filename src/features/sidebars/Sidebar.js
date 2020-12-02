@@ -34,10 +34,14 @@ import {
   Col,
 } from "reactstrap";
 import messagesroute from "../messages/route";
+import analyseroute from "../analyse/route";
+import broadcastroute from "../broadcast/route";
+import profileroute from "../profile/route";
+import Badge from "reactstrap/lib/Badge";
 
 var ps;
 
-const Sidebar = ({ bgColor, routes, logo, location }) => {
+const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
   const [collapseOpen, setcollapseOpen] = useState(false);
 
   // verifies if routeName is the one active (in browser input)
@@ -56,7 +60,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
 
   const createLinks = (routes, path) => {
     return routes.childRoutes.map((prop, key) => {
-      if (prop.path !== "")
+      if (prop.path !== "" && !prop.childRoutes)
         return (
           <NavItem key={key}>
             <NavLink
@@ -67,6 +71,27 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             >
               <i className={prop.icon} />
               {prop.name}
+              {prop.icon.includes("envelope") ? (
+                <Badge color="primary" className="ml-2">
+                  +{orders.filter((item) => item.checked == 0).length}
+                </Badge>
+              ) : 
+              prop.icon.includes("thumbs-down") ? (
+                <Badge color="danger" className="ml-2">
+                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 1)).length}
+                </Badge>
+              ) : 
+              prop.icon.includes("smile") ? (
+                <Badge color="info" className="ml-2">
+                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 2)).length}
+                </Badge>
+              ) : 
+              prop.icon.includes("thumbs-up") ? (
+                <Badge color="success" className="ml-2">
+                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 3)).length}
+                </Badge>
+              ) : null
+              }
             </NavLink>
           </NavItem>
         );
@@ -217,10 +242,50 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
+          <Nav navbar>{createLinks(routes, "/")}</Nav>
+          {/* Divider */}
+          <hr className="my-3" />
+
           <Nav navbar>
-            {createLinks(routes, "/")}
-            
+            <NavItem>
+              <NavLink>
+                <h5>Сообщения</h5>
+              </NavLink>
+            </NavItem>
             {createLinks(messagesroute, "/admin/")}
+          </Nav>
+          {/* Divider */}
+          <hr className="my-3" />
+
+          <Nav navbar>
+            <NavItem>
+              <NavLink>
+                <h5>Анализ</h5>
+              </NavLink>
+            </NavItem>
+            {createLinks(analyseroute, "/admin/")}
+          </Nav>
+          {/* Divider */}
+          <hr className="my-3" />
+
+          <Nav navbar>
+            <NavItem>
+              <NavLink>
+                <h5>Рассылка</h5>
+              </NavLink>
+            </NavItem>
+            {createLinks(broadcastroute, "/admin/")}
+          </Nav>
+          {/* Divider */}
+          <hr className="my-3" />
+
+          <Nav navbar>
+            <NavItem>
+              <NavLink>
+                <h5>Профиль</h5>
+              </NavLink>
+            </NavItem>
+            {createLinks(profileroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />

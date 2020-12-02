@@ -48,7 +48,7 @@ export default function Header() {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Количество направленных криптограм
+                        Пропорция действий
                           </CardTitle>
                       <span className="h2 font-weight-bold mb-0">
                         2,356
@@ -78,7 +78,7 @@ export default function Header() {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Количество проводимых мероприятий
+                        Количество обработанных заявок
                           </CardTitle>
                       <span className="h2 font-weight-bold mb-0">924</span>
                     </div>
@@ -106,7 +106,7 @@ export default function Header() {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Количество направленных материалов
+                        Количество направленных ответов
                           </CardTitle>
                       <span className="h2 font-weight-bold mb-0">
                         49,65%
