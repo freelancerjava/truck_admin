@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import Status from './Status';
 
 export default function Header() {
   return (
@@ -10,122 +11,52 @@ export default function Header() {
           {/* Card stats */}
           <Row>
             <Col lg="6" xl="3">
-              <Card className="card-stats mb-4 mb-xl-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h5"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        Статистика поступления сообщений
-                          </CardTitle>
-                      <span className="h2 font-weight-bold mb-0">
-                        350,897
-                          </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                        <i className="fas fa-chart-bar" />
-                      </div>
-                    </Col>
-                  </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-success mr-2">
-                      <i className="fa fa-arrow-up" /> 3.48%
-                        </span>{" "}
-                    <span className="text-nowrap">С прошедшего месяца</span>
-                  </p>
-                </CardBody>
-              </Card>
+              <Status
+                title={"Новые заказы"}
+                count={"250"}
+                icon={"fas fa-cart-plus"}
+                icon_class={"icon icon-shape bg-success text-white rounded-circle shadow"}
+                period={"С прошедшего месяца"}
+                period_class={"text-success mr-2"}
+                period_count={"3.48%"}
+                period_icon={"fa fa-arrow-up"}
+              />
             </Col>
             <Col lg="6" xl="3">
-              <Card className="card-stats mb-4 mb-xl-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h5"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        Пропорция действий
-                          </CardTitle>
-                      <span className="h2 font-weight-bold mb-0">
-                        2,356
-                          </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                        <i className="fas fa-chart-pie" />
-                      </div>
-                    </Col>
-                  </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-danger mr-2">
-                      <i className="fas fa-arrow-down" /> 3.48%
-                        </span>{" "}
-                    <span className="text-nowrap">С прошедшей недели</span>
-                  </p>
-                </CardBody>
-              </Card>
+              <Status
+                title={"Выполненные заказы"}
+                count={"525"}
+                icon={"fas fa-thumbs-up"}
+                icon_class={"icon icon-shape bg-warning text-white rounded-circle shadow"}
+                period={"С прошедшей недели"}
+                period_class={"text-danger mr-2"}
+                period_count={"3.48%"}
+                period_icon={"fas fa-arrow-down"}
+              />
             </Col>
             <Col lg="6" xl="3">
-              <Card className="card-stats mb-4 mb-xl-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h5"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        Количество обработанных заявок
-                          </CardTitle>
-                      <span className="h2 font-weight-bold mb-0">924</span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                        <i className="fas fa-users" />
-                      </div>
-                    </Col>
-                  </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-warning mr-2">
-                      <i className="fas fa-arrow-down" /> 1.10%
-                        </span>{" "}
-                    <span className="text-nowrap">С прошедшего года</span>
-                  </p>
-                </CardBody>
-              </Card>
+              <Status
+                title={"Активные заказы"}
+                count={"236"}
+                icon={"fas fa-users"}
+                icon_class={"icon icon-shape bg-yellow text-white rounded-circle shadow"}
+                period={"С прошедшего года"}
+                period_class={"text-success mr-2"}
+                period_count={"1.10%"}
+                period_icon={"fas fa-arrow-down"}
+              />
             </Col>
             <Col lg="6" xl="3">
-              <Card className="card-stats mb-4 mb-xl-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h5"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        Количество направленных ответов
-                          </CardTitle>
-                      <span className="h2 font-weight-bold mb-0">
-                        49,65%
-                          </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <i className="fas fa-percent" />
-                      </div>
-                    </Col>
-                  </Row>
-                  <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-success mr-2">
-                      <i className="fas fa-arrow-up" /> 12%
-                        </span>{" "}
-                    <span className="text-nowrap">С прошедшго дня</span>
-                  </p>
-                </CardBody>
-              </Card>
+              <Status
+                title={"Отмененные заказы"}
+                count={"49"}
+                icon={"fas fa-thumbs-down"}
+                icon_class={"icon icon-shape bg-danger text-white rounded-circle shadow"}
+                period={"С прошедшго дня"}
+                period_class={"text-danger mr-2"}
+                period_count={"12%"}
+                period_icon={"fas fa-arrow-up"}
+              />
             </Col>
           </Row>
         </div>

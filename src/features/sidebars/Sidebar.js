@@ -33,15 +33,15 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import messagesroute from "../messages/route";
 import analyseroute from "../analyse/route";
 import broadcastroute from "../broadcast/route";
 import profileroute from "../profile/route";
 import Badge from "reactstrap/lib/Badge";
+import categoryroute from "../categories/route";
 
 var ps;
 
-const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
+const Sidebar = ({ bgColor, routes, logo, location }) => {
   const [collapseOpen, setcollapseOpen] = useState(false);
 
   // verifies if routeName is the one active (in browser input)
@@ -71,27 +71,6 @@ const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
             >
               <i className={prop.icon} />
               {prop.name}
-              {prop.icon.includes("envelope") ? (
-                <Badge color="primary" className="ml-2">
-                  +{orders.filter((item) => item.checked == 0).length}
-                </Badge>
-              ) : 
-              prop.icon.includes("thumbs-down") ? (
-                <Badge color="danger" className="ml-2">
-                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 1)).length}
-                </Badge>
-              ) : 
-              prop.icon.includes("smile") ? (
-                <Badge color="info" className="ml-2">
-                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 2)).length}
-                </Badge>
-              ) : 
-              prop.icon.includes("thumbs-up") ? (
-                <Badge color="success" className="ml-2">
-                  +{orders.filter((item) => (item.checked == 0 && item.type.id == 3)).length}
-                </Badge>
-              ) : null
-              }
             </NavLink>
           </NavItem>
         );
@@ -135,10 +114,10 @@ const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
             />
           </NavbarBrand>
         ) : (
-          <Link className="navbar-brand" href="/">
-            RMS
-          </Link>
-        )}
+            <Link className="navbar-brand" href="/">
+              ЛОГО
+            </Link>
+          )}
         {/* User */}
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>
@@ -207,10 +186,10 @@ const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
                       <img alt={logo.imgAlt} src={logo.imgSrc} />
                     </Link>
                   ) : (
-                    <a href={logo.outterLink}>
-                      <img alt={logo.imgAlt} src={logo.imgSrc} />
-                    </a>
-                  )}
+                      <a href={logo.outterLink}>
+                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      </a>
+                    )}
                 </Col>
               ) : null}
               <Col className="collapse-close" xs="6">
@@ -249,13 +228,14 @@ const Sidebar = ({ bgColor, routes, logo, location, orders }) => {
           <Nav navbar>
             <NavItem>
               <NavLink>
-                <h5>Сообщения</h5>
+                <h5>Категории</h5>
               </NavLink>
             </NavItem>
-            {createLinks(messagesroute, "/admin/")}
+            {createLinks(categoryroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />
+
 
           <Nav navbar>
             <NavItem>

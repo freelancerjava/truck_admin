@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import { Redirect } from "react-router-dom";
 import Container from "reactstrap/lib/Container";
 import { Header } from "../headers";
-import { getMessagesByGq } from "../messages/query";
 import { AdminNavbar } from "../navbars";
 import { Sidebar } from "../sidebars";
 import route from "./route";
@@ -14,22 +13,6 @@ export default function Layout({ history, children }) {
   const mainRef = useRef(null);
 
   const routes = route;
-  // routes.push(orerroute.childRoutes.map(item => (orerroute.path + "/" + item.path)))
-
-  const orders_data = useQuery("orders", getMessagesByGq);
-
-  const [orders, setorders] = useState([]);
-  useEffect(() => {
-    let cancel = true;
-    if (cancel) {
-      if (orders_data.data && orders_data.data.orders) {
-        setorders(orders_data.data.orders);
-      }else{
-        setorders([])
-      }
-      cancel = false;
-    }
-  }, [orders_data.data]);
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -51,7 +34,6 @@ export default function Layout({ history, children }) {
     return "Brand";
   };
   return (
-    (token && (
       <>
         <Sidebar
           // {...this.props}
@@ -61,7 +43,6 @@ export default function Layout({ history, children }) {
             imgSrc: require("../../assets/img/brand/argon-react.png"),
             imgAlt: "...",
           }}
-          orders={orders}
         />
         <div className="main-content" ref={(el) => (mainRef.current = el)}>
           <AdminNavbar
@@ -73,7 +54,6 @@ export default function Layout({ history, children }) {
           <Container fluid></Container>
         </div>
       </>
-    )) || <Redirect from="/" to={"/auth/login"} />
   );
 }
 Layout.propTypes = {};

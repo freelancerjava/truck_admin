@@ -11,10 +11,10 @@ import sidebarsReducer from '../features/sidebars/redux/reducer';
 import footersReducer from '../features/footers/redux/reducer';
 import authReducer from '../features/auth/redux/reducer';
 import adminReducer from '../features/admin/redux/reducer';
-import messagesReducer from '../features/messages/redux/reducer';
 import analyseReducer from '../features/analyse/redux/reducer';
 import broadcastReducer from '../features/broadcast/redux/reducer';
 import profileReducer from '../features/profile/redux/reducer';
+import categoriesReducer from '../features/categories/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -32,10 +32,10 @@ const reducerMap = {
   footers: footersReducer,
   auth: authReducer,
   admin: adminReducer,
-  messages: messagesReducer,
   analyse: analyseReducer,
   broadcast: broadcastReducer,
   profile: profileReducer,
+  categories: categoriesReducer,
 };
 
 export default combineReducers(reducerMap);

@@ -10,10 +10,10 @@ import sidebarsRoute from '../features/sidebars/route';
 import footersRoute from '../features/footers/route';
 import authRoute from '../features/auth/route';
 import adminRoute from '../features/admin/route';
-import messagesRoute from '../features/messages/route';
 import analyseRoute from '../features/analyse/route';
 import broadcastRoute from '../features/broadcast/route';
 import profileRoute from '../features/profile/route';
+import categoriesRoute from '../features/categories/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -27,10 +27,10 @@ const childRoutes = [
   footersRoute,
   authRoute,
   adminRoute,
-  messagesRoute,
   analyseRoute,
   broadcastRoute,
   profileRoute,
+  categoriesRoute,
 ];
 
 const routes = [{
