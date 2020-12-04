@@ -39,6 +39,7 @@ export default function MessagesList() {
                 <thead className="text-primary">
                   <tr>
                     <th>ID</th>
+                    <th>User ID - username</th>
                     <th>Текст</th>
                     <th>Дата</th>
                     <th>Тип</th>
@@ -49,7 +50,8 @@ export default function MessagesList() {
                   {orders.map((item, key) => {
                     return (
                       <tr key={key}>
-                        <td>{item.visitor.id}</td>
+                        <td>{item.id}</td>
+                        <td>{item.visitor.id} - {item.visitor.username}</td>
                         <td>{item.text}</td>
                         <td>{item.created_at}</td>
                         <td>{item.type.name}</td>

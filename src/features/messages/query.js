@@ -3,24 +3,24 @@ const { strapi } = require("../../axios");
 export const getMessagesByGq = async() => {
   let gq = `
         query{
-            orders{
-            id
-            text
-            created_at
-            visitor{
+            orders(sort:"id:ASC"){
                 id
-                chat_id
-                username
-            }
-            users_permissions_user{
-                username
-                id
-            }
-            type{
-                id
-                name
-            }
-            checked
+                text
+                created_at
+                visitor{
+                    id
+                    chat_id
+                    username
+                }
+                users_permissions_user{
+                    username
+                    id
+                }
+                type{
+                    id
+                    name
+                }
+                checked
             }
         }
     `;
