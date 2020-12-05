@@ -60,7 +60,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
 
   const createLinks = (routes, path) => {
     return routes.childRoutes.map((prop, key) => {
-      if (prop.path !== "" && !prop.childRoutes)
+      if (prop.path !== "" && !prop.childRoutes && !prop.inner)
         return (
           <NavItem key={key}>
             <NavLink
