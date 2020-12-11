@@ -5,8 +5,8 @@ export default withRouter(function WelcomePage({history}) {
   return (
     <div className="home-welcome-page jumbotron">
       {history.push('/admin/index')}
-      {/* {JSON.parse(localStorage.getItem('user')) && history.push('/admin/index')} */}
-      {/* <Link to="auth/login">Войти в систему</Link> */}
+      {JSON.parse(localStorage.getItem('user')) && history.push('/admin/index')}
+      <Link to="auth/login">Войти в систему</Link>
     </div>
   );
 })

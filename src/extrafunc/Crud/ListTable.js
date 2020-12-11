@@ -13,11 +13,31 @@ import {
     Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import { delCat } from '../../features/categories/query';
 
-const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_fn }) => {
-    const querydata = useQuery(query_key, query_fn)
+const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_fn, query_filter, filters }) => {
+
+
+    const [filter, setfilter] = useState(0)
+    let new_query_filter = query_filter
+
+
+    if (filters) {
+        let sort = filters.data.filter((item, key) => key == filter)[0]
+        new_query_filter['where'] = {}
+        new_query_filter['where'][filters.field] = sort.value
+    }
+    new_query_filter = JSON.stringify(new_query_filter)
+    const querydata = useQuery([query_key, { filter: new_query_filter }], query_fn)
+    const [delMut, delMutRes] = useMutation(delCat, {
+        onSuccess:()=>{
+            querydata.refetch()
+        }
+    })
     const [data, setData] = useState([])
+
+
 
     useEffect(() => {
         let cancel = false
@@ -33,6 +53,9 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
 
     return (
         <>
+            {filters && <Card className='mb-2 p-2'>
+                <Filters filters={filters} filter={filter} setfilter={setfilter} />
+            </Card>}
             <Card>
                 <CardHeader
                     className="d-flex justify-content-between align-items-center">
@@ -65,7 +88,8 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
                                     <tr key={key}>
                                         {headers.map((header, key) => {
                                             return (
-                                                <td key={key} scope="col">{item[header.key]}</td>
+                                                // <td key={key} scope="col">{item[header.key]}</td>
+                                                <CustomTd item={item} header={header} key={key} />
                                             )
                                         })}
                                         <td className="text-right">
@@ -89,7 +113,10 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
                                                     </Link>
                                                     <DropdownItem
                                                         href="#pablo"
-                                                        onClick={e => e.preventDefault()}
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            delMut({id:item.id})
+                                                        }}
                                                     >Удалить</DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
@@ -108,3 +135,55 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
 }
 
 export default ListTable
+
+const CustomTd = ({ item, header, key }) => {
+    if (header.keys) {
+        let tditem = []
+        {
+            header.keys.map((keyItem) => {
+                tditem.push(<div>{getProp(item, keyItem)}</div>)
+            })
+        }
+        return (
+            <td key={key} scope="col">
+                {tditem}
+            </td>
+        )
+    } else if (header.key) {
+        return (
+            <td key={key} scope="col">{getProp(item, header.key)}</td>
+        )
+    }
+
+}
+
+const getProp = (object, props) => {
+    const arrprop = props.split('.')
+
+    let prop = object
+    arrprop.map(item => {
+        if (prop == null) return 'не присвоено!'
+        prop = prop[item]
+    })
+    return prop
+}
+
+const Filters = ({ filters, filter, setfilter }) => {
+    return (
+        <div>
+            {filters.data.map((item, key) => {
+                return (
+                    <Button
+                        size={'sm'}
+                        onClick={() => {
+                            setfilter(key)
+                        }}
+                        key={key}
+                        color={`${(filter == key) ? 'primary' : ''}`}>
+                        {item.name}
+                    </Button>
+                )
+            })}
+        </div>
+    )
+}

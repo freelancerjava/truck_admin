@@ -40,7 +40,7 @@ export default function Layout({ history, children }) {
           routes={routes}
           logo={{
             innerLink: "/dashboard/index",
-            imgSrc: require("../../assets/img/brand/argon-react.png"),
+            imgSrc: require("../../assets/img/brand/logo.png"),
             imgAlt: "...",
           }}
         />

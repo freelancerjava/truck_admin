@@ -15,6 +15,8 @@ import analyseReducer from '../features/analyse/redux/reducer';
 import broadcastReducer from '../features/broadcast/redux/reducer';
 import profileReducer from '../features/profile/redux/reducer';
 import categoriesReducer from '../features/categories/redux/reducer';
+import ordersReducer from '../features/orders/redux/reducer';
+import transportsReducer from '../features/transports/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -36,6 +38,8 @@ const reducerMap = {
   broadcast: broadcastReducer,
   profile: profileReducer,
   categories: categoriesReducer,
+  orders: ordersReducer,
+  transports: transportsReducer,
 };
 
 export default combineReducers(reducerMap);

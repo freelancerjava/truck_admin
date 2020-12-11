@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Table,
-  Media,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Container,
   Row,
   Col,
-  Card,
-  CardTitle,
-  CardBody
 } from 'reactstrap';
 import { useQuery } from 'react-query';
 import { getCats } from './query';
@@ -27,6 +18,7 @@ export default function CategoryList() {
       <Row>
         <Col>
           <ListTable
+            delete_fn={null}
             query_fn={getCats}
             query_key={"cats"}
             title={"Лист категорий"}
@@ -41,7 +33,7 @@ export default function CategoryList() {
                 },
                 {
                   name: "Наименование",
-                  key: 'name'
+                  key: 'name_ru'
                 },
                 {
                   name: "Тип",

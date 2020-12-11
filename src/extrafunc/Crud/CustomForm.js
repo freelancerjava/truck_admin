@@ -8,9 +8,9 @@ import './crud_style.less'
 import { withRouter } from 'react-router-dom';
 
 
-const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
+const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn }) => {
 
-    const id = history.location.pathname.split("update/")[1]
+    
 
 
     const [data, setData] = useState({})
@@ -18,11 +18,11 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
 
     const querydata = useQuery([query_key, { id: id }], query_fn)
 
-    // const [repMut, repMutRes] = useMutation(createReport, {
-    //     onSuccess: () => {
-    //         reportdata.refetch()        
-    //     }
-    // })
+    const [mutCreate, mutCreateRes] = useMutation(mut_create_fn, {
+        onSuccess: () => {
+            history.goBack()
+        }
+    })
 
     const [mutUpdate, mutUpdateRes] = useMutation(mut_update_fn, {
         onSuccess: () => {
@@ -34,54 +34,11 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
         if (querydata.data) {
             setData(querydata.data)
         } else {
-            setData({})
+            setData(null)
         }
     }, [querydata.data]);
 
-    const CustomInput = ({ type, ...props }) => {
-        if (type.name === 'text') {
-            return (
-                <Input {...props} type={type.name} />
-            )
-        } else if (type.name === 'select') {
-            return (
-                <Input {...props} type={type.name}>
-                    <option />
-                    {type.options.map((item, key) => {
-                        return (
-                            <option key={key} value={item[type.value_field]}>{item[type.name_field]}</option>
-                        )
-                    })}
-                </Input>
-            )
-        } else if (type.name === 'self') {
-            return (
-                <Input {...props} type={type.name}>
-                    <option />
-                    {data.map((item, key) => {
-                        return (
-                            <option key={key} value={item.id}>{item.name}</option>
-                        )
-                    })}
-                </Input>
-            )
-        } else if (type.name === 'file') {
-            return (<>
-                <Input
-                    {...props}
-                    type={type.name}
-                // value={imageFile}
-                // onChange={(e) => {
-                //     console.log("asasa", e);
 
-                //     setImageFile(URL.createObjectURL(e.target.files[0]))
-                // }}
-                />
-                {/* <img src={imageFile} /> */}
-            </>
-            )
-        }
-    }
 
     const onSubmit = (values) => {
         let temp = { ...values }
@@ -93,8 +50,8 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
         // temp.command = user.command.id
         // // temp.file = 1
 
-        // if (report == null) repMut(temp); else 
-        mutUpdate({ id: id, body: temp })
+        if (data == null) mutCreate({ body: temp }); else
+            mutUpdate({ id: id, body: temp })
         // console.log(temp);
         // repMutRes.onSuccess(repdata.refetch())
     }
@@ -102,7 +59,7 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
         <Card>
             <CardHeader>
                 <CardTitle tag='h5' className='mb-0'>
-                    Редактирование
+                {id==null ? 'Создание' : 'Редактирование'}
               </CardTitle>
             </CardHeader>
 
@@ -110,12 +67,13 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
                 <Form
                     onSubmit={onSubmit}
                     // validate={validate}
-                    initialValues={data}
-                    render={({ handleSubmit, submitError, values }) => (
+                    initialValues={data || {}}
+                    render={({ handleSubmit, submitError, values, form }) => (
                         <form onSubmit={handleSubmit} className="form">
                             {submitError && <div className="text-red text-center">{submitError}</div>}
                             <Row>
                                 <Col>
+                                {/* {JSON.stringify(values)} */}
                                     {fields.map((item, key) => {
                                         return (
                                             <FormGroup key={key} className="mb-3">
@@ -147,9 +105,19 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
                                                 className="rounded-0 shadow-none border-0"
                                                 onClick={e => {
                                                     e.preventDefault()
+                                                    form.reset()
+                                                }}
+                                            >Сбросить</Button>
+                                            <Button
+                                                color="info"
+                                                className="rounded-0 shadow-none border-0"
+                                                onClick={e => {
+                                                    e.preventDefault()
                                                     handleSubmit(values)
                                                 }}
-                                            >Обновить</Button>
+                                            >
+                                                {id==null ? 'Создать' : 'Обновить'}
+                                                </Button>
                                         </InputGroup>
                                     </FormGroup>
                                 </Col>
@@ -166,4 +134,39 @@ const EditForm = ({ history, query_key, query_fn, fields, mut_update_fn }) => {
 
 }
 
-export default withRouter(EditForm);
+export default withRouter(CustomForm);
+
+
+const CustomInput = ({ type, ...props }) => {
+    if (type.name === 'text') {
+        return (
+            <Input {...props} type={type.name} />
+        )
+    } else if (type.name === 'select') {
+        return (
+            <Input {...props} type={type.name}>
+                <option />
+                {type.options.map((item, key) => {
+                    return (
+                        <option key={key} value={item[type.value_field]}>{item[type.name_field]}</option>
+                    )
+                })}
+            </Input>
+        )
+    } else if (type.name === 'file') {
+        return (<>
+            <Input
+                {...props}
+                type={type.name}
+            // value={imageFile}
+            // onChange={(e) => {
+            //     console.log("asasa", e);
+
+            //     setImageFile(URL.createObjectURL(e.target.files[0]))
+            // }}
+            />
+            {/* <img src={imageFile} /> */}
+        </>
+        )
+    }
+}

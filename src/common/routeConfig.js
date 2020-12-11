@@ -14,6 +14,8 @@ import analyseRoute from '../features/analyse/route';
 import broadcastRoute from '../features/broadcast/route';
 import profileRoute from '../features/profile/route';
 import categoriesRoute from '../features/categories/route';
+import ordersRoute from '../features/orders/route';
+import transportsRoute from '../features/transports/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -31,6 +33,8 @@ const childRoutes = [
   broadcastRoute,
   profileRoute,
   categoriesRoute,
+  ordersRoute,
+  transportsRoute,
 ];
 
 const routes = [{

@@ -6,7 +6,7 @@ import { Map } from '../../extrafunc/Map';
 
 export default function Dashboard() {
   return (
-    <div className="admin-dashboard">
+    <>
       <Container className="mt--7" fluid>
         <Card>
           <CardTitle
@@ -19,7 +19,7 @@ export default function Dashboard() {
           </CardBody>
         </Card>
       </Container>
-    </div>
+    </>
   );
 };
 

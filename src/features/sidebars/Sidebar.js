@@ -5,17 +5,11 @@ import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -27,17 +21,13 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
-import analyseroute from "../analyse/route";
-import broadcastroute from "../broadcast/route";
-import profileroute from "../profile/route";
-import Badge from "reactstrap/lib/Badge";
 import categoryroute from "../categories/route";
+import ordersroute from "../orders/route";
+import transportsroute from "../transports/route";
 
 var ps;
 
@@ -105,7 +95,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
           <span className="navbar-toggler-icon" />
         </button>
         {/* Brand */}
-        {!logo ? (
+        {logo ? (
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
             <img
               alt={logo.imgAlt}
@@ -221,54 +211,16 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes, "/")}</Nav>
-          {/* Divider */}
-          <hr className="my-3" />
-
           <Nav navbar>
-            <NavItem>
-              <NavLink>
-                <h5>Категории</h5>
-              </NavLink>
-            </NavItem>
+            {createLinks(routes, "/")}
             {createLinks(categoryroute, "/admin/")}
+            {createLinks(ordersroute, "/admin/")}
+            {createLinks(transportsroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />
 
 
-          <Nav navbar>
-            <NavItem>
-              <NavLink>
-                <h5>Анализ</h5>
-              </NavLink>
-            </NavItem>
-            {createLinks(analyseroute, "/admin/")}
-          </Nav>
-          {/* Divider */}
-          <hr className="my-3" />
-
-          <Nav navbar>
-            <NavItem>
-              <NavLink>
-                <h5>Рассылка</h5>
-              </NavLink>
-            </NavItem>
-            {createLinks(broadcastroute, "/admin/")}
-          </Nav>
-          {/* Divider */}
-          <hr className="my-3" />
-
-          <Nav navbar>
-            <NavItem>
-              <NavLink>
-                <h5>Профиль</h5>
-              </NavLink>
-            </NavItem>
-            {createLinks(profileroute, "/admin/")}
-          </Nav>
-          {/* Divider */}
-          <hr className="my-3" />
 
           <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">

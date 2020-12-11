@@ -1,0 +1,306 @@
+yarn run v1.22.4
+$ node scripts/start.js
+Starting the development server...
+
+Compiled with warnings.
+
+./src/extrafunc/Map/elements/CustomMarker.js
+  Line 10:  'user' is assigned a value but never used  no-unused-vars
+
+./src/features/auth/Login.js
+  Line 12:    'CardHeader' is defined but never used      no-unused-vars
+  Line 20:    'Row' is defined but never used             no-unused-vars
+  Line 34:   'login' is assigned a value but never used  no-unused-vars
+  Line 126:  No duplicate props allowed                  react/jsx-no-duplicate-props
+
+./src/extrafunc/Map/index.js
+  Line 1:  'useState' is defined but never used  no-unused-vars
+
+./src/extrafunc/Crud/Newform.js
+  Line 1:   'useEffect' is defined but never used              no-unused-vars
+  Line 1:   'useState' is defined but never used               no-unused-vars
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 4:   'useQuery' is defined but never used               no-unused-vars
+  Line 10:  'mutCreateRes' is assigned a value but never used  no-unused-vars
+
+./src/features/navbars/AuthNavbar.js
+  Line 1:  'useEffect' is defined but never used             no-unused-vars
+  Line 6:   'UncontrolledCollapse' is defined but never used  no-unused-vars
+  Line 9:   'NavItem' is defined but never used               no-unused-vars
+  Line 10:  'NavLink' is defined but never used               no-unused-vars
+  Line 11:  'Nav' is defined but never used                   no-unused-vars
+  Line 13:  'Row' is defined but never used                   no-unused-vars
+  Line 14:  'Col' is defined but never used                   no-unused-vars
+
+./src/features/navbars/AdminNavbar.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+
+./src/features/headers/Header.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 3:  'Card' is defined but never used       no-unused-vars
+  Line 3:  'CardBody' is defined but never used   no-unused-vars
+  Line 3:  'CardTitle' is defined but never used  no-unused-vars
+
+./src/features/auth/Layout.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 3:  'Route' is defined but never used      no-unused-vars
+  Line 3:  'Switch' is defined but never used     no-unused-vars
+  Line 3:  'Redirect' is defined but never used   no-unused-vars
+
+./src/features/categories/CategoryList.js
+  Line 1:  'useState' is defined but never used   no-unused-vars
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 7:  'useQuery' is defined but never used   no-unused-vars
+  Line 9:  'Link' is defined but never used       no-unused-vars
+
+./src/features/orders/Layout.js
+  Line 1:  'React' is defined but never used  no-unused-vars
+
+./src/features/categories/Layout.js
+  Line 1:  'React' is defined but never used  no-unused-vars
+
+./src/features/admin/Layout.js
+  Line 2:   'useQuery' is defined but never used           no-unused-vars
+  Line 3:   'Redirect' is defined but never used           no-unused-vars
+  Line 12:  'token' is assigned a value but never used     no-unused-vars
+  Line 12:  'setToken' is assigned a value but never used  no-unused-vars
+
+./src/features/categories/Category.js
+  Line 2:  'CardTitle' is defined but never used   no-unused-vars
+  Line 2:  'CardBody' is defined but never used    no-unused-vars
+  Line 2:  'Card' is defined but never used        no-unused-vars
+  Line 2:  'CardHeader' is defined but never used  no-unused-vars
+  Line 3:   'EditForm' is defined but never used    no-unused-vars
+
+./src/features/categories/NewCategory.js
+  Line 2:  'CardTitle' is defined but never used   no-unused-vars
+  Line 2:  'CardBody' is defined but never used    no-unused-vars
+  Line 2:  'Card' is defined but never used        no-unused-vars
+  Line 2:  'CardHeader' is defined but never used  no-unused-vars
+  Line 3:   'NewForm' is defined but never used     no-unused-vars
+
+./src/features/orders/query.js
+  Line 31:  'arr' is assigned a value but never used  no-unused-vars
+
+./src/extrafunc/Crud/CustomForm.js
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 17:  'imageFile' is assigned a value but never used     no-unused-vars
+  Line 17:  'setImageFile' is assigned a value but never used  no-unused-vars
+  Line 21:  'mutCreateRes' is assigned a value but never used  no-unused-vars
+  Line 27:  'mutUpdateRes' is assigned a value but never used  no-unused-vars
+  Line 45:  Expected to return a value in arrow function       array-callback-return
+
+./src/extrafunc/Crud/EditForm.js
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 17:  'imageFile' is assigned a value but never used     no-unused-vars
+  Line 17:  'setImageFile' is assigned a value but never used  no-unused-vars
+  Line 27:  'mutUpdateRes' is assigned a value but never used  no-unused-vars
+  Line 88:  Expected to return a value in arrow function       array-callback-return
+
+./src/features/sidebars/Sidebar.js
+  Line 4:   'PropTypes' is defined but never used                    no-unused-vars
+  Line 8:    'Button' is defined but never used                       no-unused-vars
+  Line 9:    'Card' is defined but never used                         no-unused-vars
+  Line 10:   'CardHeader' is defined but never used                   no-unused-vars
+  Line 11:   'CardBody' is defined but never used                     no-unused-vars
+  Line 12:   'CardTitle' is defined but never used                    no-unused-vars
+  Line 18:   'FormGroup' is defined but never used                    no-unused-vars
+  Line 30:   'Progress' is defined but never used                     no-unused-vars
+  Line 31:   'Table' is defined but never used                        no-unused-vars
+  Line 36:   'analyseroute' is defined but never used                 no-unused-vars
+  Line 37:   'broadcastroute' is defined but never used               no-unused-vars
+  Line 38:   'profileroute' is defined but never used                 no-unused-vars
+  Line 39:   'Badge' is defined but never used                        no-unused-vars
+  Line 43:   'ps' is defined but never used                           no-unused-vars
+  Line 49:   'activeRoute' is assigned a value but never used         no-unused-vars
+  Line 63:  Expected to return a value at the end of arrow function  array-callback-return
+
+./src/extrafunc/Crud/ListTable.js
+  Line 4:     'Media' is defined but never used                        no-unused-vars
+  Line 27:   Expected '===' and instead saw '=='                      eqeqeq
+  Line 33:   'delMutRes' is assigned a value but never used           no-unused-vars
+  Line 142:   Nested block is redundant                                no-lone-blocks
+  Line 143:  Expected to return a value in arrow function             array-callback-return
+  Line 148:  The scope prop can only be used on <th> elements         jsx-a11y/scope
+  Line 154:  The scope prop can only be used on <th> elements         jsx-a11y/scope
+  Line 164:  Expected to return a value at the end of arrow function  array-callback-return
+  Line 182:  Expected '===' and instead saw '=='                      eqeqeq
+
+./src/Root.js
+  Line 5:  'Redirect' is defined but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+yarn run v1.22.4
+$ node scripts/start.js
+Starting the development server...
+
+Compiled with warnings.
+
+./src/extrafunc/Map/elements/CustomMarker.js
+  Line 10:  'user' is assigned a value but never used  no-unused-vars
+
+./src/features/auth/Login.js
+  Line 12:    'CardHeader' is defined but never used      no-unused-vars
+  Line 20:    'Row' is defined but never used             no-unused-vars
+  Line 34:   'login' is assigned a value but never used  no-unused-vars
+  Line 126:  No duplicate props allowed                  react/jsx-no-duplicate-props
+
+./src/extrafunc/Map/index.js
+  Line 1:  'useState' is defined but never used  no-unused-vars
+
+./src/extrafunc/Crud/Newform.js
+  Line 1:   'useEffect' is defined but never used              no-unused-vars
+  Line 1:   'useState' is defined but never used               no-unused-vars
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 4:   'useQuery' is defined but never used               no-unused-vars
+  Line 10:  'mutCreateRes' is assigned a value but never used  no-unused-vars
+
+./src/features/navbars/AuthNavbar.js
+  Line 1:  'useEffect' is defined but never used             no-unused-vars
+  Line 6:   'UncontrolledCollapse' is defined but never used  no-unused-vars
+  Line 9:   'NavItem' is defined but never used               no-unused-vars
+  Line 10:  'NavLink' is defined but never used               no-unused-vars
+  Line 11:  'Nav' is defined but never used                   no-unused-vars
+  Line 13:  'Row' is defined but never used                   no-unused-vars
+  Line 14:  'Col' is defined but never used                   no-unused-vars
+
+./src/features/navbars/AdminNavbar.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+
+./src/features/headers/Header.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 3:  'Card' is defined but never used       no-unused-vars
+  Line 3:  'CardBody' is defined but never used   no-unused-vars
+  Line 3:  'CardTitle' is defined but never used  no-unused-vars
+
+./src/features/auth/Layout.js
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 3:  'Route' is defined but never used      no-unused-vars
+  Line 3:  'Switch' is defined but never used     no-unused-vars
+  Line 3:  'Redirect' is defined but never used   no-unused-vars
+
+./src/features/categories/CategoryList.js
+  Line 1:  'useState' is defined but never used   no-unused-vars
+  Line 1:  'useEffect' is defined but never used  no-unused-vars
+  Line 7:  'useQuery' is defined but never used   no-unused-vars
+  Line 9:  'Link' is defined but never used       no-unused-vars
+
+./src/features/orders/Layout.js
+  Line 1:  'React' is defined but never used  no-unused-vars
+
+./src/features/categories/Layout.js
+  Line 1:  'React' is defined but never used  no-unused-vars
+
+./src/features/admin/Layout.js
+  Line 2:   'useQuery' is defined but never used           no-unused-vars
+  Line 3:   'Redirect' is defined but never used           no-unused-vars
+  Line 12:  'token' is assigned a value but never used     no-unused-vars
+  Line 12:  'setToken' is assigned a value but never used  no-unused-vars
+
+./src/features/categories/Category.js
+  Line 2:  'CardTitle' is defined but never used   no-unused-vars
+  Line 2:  'CardBody' is defined but never used    no-unused-vars
+  Line 2:  'Card' is defined but never used        no-unused-vars
+  Line 2:  'CardHeader' is defined but never used  no-unused-vars
+  Line 3:   'EditForm' is defined but never used    no-unused-vars
+
+./src/features/categories/NewCategory.js
+  Line 2:  'CardTitle' is defined but never used   no-unused-vars
+  Line 2:  'CardBody' is defined but never used    no-unused-vars
+  Line 2:  'Card' is defined but never used        no-unused-vars
+  Line 2:  'CardHeader' is defined but never used  no-unused-vars
+  Line 3:   'NewForm' is defined but never used     no-unused-vars
+
+./src/features/orders/query.js
+  Line 31:  'arr' is assigned a value but never used  no-unused-vars
+
+./src/extrafunc/Crud/CustomForm.js
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 17:  'imageFile' is assigned a value but never used     no-unused-vars
+  Line 17:  'setImageFile' is assigned a value but never used  no-unused-vars
+  Line 21:  'mutCreateRes' is assigned a value but never used  no-unused-vars
+  Line 27:  'mutUpdateRes' is assigned a value but never used  no-unused-vars
+  Line 45:  Expected to return a value in arrow function       array-callback-return
+
+./src/extrafunc/Crud/EditForm.js
+  Line 3:   'CardFooter' is defined but never used             no-unused-vars
+  Line 3:   'InputGroupAddon' is defined but never used        no-unused-vars
+  Line 3:  'InputGroupText' is defined but never used         no-unused-vars
+  Line 17:  'imageFile' is assigned a value but never used     no-unused-vars
+  Line 17:  'setImageFile' is assigned a value but never used  no-unused-vars
+  Line 27:  'mutUpdateRes' is assigned a value but never used  no-unused-vars
+  Line 88:  Expected to return a value in arrow function       array-callback-return
+
+./src/features/sidebars/Sidebar.js
+  Line 4:   'PropTypes' is defined but never used                    no-unused-vars
+  Line 8:    'Button' is defined but never used                       no-unused-vars
+  Line 9:    'Card' is defined but never used                         no-unused-vars
+  Line 10:   'CardHeader' is defined but never used                   no-unused-vars
+  Line 11:   'CardBody' is defined but never used                     no-unused-vars
+  Line 12:   'CardTitle' is defined but never used                    no-unused-vars
+  Line 18:   'FormGroup' is defined but never used                    no-unused-vars
+  Line 30:   'Progress' is defined but never used                     no-unused-vars
+  Line 31:   'Table' is defined but never used                        no-unused-vars
+  Line 36:   'analyseroute' is defined but never used                 no-unused-vars
+  Line 37:   'broadcastroute' is defined but never used               no-unused-vars
+  Line 38:   'profileroute' is defined but never used                 no-unused-vars
+  Line 39:   'Badge' is defined but never used                        no-unused-vars
+  Line 43:   'ps' is defined but never used                           no-unused-vars
+  Line 49:   'activeRoute' is assigned a value but never used         no-unused-vars
+  Line 63:  Expected to return a value at the end of arrow function  array-callback-return
+
+./src/extrafunc/Crud/ListTable.js
+  Line 4:     'Media' is defined but never used                        no-unused-vars
+  Line 27:   Expected '===' and instead saw '=='                      eqeqeq
+  Line 33:   'delMutRes' is assigned a value but never used           no-unused-vars
+  Line 142:   Nested block is redundant                                no-lone-blocks
+  Line 143:  Expected to return a value in arrow function             array-callback-return
+  Line 148:  The scope prop can only be used on <th> elements         jsx-a11y/scope
+  Line 154:  The scope prop can only be used on <th> elements         jsx-a11y/scope
+  Line 164:  Expected to return a value at the end of arrow function  array-callback-return
+  Line 182:  Expected '===' and instead saw '=='                      eqeqeq
+
+./src/Root.js
+  Line 5:  'Redirect' is defined but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+yarn run v1.22.4
+$ node scripts/start.js
+Starting the development server...
+
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: ENOSPC: System limit for number of file watchers reached, watch '/home/farrux/java/admin_dashboard/public'
+    at FSWatcher.start (internal/fs/watchers.js:165:26)
+    at Object.watch (fs.js:1258:11)
+    at createFsWatchInstance (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:38:15)
+    at setFsWatchListener (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:81:15)
+    at FSWatcher.NodeFsHandler._watchWithNodeFs (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:233:14)
+    at FSWatcher.NodeFsHandler._handleDir (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:429:19)
+    at FSWatcher.<anonymous> (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:477:19)
+    at FSWatcher.<anonymous> (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:482:16)
+    at FSReqWrap.oncomplete (fs.js:154:5)
+Emitted 'error' event at:
+    at FSWatcher._handleError (/home/farrux/java/admin_dashboard/node_modules/chokidar/index.js:260:10)
+    at createFsWatchInstance (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:40:5)
+    at setFsWatchListener (/home/farrux/java/admin_dashboard/node_modules/chokidar/lib/nodefs-handler.js:81:15)
+    [... lines matching original stack trace ...]
+    at FSReqWrap.oncomplete (fs.js:154:5)
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
