@@ -35,13 +35,13 @@ export default withRouter(function Login({ history }) {
 
   const onSubmit = async (data) => {
     const res = await loginMut(data);
-    if (res) {
+    if (res.id) {
       if (!window.location.origin.includes('localhost')) {
         // await notifyMut();
       }
       history.push('/admin/index');
     }
-    if (!res) {
+    if (res.id == null) {
       console.log(res, "flag")
       return {
         [FORM_ERROR]: 'Невалидные данные аккаунта!'

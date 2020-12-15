@@ -12,11 +12,11 @@ import {
     CardHeader,
     Button
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 
-const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_fn, query_filter, filters }) => {
+const ListTable = ({ history, title, headers, edit_link, add_link, id, query_key, query_fn, query_filter, mut_delete_fn, filters }) => {
 
 
     const [filter, setfilter] = useState(0)
@@ -30,8 +30,8 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
     }
     new_query_filter = JSON.stringify(new_query_filter)
     const querydata = useQuery([query_key, { filter: new_query_filter }], query_fn)
-    const [delMut, delMutRes] = useMutation(delCat, {
-        onSuccess:()=>{
+    const [delMut, delMutRes] = useMutation(mut_delete_fn, {
+        onSuccess: () => {
             querydata.refetch()
         }
     })
@@ -65,14 +65,14 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
                         {title}
                     </CardTitle>
                     <Link to={add_link}>
-                        <Button color={"primary"}>
+                        <Button color={"primary"} size={'sm'}>
                             Добавить запись
                         </Button>
                     </Link>
                 </CardHeader>
                 <CardBody>
-                    <Table className="align-items-center table-flush" responsive>
-                        <thead className="thead-light">
+                    <Table className="align-items-center table-flush p-small" responsive>
+                        <thead className="">
                             <tr>
                                 {headers.map((item, key) => {
                                     return (
@@ -85,14 +85,23 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
                         <tbody>
                             {data && data.map((item, key) => {
                                 return (
-                                    <tr key={key}>
+                                    <tr
+                                        className={`hoverable ${key % 2 == 0 ? 'odd' : ''}`}
+                                        name='trow'
+                                        key={key}
+                                        onClick={(e) => {
+                                            // console.log(e.target.tagName);
+                                            
+                                            if (e.target.tagName === 'TD')
+                                            history.push(`${edit_link}/${item[id]}`)
+                                        }}>
                                         {headers.map((header, key) => {
                                             return (
                                                 // <td key={key} scope="col">{item[header.key]}</td>
-                                                <CustomTd item={item} header={header} key={key} />
+                                                <CustomTd item={item} header={header} key={key} data={data} />
                                             )
                                         })}
-                                        <td className="text-right">
+                                        <td className="text-right" name='options'>
                                             <UncontrolledDropdown>
                                                 <DropdownToggle
                                                     className="btn-icon-only text-light"
@@ -112,10 +121,10 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
                                                         >Изменить</DropdownItem>
                                                     </Link>
                                                     <DropdownItem
-                                                        href="#pablo"
+                                                        href="#123"
                                                         onClick={e => {
                                                             e.preventDefault()
-                                                            delMut({id:item.id})
+                                                            delMut({ id: item.id })
                                                         }}
                                                     >Удалить</DropdownItem>
                                                 </DropdownMenu>
@@ -134,14 +143,36 @@ const ListTable = ({ title, headers, edit_link, add_link, id, query_key, query_f
     )
 }
 
-export default ListTable
+export default withRouter(ListTable)
 
 const CustomTd = ({ item, header, key }) => {
-    if (header.keys) {
+    if (header.media) {
+        return (
+            <td key={key} scope="col">
+                <Media className="align-items-center">
+                    <a
+                        className="avatar rounded-circle mr-3"
+                        href="#pablo"
+                        onClick={e => e.preventDefault()}
+                    >
+                        <img
+                            alt={header.key}
+                            src={getProp(item, header.key) || require("../../assets/img/theme/bootstrap.jpg")}
+                        />
+                    </a>
+                    <Media>
+                        <span className="mb-0 text-sm">
+                            {/* {"url"} */}
+                        </span>
+                    </Media>
+                </Media>
+            </td>
+        )
+    } else if (header.keys) {
         let tditem = []
         {
             header.keys.map((keyItem) => {
-                tditem.push(<div>{getProp(item, keyItem)}</div>)
+                tditem.push(<div>{getProp(item, keyItem) || header.def_val}</div>)
             })
         }
         return (
@@ -151,7 +182,7 @@ const CustomTd = ({ item, header, key }) => {
         )
     } else if (header.key) {
         return (
-            <td key={key} scope="col">{getProp(item, header.key)}</td>
+            <td key={key} scope="col">{getProp(item, header.key) || header.def_val}</td>
         )
     }
 
@@ -165,6 +196,9 @@ const getProp = (object, props) => {
         if (prop == null) return 'не присвоено!'
         prop = prop[item]
     })
+    // if(prop == 1) return '1'
+    if (prop === true) return 'true'
+    if (prop === false) return 'false'
     return prop
 }
 

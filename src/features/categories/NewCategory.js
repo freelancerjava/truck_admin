@@ -22,7 +22,6 @@ export default function NewCategory() {
     }
   }, [catsdata.data])
   return (
-    <Container className="mt--7" fluid>
       <Row>
         <Col>
           <CustomForm
@@ -32,7 +31,7 @@ export default function NewCategory() {
               [
                 {
                   name: "Наименование uz",
-                  key: 'name_ru',
+                  key: 'name_uz',
                   type: {
                     name: 'text'
                   }
@@ -125,7 +124,6 @@ export default function NewCategory() {
           />
         </Col>
       </Row>
-    </Container>
   );
 };
 

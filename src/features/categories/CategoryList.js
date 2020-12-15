@@ -5,7 +5,7 @@ import {
   Col,
 } from 'reactstrap';
 import { useQuery } from 'react-query';
-import { getCats } from './query';
+import { getCats, delCat } from './query';
 import { Link } from 'react-router-dom';
 import ListTable from '../../extrafunc/Crud/ListTable';
 // import PropTypes from 'prop-types';
@@ -14,53 +14,65 @@ export default function CategoryList() {
 
 
   return (
-    <Container className="mt--7" fluid>
-      <Row>
-        <Col>
-          <ListTable
-            delete_fn={null}
-            query_fn={getCats}
-            query_key={"cats"}
-            title={"Лист категорий"}
-            add_link={"/admin/categories/index/add"}
-            edit_link={"/admin/categories/index/update"}
-            id={"id"}
-            headers={
-              [
-                {
-                  name: "ID",
-                  key: 'id'
-                },
-                {
-                  name: "Наименование",
-                  key: 'name_ru'
-                },
-                {
-                  name: "Тип",
-                  key: 'type'
-                },
-                {
-                  name: "Описание",
-                  key: 'description'
-                },
-                {
-                  name: "min_distance",
-                  key: 'min_distance'
-                },
-                {
-                  name: "min_waiting",
-                  key: 'min_waiting'
-                },
-                {
-                  name: "position",
-                  key: 'position'
-                }
-              ]
-            }
-          />
-        </Col>
-      </Row>
-    </Container>
+    <Row>
+      <Col>
+        <ListTable
+          mut_delete_fn={delCat}
+          query_fn={getCats}
+          query_key={"cats"}
+          title={"Лист категорий"}
+          add_link={"/admin/categories/index/add"}
+          edit_link={"/admin/categories/index/update"}
+          query_filter={{ include: ['parent', 'rootCategory'] }}
+          id={"id"}
+          headers={
+            [
+              {
+                name: "ID",
+                key: 'id'
+              },
+              {
+                name: "Медиа",
+                key: 'icon',
+                media: true
+              },
+              {
+                name: "Наименование",
+                key: 'name_ru'
+              },
+              {
+                name: "Тип",
+                key: 'type'
+              },
+              {
+                name: "Описание",
+                key: 'description'
+              },
+              {
+                name: "Родительская\nкатегория",
+                key: 'parent.name_ru',
+              },
+              {
+                name: "Корневая\nкатегория",
+                key: 'rootCategory.name_ru',
+              },
+              {
+                name: "min_distance",
+                key: 'min_distance'
+              },
+              {
+                name: "min_waiting",
+                key: 'min_waiting'
+              },
+              {
+                name: "position",
+                key: 'position'
+              }
+            ]
+          }
+        />
+      </Col>
+    </Row>
   );
 };
 

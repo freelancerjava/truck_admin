@@ -6,7 +6,6 @@ import { Container, Row, Col } from 'reactstrap';
 
 export default function OrdersList() {
   return (
-    <Container className="mt--7" fluid>
       <Row>
         <Col>
           <ListTable
@@ -72,7 +71,6 @@ export default function OrdersList() {
           />
         </Col>
       </Row>
-    </Container>
   );
 };
 

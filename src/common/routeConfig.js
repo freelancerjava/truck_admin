@@ -16,6 +16,7 @@ import profileRoute from '../features/profile/route';
 import categoriesRoute from '../features/categories/route';
 import ordersRoute from '../features/orders/route';
 import transportsRoute from '../features/transports/route';
+import usersRoute from '../features/users/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -35,7 +36,20 @@ const childRoutes = [
   categoriesRoute,
   ordersRoute,
   transportsRoute,
+  usersRoute,
 ];
+
+// const logout = [
+//   authRoute,
+// ]
+
+// let tempchildren = []
+
+// if (JSON.parse(localStorage.getItem('user')) != null) {
+//   tempchildren = childRoutes
+// } else {
+//   tempchildren = logout
+// }
 
 const routes = [{
   path: '/',

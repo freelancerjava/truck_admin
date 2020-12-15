@@ -5,8 +5,7 @@ import Status from './Status';
 
 export default function Header() {
   return (
-    <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
-      <Container fluid>
+    <div className="header pb-8 pt-md-1">
         <div className="header-body row-transition">
           {/* Card stats */}
           <Row>
@@ -60,7 +59,6 @@ export default function Header() {
             </Col>
           </Row>
         </div>
-      </Container>
     </div>
   );
 };

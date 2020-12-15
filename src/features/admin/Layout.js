@@ -34,26 +34,28 @@ export default function Layout({ history, children }) {
     return "Brand";
   };
   return (
-      <>
-        <Sidebar
+    <>
+      {/* {!JSON.parse(localStorage.getItem('user')) && history.push('/auth/login')} */}
+      <Sidebar
+        // {...this.props}
+        routes={routes}
+        logo={{
+          innerLink: "/dashboard/index",
+          imgSrc: require("../../assets/img/brand/logo.png"),
+          imgAlt: "...",
+        }}
+      />
+      <div className="main-content" ref={(el) => (mainRef.current = el)}>
+        <AdminNavbar
           // {...this.props}
-          routes={routes}
-          logo={{
-            innerLink: "/dashboard/index",
-            imgSrc: require("../../assets/img/brand/logo.png"),
-            imgAlt: "...",
-          }}
+          brandText={getBrandText(history.location.pathname)}
         />
-        <div className="main-content" ref={(el) => (mainRef.current = el)}>
-          <AdminNavbar
-            // {...this.props}
-            brandText={getBrandText(history.location.pathname)}
-          />
-          <Header />
+        {/* <Header /> */}
+        <Container className={'pt-7'} fluid>
           {children}
-          <Container fluid></Container>
-        </div>
-      </>
+        </Container>
+      </div>
+    </>
   );
 }
 Layout.propTypes = {};

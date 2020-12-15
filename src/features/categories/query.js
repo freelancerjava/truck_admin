@@ -1,7 +1,9 @@
 import { strapi } from "../../axios";
 
-export const getCats = async () => {
-    const data = await strapi.request('get', 'categories')
+export const getCats = async (key,{filter}={filter:false}) => {
+    
+    const path = filter != false ? `categories?filter=${filter}` : 'categories' 
+    const data = await strapi.request('get', path)
     return data
 };
 

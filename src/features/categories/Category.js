@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 function Category({ history }) {
 
-  const catsdata = useQuery('cats', getCats)
+  const catsdata = useQuery(['cats'], getCats)
   const [cats, setCats] = useState([])
 
   const id = history.location.pathname.split("update/")[1]
@@ -26,7 +26,6 @@ function Category({ history }) {
     }
   }, [catsdata.data])
   return (
-    <Container className="mt--7" fluid>
       <Row>
         <Col>
           <CustomForm
@@ -64,13 +63,13 @@ function Category({ history }) {
                     name: 'text'
                   }
                 },
-                // {
-                //   name: "Эмблема",
-                //   key: 'icon',
-                //   type: {
-                //     name: 'file'
-                //   }
-                // },
+                {
+                  name: "Эмблема",
+                  key: 'icon',
+                  type: {
+                    name: 'file'
+                  }
+                },
                 {
                   name: "Тип",
                   key: 'type',
@@ -131,7 +130,6 @@ function Category({ history }) {
           />
         </Col>
       </Row>
-    </Container>
   );
 };
 

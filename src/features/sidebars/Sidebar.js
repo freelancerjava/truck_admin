@@ -28,6 +28,7 @@ import {
 import categoryroute from "../categories/route";
 import ordersroute from "../orders/route";
 import transportsroute from "../transports/route";
+import usersroute from "../users/route";
 
 var ps;
 
@@ -194,6 +195,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
               </Col>
             </Row>
           </div>
+          
           {/* Form */}
           <Form className="mt-4 mb-3 d-md-none">
             <InputGroup className="input-group-rounded input-group-merge">
@@ -216,6 +218,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             {createLinks(categoryroute, "/admin/")}
             {createLinks(ordersroute, "/admin/")}
             {createLinks(transportsroute, "/admin/")}
+            {createLinks(usersroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />
