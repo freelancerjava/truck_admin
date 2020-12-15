@@ -14,6 +14,7 @@ export default function OrdersList() {
             title={"Лист Заказов"}
             add_link={"/admin/orders/index/add"}
             edit_link={"/admin/orders/index/update"}
+            view_link={"/admin/orders/index/view"}
             query_filter={{ include: ['category', 'transport', 'driver', 'creator'] }}
             filters={{
               field: 'status',

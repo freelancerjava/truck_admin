@@ -16,7 +16,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 
-const ListTable = ({ history, title, headers, edit_link, add_link, id, query_key, query_fn, query_filter, mut_delete_fn, filters }) => {
+const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, query_filter, mut_delete_fn, filters }) => {
 
 
     const [filter, setfilter] = useState(0)
@@ -92,8 +92,8 @@ const ListTable = ({ history, title, headers, edit_link, add_link, id, query_key
                                         onClick={(e) => {
                                             // console.log(e.target.tagName);
                                             
-                                            if (e.target.tagName === 'TD')
-                                            history.push(`${edit_link}/${item[id]}`)
+                                            if (e.target.tagName !== 'A')
+                                            history.push(`${view_link}/${item[id]}`)
                                         }}>
                                         {headers.map((header, key) => {
                                             return (
