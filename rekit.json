@@ -3,5 +3,5 @@
   "rekitTest": true,
   "exclude": [],
   "include": [],
-  "css": "less"
+  "css": "scss"
 }
