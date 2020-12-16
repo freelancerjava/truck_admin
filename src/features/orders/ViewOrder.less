@@ -1,5 +1,46 @@
 @import '../../styles/mixins';
 
-.orders-view-order {
+.acc_details{
 
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        a{
+            text-decoration: underline;
+        }
+    }
+
+    .body{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .img{
+        border-radius: 5px;
+        overflow: hidden;
+        width: 20%;
+        img{
+            width: 90px;
+            height: 90px;
+        }
+    }
+
+    .details{
+        margin-left: 15px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        width: 80%;
+        height: 100%;
+    }
+
+    .contact{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

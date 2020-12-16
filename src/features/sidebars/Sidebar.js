@@ -215,10 +215,10 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
           {/* Navigation */}
           <Nav navbar>
             {createLinks(routes, "/")}
-            {createLinks(categoryroute, "/admin/")}
             {createLinks(ordersroute, "/admin/")}
             {createLinks(transportsroute, "/admin/")}
             {createLinks(usersroute, "/admin/")}
+            {createLinks(categoryroute, "/admin/")}
           </Nav>
           {/* Divider */}
           <hr className="my-3" />

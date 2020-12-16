@@ -57,7 +57,7 @@ export const Map = (props) => {
          loadingElement={<div style={{ height: `100%` }} />}
          containerElement={
             <div
-               style={{ height: `600px` }}
+               style={{ height: props.height || `600px` }}
                className="map-canvas"
                id="map-canvas"
             />

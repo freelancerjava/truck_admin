@@ -92,7 +92,7 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                                         onClick={(e) => {
                                             // console.log(e.target.tagName);
                                             
-                                            if (e.target.tagName !== 'A')
+                                            if (e.target.tagName !== 'A' && e.target.tagName !== 'I')
                                             history.push(`${view_link}/${item[id]}`)
                                         }}>
                                         {headers.map((header, key) => {
