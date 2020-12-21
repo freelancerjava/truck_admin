@@ -11,6 +11,12 @@ import route from "./route";
 export default function Layout({ history, children }) {
   const [token, setToken] = useState(localStorage.getItem("jwt") || null);
   const mainRef = useRef(null);
+  const [mini, setMini] = useState(false)
+
+  const toggleMini = () => {
+    setMini(!mini)
+
+  }
 
   const routes = route;
 
@@ -38,20 +44,22 @@ export default function Layout({ history, children }) {
       {/* {!JSON.parse(localStorage.getItem('user')) && history.push('/auth/login')} */}
       <Sidebar
         // {...this.props}
+        mini={mini}
         routes={routes}
         logo={{
           innerLink: "/dashboard/index",
-          imgSrc: require("../../assets/img/brand/logo.png"),
+          imgSrc: mini ? require("../../assets/img/brand/minilogo.png") : require("../../assets/img/brand/logo.png"),
           imgAlt: "...",
         }}
       />
-      <div className="main-content" ref={(el) => (mainRef.current = el)}>
+      <div className={`main-content ${mini ? 'big-content' : ''}`} ref={(el) => (mainRef.current = el)}>
         <AdminNavbar
+          toggleMini={toggleMini}
           // {...this.props}
           brandText={getBrandText(history.location.pathname)}
         />
         {/* <Header /> */}
-        <Container className={'pt-7'} fluid>
+        <Container className={'pt-7 pb-3'} fluid>
           {children}
         </Container>
       </div>

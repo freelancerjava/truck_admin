@@ -66,6 +66,20 @@ function Transport({ history }) {
                 }
               },
               {
+                name: 'Непромодерированный',
+                key: 'need_moderation',
+                type: {
+                  name: 'checkbox'
+                }
+              },
+              {
+                name: 'Сообщение о модерации',
+                key: 'moderateMessage',
+                type: {
+                  name: 'textarea',
+                }
+              },
+              {
                 name: 'Год проблемы',
                 key: 'year_of_issue',
                 type: {

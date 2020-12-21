@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { CustomInput as CInput, Button, Card, CardBody, CardFooter, CardHeader, Col, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label } from "reactstrap";
+import { CustomInput as CInput, Button, Card, CardBody, CardFooter, CardHeader, Col, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label, Progress } from "reactstrap";
 import { useMutation, useQuery } from 'react-query';
 import { CardTitle } from 'reactstrap';
 
@@ -9,9 +9,11 @@ import { withRouter } from 'react-router-dom';
 
 import { strapi, myAxios } from '../../axios';
 import { onFileUpload } from '../../axios/query';
+import ViewNav from '../../features/elements/ViewNav';
+import ModerationModal from './ModerationModal';
 
 
-const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn }) => {
+const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav }) => {
 
 
 
@@ -20,6 +22,7 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
     const [loading, setLoading] = useState(false)
     const [imageFile, setImageFile] = useState(null)
     const [selectedFile, setSelectedFile] = useState(null)
+    const [fileUploadProgress, setFileUploadProgress] = useState(0)
 
     const querydata = useQuery([query_key, { id: id }], query_fn)
 
@@ -53,7 +56,7 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
         }
     })
 
-    const onFileUpload1 = async (values, field, selectedFile) => {
+    const onFileUpload1 = async (onChange, selectedFile) => {
 
         const formData = new FormData();
         formData.append(
@@ -69,13 +72,14 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
             {
                 onUploadProgress: ProgressEvent => {
                     console.log('progress: ', (ProgressEvent.loaded / ProgressEvent.total * 100));
-                },
+                    setFileUploadProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
+                }
             });
-        console.log("data", data.data.result);
+        // console.log("data", data.data.result);
 
-        values[field] = data.data.result
+        onChange(data.data.result)
 
-        console.log(values);
+        // console.log(values);
 
     }
 
@@ -99,20 +103,31 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
 
         if (data == null) mutCreate({ body: temp }); else
             mutUpdate({ id: id, body: temp })
-        console.log(temp);
+        // console.log(temp);
         // repMutRes.onSuccess(repdata.refetch())
     }
 
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
+        setFileUploadProgress(0)
     };
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className='d-flex justify-content-between align-items-center'>
                 <CardTitle tag='h5' className='mb-0'>
                     {id == null ? 'Создание' : 'Редактирование'}
+                    <ViewNav
+                        title={title || ''}
+                        parentNav={parentNav || {
+                            url: '/admin/orders/index',
+                            title: ''
+                        }}
+                    />
                 </CardTitle>
+
+                <ModerationModal/>
+
             </CardHeader>
 
             <CardBody>
@@ -124,14 +139,21 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
                         <form onSubmit={handleSubmit} className="form">
                             {submitError && <div className="text-red text-center">{submitError}</div>}
                             <Row>
-                                <Col>
+                                <Col lg='6'>
                                     {/* {JSON.stringify(values)} */}
                                     {fields.map((item, key) => {
                                         return (
                                             <FormGroup key={key} className="mb-3">
                                                 <Label for={`${item.key}_id`}>{item.name}</Label>
                                                 <InputGroup className="input-group-alternative">
-                                                    <CustomInput loading={loading} item={item} onFileChange={onFileChange} onFileUpload={onFileUpload1} values={values} selectedFile={selectedFile} />
+                                                    <CustomInput loading={loading}
+                                                        item={item}
+                                                        onFileChange={onFileChange}
+                                                        onFileUpload={onFileUpload1}
+                                                        values={values}
+                                                        selectedFile={selectedFile}
+                                                        fileUploadProgress={fileUploadProgress}
+                                                    />
                                                 </InputGroup>
                                             </FormGroup>
                                         )
@@ -140,7 +162,7 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
                             </Row>
 
                             <Row>
-                                <Col className="justify-content-end d-flex">
+                                <Col className="justify-content-center d-flex">
                                     {loading ? <i className='fa fa-spinner fa-spin' /> :
                                         <FormGroup>
                                             <InputGroup>
@@ -181,7 +203,7 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
 export default withRouter(CustomForm);
 
 
-const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, loading }) => {
+const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, loading, fileUploadProgress }) => {
     if (item.type.name === 'text') {
         return (<Field name={item.key}>
             {props => (
@@ -221,22 +243,29 @@ const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, l
     } else if (item.type.name === 'file') {
         return (<>
             <div className='file-prev-cont w-100'>
-                {/* <Field name={item.key}>
-                    {props => ( */}
-                <>
-                    <img src={values[item.key]} className='file_prev' />
-                    <div className='d-flex align-items-center justify-content-space-between'>
-                        <Input type='file' onChange={onFileChange} />
-                        {loading ? <i className='fa fa-spinner fa-spin' /> :
-                            <Button onClick={(e) => {
-                                e.preventDefault();
-                                onFileUpload(values, item.key, selectedFile)
-                            }}>Загрузить</Button>
-                        }
-                    </div>
-                </>
-                {/* )}
-                </Field> */}
+                <Field name={item.key}>
+                    {props => (
+                        <>
+
+                            <div className='d-flex align-items-center justify-content-space-between flex-column'>
+                                <label for='file-id'>
+                                    <img src={props.input.value || require('../../assets/img/tempfile.png')} className='file_prev' />
+                                </label>
+                                <p className='text-success'>{selectedFile ? selectedFile.name : 'Выберите файл'}</p>
+                                <Progress value={fileUploadProgress} className='w-75' />
+                                <Input hidden type='file' onChange={onFileChange} id='file-id' />
+                                {loading ? <i className='fa fa-spinner fa-spin' /> :
+                                    <Button
+                                        color={selectedFile ? 'info' : 'defautl'}
+                                        disabled={selectedFile ? false : true} onClick={(e) => {
+                                            e.preventDefault();
+                                            onFileUpload(props.input.onChange, selectedFile)
+                                        }}>Загрузить</Button>
+                                }
+                            </div>
+                        </>
+                    )}
+                </Field>
             </div>
 
         </>)

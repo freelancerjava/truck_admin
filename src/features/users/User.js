@@ -33,6 +33,28 @@ function User({ history }) {
                 }
               },
               {
+                name: 'Непромодерированный',
+                key: 'need_moderation',
+                proptype: 'bool',
+                type: {
+                  name: 'checkbox'
+                }
+              },
+              {
+                name: 'Сообщение о модерации',
+                key: 'moderateMessage',
+                type: {
+                  name: 'textarea',
+                }
+              },
+              // {
+              //   name: 'Активный',
+              //   key: 'is_active',
+              //   type: {
+              //     name: 'checkbox',
+              //   }
+              // },              
+              {
                 name: 'Роль',
                 key: 'role',
                 type: {
@@ -94,13 +116,7 @@ function User({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'Активный',
-                key: 'is_active',
-                type: {
-                  name: 'checkbox',
-                }
-              },
+              
               {
                 name: 'Запись',
                 key: 'note',

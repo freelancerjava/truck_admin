@@ -1,0 +1,44 @@
+@import '../../styles/mixins';
+
+.acc_details{
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        a{
+            text-decoration: underline;
+        }
+    }
+
+    .body{
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .img{
+        border-radius: 5px;
+        padding: 10px;
+        img{
+            width: 120px;
+            height: 114px;
+        }
+    }
+
+    .details{
+        margin-left: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        flex-direction: column;
+        width: 80%;
+        padding: 10px 0;
+    }
+
+    .contact{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

@@ -1,0 +1,36 @@
+@import '../../styles/mixins';
+
+.orders-create-order {
+
+}
+
+.create-img{
+    width: 150px;
+    height: 140px;
+    padding: 20px;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
+
+.form-control{
+    width: 250px !important;
+    height: 40px;
+}
+
+.w-60{
+    flex-basis: 100% !important;
+}
+
+.form-group{
+    label{
+        color: #B5B8C2;
+    }
+}
+
+.img-center{
+    img{
+        height: 100px;
+    }
+}

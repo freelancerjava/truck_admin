@@ -32,7 +32,7 @@ import usersroute from "../users/route";
 
 var ps;
 
-const Sidebar = ({ bgColor, routes, logo, location }) => {
+const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
   const [collapseOpen, setcollapseOpen] = useState(false);
 
   // verifies if routeName is the one active (in browser input)
@@ -61,7 +61,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
               activeClassName="active"
             >
               <i className={prop.icon} />
-              {prop.name}
+              {mini ? null : prop.name}
             </NavLink>
           </NavItem>
         );
@@ -82,7 +82,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
   }
   return (
     <Navbar
-      className="navbar-vertical fixed-left navbar-light bg-white"
+      className={`navbar-vertical fixed-left navbar-light bg-white ${mini ? 'mini-navbar' : ''}`}
       expand="md"
       id="sidenav-main"
     >
@@ -195,7 +195,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
               </Col>
             </Row>
           </div>
-          
+
           {/* Form */}
           <Form className="mt-4 mb-3 d-md-none">
             <InputGroup className="input-group-rounded input-group-merge">
@@ -213,11 +213,11 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>
+          <Nav navbar >
             {createLinks(routes, "/")}
             {createLinks(ordersroute, "/admin/")}
-            {createLinks(transportsroute, "/admin/")}
             {createLinks(usersroute, "/admin/")}
+            {createLinks(transportsroute, "/admin/")}
             {createLinks(categoryroute, "/admin/")}
           </Nav>
           {/* Divider */}
@@ -229,7 +229,7 @@ const Sidebar = ({ bgColor, routes, logo, location }) => {
             <NavItem className="active-pro active">
               <NavLink href="/auth/login">
                 <i className="ni ni-spaceship" />
-                Выход
+                {mini ? '' : 'Выход'}
               </NavLink>
             </NavItem>
           </Nav>

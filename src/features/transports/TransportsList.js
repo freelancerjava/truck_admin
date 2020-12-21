@@ -21,6 +21,13 @@ export default function TransportsList() {
           add_link={"/admin/transports/index/add"}
           edit_link={"/admin/transports/index/update"}
           query_filter={{ include: ['category', 'driver', 'make', 'model'] }}
+          innerFilters={{
+            field: 'need_moderation',
+            data: [
+              { key: 0, name: 'Промодерированные', value: null },
+              { key: 1, name: 'Непромодерированные', value: true },
+            ]
+          }}
           id={"id"}
           headers={
             [
@@ -31,6 +38,14 @@ export default function TransportsList() {
               {
                 name: "Государственный\nномер",
                 key: 'gos_number'
+              },
+              {
+                name: 'Непромодерированный',
+                key: 'need_moderation',
+                def_val: "Прошедшие",
+                type: {
+                  name: 'switch'
+                }
               },
               {
                 name: "Мин. цена",

@@ -24,6 +24,14 @@ export default function UserList() {
               { key: 3, name: 'Сотрудники', value: 'default' },
             ]
           }}
+          innerFilters={{
+            field: 'need_moderation',
+            data: [
+              { key: 0, name: 'Промодерированные', value: null },
+              { key: 1, name: 'Непромодерированные', value: true },
+              { key: 2, name: 'Отказанные', value: false },
+            ]
+          }}
           id={"id"}
           headers={
             [
@@ -47,6 +55,19 @@ export default function UserList() {
                 type: {
                   name: 'text'
                 }
+              },
+              {
+                name: 'Промодерированные',
+                key: 'need_moderation',
+                def_val: "Прошедшие",
+                type: {
+                  name: 'switch'
+                }
+              },
+              {
+                name: 'Медиа',
+                key: 'attachments.main.result',
+                media: true
               },
               {
                 name: 'Роль',

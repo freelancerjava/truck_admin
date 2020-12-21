@@ -1,5 +1,26 @@
 @import '../../styles/mixins';
 
-.sidebars-sidebar {
+.navbar-vertical{
+    z-index: 999;
+}
 
+.nav-link.active:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    border-left: 6px solid #2D2E80 !important;
+    border-radius: 5px;
+    margin-left: 2px;
+    // border-bottom-right-radius: 5px;
+}
+
+@media (min-width: 768px){
+    .mini-navbar {
+        max-width: 70px !important;
+    }
+    .big-content{
+        margin-left: 70px !important;
+    }
 }

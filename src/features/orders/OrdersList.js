@@ -12,7 +12,7 @@ export default function OrdersList() {
             query_fn={getOrders}
             query_key={"orders"}
             title={"Лист Заказов"}
-            add_link={"/admin/orders/index/add"}
+            add_link={"/admin/orders/index/create"}
             edit_link={"/admin/orders/index/update"}
             view_link={"/admin/orders/index/view"}
             query_filter={{ include: ['category', 'transport', 'driver', 'creator'] }}
