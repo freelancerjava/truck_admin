@@ -5,21 +5,23 @@ import { Form, Field } from 'react-final-form';
 import { useMutation } from 'react-query';
 import { strapi } from '../../axios';
 
-const ModerationModal = ({ mut_query }) => {
+const ModerationModal = ({ history, id, mut_query }) => {
     const [modal, setmodal] = useState(false);
-    const [moderateMut, moderateMutRes] = useMutation(mut_query)
+    const [moderateMut, moderateMutRes] = useMutation(mut_query, {
+        onSuccess: () => {
+            setmodal(false)
+            history.goBack()
+        }
+    })
 
-    const moderateUser = async () => {
-        const data = await strapi.request('put', '')
-    }
     const onSubmit = (data) => {
-        moderateMut({ data: data })
+        moderateMut({ id: id, body: data })
     }
     return (
         <>
             <div>
                 <Button color={'success'} onClick={() => {
-                    onSubmit()
+                    onSubmit({ need_moderation: null, moderation_message: null })
                 }}>Пропустить</Button>
                 <Button color={'danger'} onClick={() => {
                     setmodal(true)
@@ -30,7 +32,7 @@ const ModerationModal = ({ mut_query }) => {
                     onSubmit={onSubmit}
                     initialValues={
                         {
-                            need_moderation: true,
+                            need_moderation: false,
                             moderation_message: ''
                         }
                     }
@@ -38,7 +40,7 @@ const ModerationModal = ({ mut_query }) => {
                     render={({ handleSubmit, submitError, values, form }) => (
                         <form onSubmit={handleSubmit} className="form">
                             {submitError && <div className="text-red text-center">{submitError}</div>}
-                            {JSON.stringify(values)}
+                            {/* {JSON.stringify(values)} */}
                             <ModalHeader>Модерация</ModalHeader>
                             <ModalBody>
                                 {/* <FormGroup className="mb-3" check>
@@ -60,12 +62,12 @@ const ModerationModal = ({ mut_query }) => {
                                 </FormGroup> */}
 
                                 <FormGroup className="mb-3">
-                                    <Label for={`need_moderation`}>Текст отказа</Label>
+                                    <Label for={`moderation_message`}>Текст отказа</Label>
                                     <InputGroup className="input-group-alternative">
-                                        <Field name={'moderateMessage'}>
+                                        <Field name={'moderation_message'}>
                                             {props => (
                                                 <Input
-                                                    id='moderateMessage'
+                                                    id='moderation_message'
                                                     type='textarea'
                                                     name={props.input.name}
                                                     value={props.input.value}
@@ -80,7 +82,7 @@ const ModerationModal = ({ mut_query }) => {
                                 <Button color={'primary'} onClick={() => {
                                     handleSubmit(values)
                                 }}>Сохранить</Button>
-                                <Button color={'default'} onClick={()=>setmodal(false)}>Назад</Button>
+                                <Button color={'default'} onClick={() => setmodal(false)}>Назад</Button>
                             </ModalFooter>
                         </form>
                     )

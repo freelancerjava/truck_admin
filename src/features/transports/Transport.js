@@ -7,6 +7,9 @@ import CustomForm from '../../extrafunc/Crud/CustomForm';
 import { withRouter } from 'react-router-dom';
 import { getCats } from '../categories/query';
 import { getMakes, getModels } from '../../axios/query';
+import Transport1FileUploader from './uploaders/Transport1FileUploader';
+import TransportRegister1FileUploader from './uploaders/TransportRegister1FileUploader';
+import TransportFileUploader from './uploaders/TransportFileUploader';
 
 function Transport({ history }) {
   const catsdata = useQuery(['cats'], getCats)
@@ -45,6 +48,7 @@ function Transport({ history }) {
     <Row>
       <Col>
         <CustomForm
+          moderation={true}
           id={id}
           query_fn={getTransport}
           mut_update_fn={updateTransport}
@@ -77,6 +81,86 @@ function Transport({ history }) {
                 key: 'moderateMessage',
                 type: {
                   name: 'textarea',
+                }
+              },
+              {
+                name: 'Transport 1',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport1',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport 2',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport2',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport 3',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport3',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport 4',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport4',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport Register 1',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport_register1',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport Register 2',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport_register2',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Authorization 1',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'authorization1',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Authorization 2',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'authorization2',
+                  uploader: TransportFileUploader
                 }
               },
               {

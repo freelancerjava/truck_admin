@@ -11,9 +11,10 @@ import { strapi, myAxios } from '../../axios';
 import { onFileUpload } from '../../axios/query';
 import ViewNav from '../../features/elements/ViewNav';
 import ModerationModal from './ModerationModal';
+import FileUploader from './FileUploader';
 
 
-const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav }) => {
+const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav }) => {
 
 
 
@@ -91,6 +92,8 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
                     temp[item.key] = false
                 } else if (item.proptype == 'number') {
                     temp[item.key] = 0
+                    // } else if (item.proptype == 'obj') {
+                    //     temp[item.key] = JSON.stringify(temp[item.key])
                 } else {
                     temp[item.key] = null
                 }
@@ -126,7 +129,7 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
                     />
                 </CardTitle>
 
-                <ModerationModal/>
+                {moderation == true ? <ModerationModal history={history} id={id} mut_query={mut_update_fn} /> : null}
 
             </CardHeader>
 
@@ -146,7 +149,8 @@ const CustomForm = ({ history, query_key, query_fn, fields, mut_update_fn, id, m
                                             <FormGroup key={key} className="mb-3">
                                                 <Label for={`${item.key}_id`}>{item.name}</Label>
                                                 <InputGroup className="input-group-alternative">
-                                                    <CustomInput loading={loading}
+                                                    <CustomInput
+                                                        loading={loading}
                                                         item={item}
                                                         onFileChange={onFileChange}
                                                         onFileUpload={onFileUpload1}
@@ -264,6 +268,17 @@ const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, l
                                 }
                             </div>
                         </>
+                    )}
+                </Field>
+            </div>
+
+        </>)
+    } else if (item.type.name === 'media') {
+        return (<>
+            <div className='file-prev-cont w-100'>
+                <Field name={item.key}>
+                    {props => (
+                        <item.type.uploader {...props} id={`${item.key}_id`} type={item.type.subType}/>
                     )}
                 </Field>
             </div>

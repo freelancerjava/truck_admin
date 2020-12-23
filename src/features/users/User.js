@@ -4,6 +4,7 @@ import { getUser, updateUser } from './query';
 import { useQuery } from 'react-query';
 import CustomForm from '../../extrafunc/Crud/CustomForm';
 import { withRouter } from 'react-router-dom';
+import UserFileUploader from './uploaders/UserFileUploader';
 
 function User({ history }) {
   const id = history.location.pathname.split("update/")[1]
@@ -12,6 +13,7 @@ function User({ history }) {
     <Row>
       <Col>
         <CustomForm
+          moderation={true}
           id={id}
           query_fn={getUser}
           mut_update_fn={updateUser}
@@ -32,19 +34,109 @@ function User({ history }) {
                   name: 'text'
                 }
               },
+              // {
+              //   name: 'Непромодерированный',
+              //   key: 'need_moderation',
+              //   proptype: 'bool',
+              //   type: {
+              //     name: 'checkbox'
+              //   }
+              // },
+              // {
+              //   name: 'Сообщение о модерации',
+              //   key: 'moderation_message',
+              //   type: {
+              //     name: 'textarea',
+              //   }
+              // },
               {
-                name: 'Непромодерированный',
-                key: 'need_moderation',
-                proptype: 'bool',
+                name: 'Main',
+                key: 'attachments',
+                media: true,
                 type: {
-                  name: 'checkbox'
+                  name: 'media',
+                  subType: 'main',
+                  uploader: UserFileUploader
                 }
               },
               {
-                name: 'Сообщение о модерации',
-                key: 'moderateMessage',
+                name: 'Passport 1',
+                key: 'attachments',
+                media: true,
                 type: {
-                  name: 'textarea',
+                  name: 'media',
+                  subType: 'passport1',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'Passport 2',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'passport2',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'Passport 2',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'passport2',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'Passport 3',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'passport3',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'Driving 1',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'driving1',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'Driving 2',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'driving2',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'License 1',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'license1',
+                  uploader: UserFileUploader
+                }
+              },
+              {
+                name: 'License 2',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'license2',
+                  uploader: UserFileUploader
                 }
               },
               // {
@@ -116,7 +208,7 @@ function User({ history }) {
                   name: 'text'
                 }
               },
-              
+
               {
                 name: 'Запись',
                 key: 'note',

@@ -22,11 +22,24 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
     const [filter, setfilter] = useState(0)
     const [innerFilter, setInnerFilter] = useState(0)
     let new_query_filter = query_filter
+    new_query_filter.order = 'id DESC'
 
+    const getField = (prop) => {
+        let p = {}
+        const makeObj = (obj) => {
+            let arrprop = prop.split('.')
+            arrprop.map((item) => {
+                p[item] = {}
+                makeObj(p[item])
+            })
+        }
+        makeObj(p)
 
+        return p
+    }
     if (filters) {
         let sort = filters.data.filter((item, key) => key == filter)[0]
-        new_query_filter['where'] = {}
+        new_query_filter['where'] = {} ;//getField(filters.field)
         sort && (new_query_filter['where'][filters.field] = sort.value)
     }
     if (innerFilters) {

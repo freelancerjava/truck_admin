@@ -21,11 +21,19 @@ export default function TransportsList() {
           add_link={"/admin/transports/index/add"}
           edit_link={"/admin/transports/index/update"}
           query_filter={{ include: ['category', 'driver', 'make', 'model'] }}
+          filters={{
+            field: 'category.type',
+            data: [
+              { key: 0, name: 'Грузовые', value: 'cargo' },
+              { key: 1, name: 'Спец. техника', value: 'rent' }
+            ]
+          }}
           innerFilters={{
             field: 'need_moderation',
             data: [
               { key: 0, name: 'Промодерированные', value: null },
               { key: 1, name: 'Непромодерированные', value: true },
+              { key: 2, name: 'Отказанные', value: false }
             ]
           }}
           id={"id"}
@@ -39,13 +47,60 @@ export default function TransportsList() {
                 name: "Государственный\nномер",
                 key: 'gos_number'
               },
+              // {
+              //   name: 'Непромодерированный',
+              //   key: 'need_moderation',
+              //   def_val: "Прошедшие",
+              //   type: {
+              //     name: 'switch'
+              //   }
+              // },
+              // {
+              //   name: 'Причина отказа',
+              //   key: 'moderation_message',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
-                name: 'Непромодерированный',
-                key: 'need_moderation',
-                def_val: "Прошедшие",
-                type: {
-                  name: 'switch'
-                }
+                name: "Transport 1",
+                key: 'attachment.transport1.preview',
+                media: true
+              },
+              {
+                name: "Transport 2",
+                key: 'attachment.transport2.preview',
+                media: true
+              },
+              {
+                name: "Transport 3",
+                key: 'attachment.transport3.preview',
+                media: true
+              },
+              {
+                name: "Transport 4",
+                key: 'attachment.transport4.preview',
+                media: true
+              },
+              {
+                name: "Transport Register 1",
+                key: 'attachment.transport_register1.preview',
+                media: true
+              },
+              {
+                name: "Transport Register 2",
+                key: 'attachment.transport_register2.preview',
+                media: true
+              },
+              {
+                name: "Authorization 1",
+                key: 'attachment.authorization1.preview',
+                media: true
+              },
+              {
+                name: "Authorization 2",
+                key: 'attachment.authorization2.preview',
+                media: true
               },
               {
                 name: "Мин. цена",

@@ -71,6 +71,7 @@ function Category({ history }) {
               {
                 name: "Эмблема",
                 key: 'icon',
+                proptype: 'obj',
                 type: {
                   name: 'file'
                 }

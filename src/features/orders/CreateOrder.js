@@ -75,13 +75,13 @@ export default withRouter(function CreateOrder({ history, title, data }) {
             {submitError && <div className="text-red text-center">{submitError}</div>}
 
             <Row className='mb-3'>
-              {JSON.stringify(values)}
+              {/* {JSON.stringify(values)} */}
               <Col className='d-flex justify-content-between'>
                 <Card className='p-3 w-100'>
                   <h4 className='title font-weight-bold text-primary text-uppercase'>
                     {title || 'Данные заказчика'}
                   </h4>
-                  <Field name={'creator'}>
+                  <Field name='creatorId'>
                     {props => (
                       <div className='d-flex'>
 
@@ -109,17 +109,20 @@ export default withRouter(function CreateOrder({ history, title, data }) {
                           <FormGroup key={2} className="mb-1 p-1">
                             <Label for='nput-id'>номер телефона</Label>
                             <InputGroup className="input-group-alternative">
-                              <Input type='text' id='input-id' className='p-1' />
+                              <Input type='text' id='input-id' className='p-1' value={props.input.value.phone}/>
                             </InputGroup>
                           </FormGroup>
                           <FormGroup key={3} className="mb-1 p-1">
                             <Label for='nput-id'>Пользователь</Label>
                             <InputGroup className="input-group-alternative">
-                              <Input type='select' id='input-id' className='p-1' name={props.input.name} onChange={() => {
-                                console.log('onchange');
-                                props.input.onChange(props.input.value)
-                              }
-                              }>
+                              <Input type='select' id='input-id' className='p-1'
+                                name={props.input.name}
+                                onChange={() => {
+                                  props.input.onChange({ ...props.input.value, ...users[0] })
+                                }
+                                }
+                                value={props.input.value.id}
+                              >
                                 <option>---</option>
                                 {users.map((item, key) => {
                                   return (

@@ -56,33 +56,75 @@ export default function UserList() {
                   name: 'text'
                 }
               },
-              {
-                name: 'Промодерированные',
-                key: 'need_moderation',
-                def_val: "Прошедшие",
-                type: {
-                  name: 'switch'
-                }
-              },
+              // {
+              //   name: 'Промодерированные',
+              //   key: 'need_moderation',
+              //   def_val: "Прошедшие",
+              //   type: {
+              //     name: 'switch'
+              //   }
+              // },
+              // {
+              //   name: 'Причина отказа',
+              //   key: 'moderation_message',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Медиа',
                 key: 'attachments.main.result',
                 media: true
               },
               {
-                name: 'Роль',
-                key: 'role',
-                type: {
-                  name: 'text'
-                }
+                name: "Passport 1",
+                key: 'attachments.passport1.preview',
+                media: true
               },
               {
-                name: 'Статус',
-                key: 'status',
-                type: {
-                  name: 'text'
-                }
+                name: "Passport 2",
+                key: 'attachments.passport2.preview',
+                media: true
               },
+              {
+                name: "Passport 3",
+                key: 'attachments.passport3.preview',
+                media: true
+              },
+              {
+                name: "Driving 1",
+                key: 'attachments.driving1.preview',
+                media: true
+              },
+              {
+                name: "Driving 2",
+                key: 'attachments.driving2.preview',
+                media: true
+              },
+              {
+                name: "License 1",
+                key: 'attachments.license1.preview',
+                media: true
+              },
+              {
+                name: "License 2",
+                key: 'attachments.license2.preview',
+                media: true
+              },
+              // {
+              //   name: 'Роль',
+              //   key: 'role',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Статус',
+              //   key: 'status',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Телефон',
                 key: 'phone',
@@ -104,36 +146,36 @@ export default function UserList() {
                   name: 'text'
                 }
               },
-              {
-                name: 'Зарегистрирован',
-                key: 'isRegistered',
-                def_val: "false",
-                type: {
-                  name: 'switch'
-                }
-              },
-              {
-                name: 'Публичный',
-                key: 'public_id',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'Приватный',
-                key: 'private_id',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'Активный',
-                key: 'is_active',
-                def_val: "false",
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Зарегистрирован',
+              //   key: 'isRegistered',
+              //   def_val: "false",
+              //   type: {
+              //     name: 'switch'
+              //   }
+              // },
+              // {
+              //   name: 'Публичный',
+              //   key: 'public_id',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Приватный',
+              //   key: 'private_id',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Активный',
+              //   key: 'is_active',
+              //   def_val: "false",
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Запись',
                 key: 'note',
@@ -148,13 +190,13 @@ export default function UserList() {
                   name: 'text'
                 }
               },
-              {
-                name: 'День рождения',
-                key: 'birth_date',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'День рождения',
+              //   key: 'birth_date',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Комиссия',
                 key: 'commission',
@@ -162,13 +204,13 @@ export default function UserList() {
                   name: 'text'
                 }
               },
-              {
-                name: 'Язык',
-                key: 'language',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Язык',
+              //   key: 'language',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Компания',
                 key: 'company_name',
@@ -190,13 +232,13 @@ export default function UserList() {
                   name: 'text'
                 }
               },
-              {
-                name: 'Номер аккаунта',
-                key: 'account_number',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Номер аккаунта',
+              //   key: 'account_number',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'МФО банк',
                 key: 'mfo_bank',
@@ -219,13 +261,13 @@ export default function UserList() {
                 }
               },
 
-              {
-                name: 'Подтвержден',
-                key: 'emailVerified',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Подтвержден',
+              //   key: 'emailVerified',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
             ]
           }
         />
