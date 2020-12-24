@@ -29,6 +29,7 @@ import categoryroute from "../categories/route";
 import ordersroute from "../orders/route";
 import transportsroute from "../transports/route";
 import usersroute from "../users/route";
+import transactionsroute from "../transactions/route";
 
 var ps;
 
@@ -218,6 +219,7 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
             {createLinks(ordersroute, "/admin/")}
             {createLinks(usersroute, "/admin/")}
             {createLinks(transportsroute, "/admin/")}
+            {createLinks(transactionsroute, "/admin/")}
             {createLinks(categoryroute, "/admin/")}
           </Nav>
           {/* Divider */}

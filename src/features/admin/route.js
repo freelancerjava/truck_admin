@@ -8,6 +8,7 @@ import ordersroute from "../orders/route";
 import transportsroute from "../transports/route";
 import usersroute from "../users/route";
 import { PageNotFound } from "../common";
+import transactionsroute from "../transactions/route";
 
 export default {
   path: "admin",
@@ -18,6 +19,7 @@ export default {
     ordersroute,
     transportsroute,
     usersroute,
+    transactionsroute,
     { path: '*', name: 'Page not found', component: PageNotFound, inner: true },
   ],
 };

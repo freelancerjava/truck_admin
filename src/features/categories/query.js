@@ -39,6 +39,7 @@ export const delCat = async ({ id }) => {
 };
 
 export const getCount = async (key, { where } = { where: {} }) => {
-    const data = await strapi.request('get', `categories/count?where=${where}`)
+    const path = where ? `categories/count?where=${where}` : `categories/count`
+    const data = await strapi.request('get', path)
     return data
 };

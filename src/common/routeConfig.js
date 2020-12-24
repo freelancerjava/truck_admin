@@ -18,6 +18,7 @@ import ordersRoute from '../features/orders/route';
 import transportsRoute from '../features/transports/route';
 import usersRoute from '../features/users/route';
 import elementsRoute from '../features/elements/route';
+import transactionsRoute from '../features/transactions/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -39,6 +40,7 @@ const childRoutes = [
   transportsRoute,
   usersRoute,
   elementsRoute,
+  transactionsRoute,
 ];
 
 // const logout = [

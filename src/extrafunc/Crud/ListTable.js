@@ -194,8 +194,8 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                     <nav aria-label="...">
                         {console.log('ceil', Math.ceil(count / (paginationValue * 10)), page)}
                         <Pagination
-                            className="pagination justify-content-end mb-0"
-                            listClassName="justify-content-end mb-0"
+                            className="pagination justify-start mb-0"
+                            listClassName="justify-content-start mb-0"
                         >
                             <PaginationItem className={`${page == 0 ? 'disabled' : ''}`} onClick={() => {
                                 page != 0 && setPage(page - 1)
