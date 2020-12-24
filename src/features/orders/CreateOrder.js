@@ -74,7 +74,7 @@ export default withRouter(function CreateOrder({ history, title, data }) {
           <form onSubmit={handleSubmit} className="form">
             {submitError && <div className="text-red text-center">{submitError}</div>}
 
-            <Row className='mb-3'>
+            <Row className='mb-3 create-order'>
               {/* {JSON.stringify(values)} */}
               <Col className='d-flex justify-content-between'>
                 <Card className='p-3 w-100'>

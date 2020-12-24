@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUsers } from './query';
+import { getUsers, getCount } from './query';
 import ListTable from '../../extrafunc/Crud/ListTable';
 import { Container, Row, Col } from 'reactstrap';
 // import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ export default function UserList() {
       <Col>
         <ListTable
           query_fn={getUsers}
+          cnt_query_fn={getCount}
           query_key={"users"}
           title={"Лист пользователей"}
           add_link={"/admin/users/index/add"}
@@ -25,11 +26,13 @@ export default function UserList() {
             ]
           }}
           innerFilters={{
-            field: 'need_moderation',
+            field: 'status',
             data: [
-              { key: 0, name: 'Промодерированные', value: null },
-              { key: 1, name: 'Непромодерированные', value: true },
-              { key: 2, name: 'Отказанные', value: false },
+              { key: 0, name: 'Active', value: 'active' },
+              { key: 1, name: 'Checking', value: 'checking' },
+              { key: 2, name: 'Need registration', value: 'need_registration' },
+              { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
+              { key: 4, name: 'Deactivated', value: 'deactivated' },
             ]
           }}
           id={"id"}

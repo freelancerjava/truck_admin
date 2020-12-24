@@ -5,7 +5,7 @@ import {
   Col,
 } from 'reactstrap';
 import { useQuery } from 'react-query';
-import { getCats, delCat } from './query';
+import { getCats, delCat, getCount } from './query';
 import { Link } from 'react-router-dom';
 import ListTable from '../../extrafunc/Crud/ListTable';
 // import PropTypes from 'prop-types';
@@ -17,6 +17,7 @@ export default function CategoryList() {
     <Row>
       <Col>
         <ListTable
+          cnt_query_fn={getCount}
           mut_delete_fn={delCat}
           query_fn={getCats}
           query_key={"cats"}

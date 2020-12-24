@@ -37,3 +37,9 @@ export const delOrder = async ({ id }) => {
   )
   return data
 };
+
+export const getCount = async (key,{where}={where:{}}) => {
+  const data = await strapi.request('get', `orders/count?where=${where}`)
+  // const data = await strapi.request('get', `orders/count`)
+  return data
+};

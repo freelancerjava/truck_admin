@@ -37,6 +37,10 @@ export const delTransport = async ({ id }) => {
     return data
 };
 
+export const getCount = async (key, { where } = { where: {} }) => {
+    const data = await strapi.request('get', `transports/count?where=${where}`)
+    return data
+};
 
 const data = {
     "name": "string",

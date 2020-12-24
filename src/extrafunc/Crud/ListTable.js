@@ -10,17 +10,24 @@ import {
     CardTitle,
     CardBody,
     CardHeader,
-    Button
+    Button,
+    Input,
+    CardFooter,
+    Pagination,
+    PaginationItem,
+    PaginationLink
 } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 
-const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
+const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
 
 
     const [filter, setfilter] = useState(0)
     const [innerFilter, setInnerFilter] = useState(0)
+    const [paginationValue, setPaginationValue] = useState(1);
+    const [page, setPage] = useState(0);
     let new_query_filter = query_filter
     new_query_filter.order = 'id DESC'
 
@@ -37,9 +44,12 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
 
         return p
     }
+
+    new_query_filter = { ...new_query_filter, limit: 10 * paginationValue, skip: 10 * page * paginationValue }
+
     if (filters) {
         let sort = filters.data.filter((item, key) => key == filter)[0]
-        new_query_filter['where'] = {} ;//getField(filters.field)
+        new_query_filter['where'] = {};
         sort && (new_query_filter['where'][filters.field] = sort.value)
     }
     if (innerFilters) {
@@ -47,14 +57,17 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
         !new_query_filter['where'] && (new_query_filter['where'] = {})
         sort && (new_query_filter['where'][innerFilters.field] = sort.value)
     }
+    let countWhere = JSON.stringify(new_query_filter.where)
     new_query_filter = JSON.stringify(new_query_filter)
     const querydata = useQuery([query_key, { filter: new_query_filter }], query_fn)
+    const countdata = useQuery(['count', { where: countWhere }], cnt_query_fn)
     const [delMut, delMutRes] = useMutation(mut_delete_fn, {
         onSuccess: () => {
             querydata.refetch()
         }
     })
     const [data, setData] = useState([])
+    const [count, setCount] = useState(0)
 
 
 
@@ -66,9 +79,14 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
             } else {
                 setData([])
             }
+            if (countdata.data) {
+                setCount(parseInt(countdata.data.count))
+            } else {
+                setData(0)
+            }
             cancel = true
         }
-    }, [querydata.data])
+    }, [querydata.data, countdata.data])
 
     return (
         <>
@@ -84,11 +102,24 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                         {title}
                     </CardTitle>
                     {innerFilters && <InnerFilters filters={innerFilters} filter={innerFilter} setfilter={setInnerFilter} />}
-                    <Link to={add_link}>
-                        <Button color={"primary"} size={'sm'}>
-                            Добавить запись
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <Input className={'mr-3'} type='select' width={1} onChange={(e) => {
+                            setPaginationValue(parseInt(e.target.value))
+                            setPage(0)
+                        }}>
+                            <option value={1}>10</option>
+                            <option value={2}>20</option>
+                            <option value={3}>30</option>
+                            <option value={4}>40</option>
+                        </Input>
+                        <Input type='text' placeholder='Поиск' className='mr-5' width={2} />
+                        <Link to={add_link}>
+                            <Button color={"primary"} size={'sm'}>
+                                Добавить запись
                         </Button>
-                    </Link>
+                        </Link>
+                    </div>
+
                 </CardHeader>
                 <CardBody>
                     <Table className="align-items-center table-flush p-small" responsive>
@@ -159,6 +190,72 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                         </tbody>
                     </Table>
                 </CardBody>
+                <CardFooter>
+                    <nav aria-label="...">
+                        {console.log('ceil', Math.ceil(count / (paginationValue * 10)), page)}
+                        <Pagination
+                            className="pagination justify-content-end mb-0"
+                            listClassName="justify-content-end mb-0"
+                        >
+                            <PaginationItem className={`${page == 0 ? 'disabled' : ''}`} onClick={() => {
+                                page != 0 && setPage(page - 1)
+                            }}>
+                                <PaginationLink
+                                    href="#pablo"
+                                    onClick={(e) => e.preventDefault()}
+                                    tabIndex="-1"
+                                >
+                                    <i className="fas fa-angle-left" />
+                                    <span className="sr-only"> Previous </span>{" "}
+                                </PaginationLink>
+                            </PaginationItem>
+                            {Array.from({ length: Math.ceil(count / (paginationValue * 10)) }, (v, k) => {
+                                // if (k == 0) return k
+                                // else if (k == Math.ceil(count / paginationValue) - 1) return k
+                                // else if (k == Math.ceil(count / paginationValue / 2)) return k
+                                // else if (k == Math.ceil(count / paginationValue / 5)) return k
+                                // else return k
+                                return k
+                            }).map((item, key) => {
+                                return (
+                                    <PaginationItem className={`${page == item ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setPage(item)
+                                        }}>
+                                        <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+                                            {item + 1}{" "}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                )
+                            })}
+                            {/* <PaginationItem className="active">
+                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+                                    1{" "}
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+                                    2 <span className="sr-only"> (current) </span>{" "}
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+                                    3{" "}
+                                </PaginationLink>
+                            </PaginationItem> */}
+                            <PaginationItem
+                                className={`${page == Math.ceil(count / (paginationValue * 10)) - 1 ? 'disabled' : ''}`}
+                                onClick={() => {
+                                    page != Math.ceil(count / (paginationValue * 10)) - 1 && setPage(page + 1)
+                                }}>
+                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()} >
+                                    <i className="fas fa-angle-right" />
+                                    <span className="sr-only"> Next </span>{" "}
+                                </PaginationLink>
+                            </PaginationItem>
+                        </Pagination>
+                    </nav>
+                </CardFooter>
             </Card>
 
         </>

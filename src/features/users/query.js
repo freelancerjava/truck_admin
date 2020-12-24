@@ -29,3 +29,10 @@ export const addUser = async ({ body }) => {
     )
     return data
 };
+
+
+export const getCount = async (key, {where}={where:{}}) => {
+    const data = await strapi.request('get', `users/count?${token}&where=${where}`)
+    // const data = await strapi.request('get', `users/count?${token}`)
+    return data
+};

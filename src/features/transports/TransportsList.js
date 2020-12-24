@@ -5,7 +5,7 @@ import {
   Col,
 } from 'reactstrap';
 import { useQuery } from 'react-query';
-import { getTransports, delTransport } from './query';
+import { getTransports, delTransport, getCount } from './query';
 import { Link } from 'react-router-dom';
 import ListTable from '../../extrafunc/Crud/ListTable';
 
@@ -14,6 +14,7 @@ export default function TransportsList() {
     <Row>
       <Col>
         <ListTable
+          cnt_query_fn={getCount}
           mut_delete_fn={delTransport}
           query_fn={getTransports}
           query_key={"transports"}
@@ -29,11 +30,13 @@ export default function TransportsList() {
             ]
           }}
           innerFilters={{
-            field: 'need_moderation',
+            field: 'status',
             data: [
-              { key: 0, name: 'Промодерированные', value: null },
-              { key: 1, name: 'Непромодерированные', value: true },
-              { key: 2, name: 'Отказанные', value: false }
+              { key: 0, name: 'Active', value: 'active' },
+              { key: 1, name: 'Checking', value: 'checking' },
+              { key: 2, name: 'Need registration', value: 'need_registration' },
+              { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
+              { key: 4, name: 'Deactivated', value: 'deactivated' },
             ]
           }}
           id={"id"}
