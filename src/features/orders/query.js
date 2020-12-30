@@ -1,12 +1,12 @@
 import { strapi } from "../../axios";
 
-export const getOrders = async (key, { filter }) => {
+export const getOrders = async (key, { filter } = { filter: false }) => {
   const path = filter ? `orders?filter=${filter}` : 'orders'
-  const data = await strapi.request('get', path)  
+  const data = await strapi.request('get', path)
   return data
 };
 
-export const getOrder = async (key, { id, filter}) => {
+export const getOrder = async (key, { id, filter }) => {
   const path = filter ? `orders/${id}?filter=${filter}` : `orders/${id}`
   const data = await strapi.request('get', path)
   return data
@@ -14,8 +14,8 @@ export const getOrder = async (key, { id, filter}) => {
 
 export const updateOrder = async ({ id, body }) => {
   const data = await strapi.request(
-    'post',
-    `orders/update?where=${JSON.stringify({ id: id })}`,
+    'patch',
+    `orders/${id}`,
     { data: { ...body } }
   )
   return data
@@ -38,7 +38,7 @@ export const delOrder = async ({ id }) => {
   return data
 };
 
-export const getCount = async (key,{where}={where:{}}) => {
+export const getCount = async (key, { where } = { where: {} }) => {
   const data = await strapi.request('get', `orders/count?where=${where}`)
   // const data = await strapi.request('get', `orders/count`)
   return data

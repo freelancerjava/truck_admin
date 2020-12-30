@@ -25,6 +25,7 @@ export default function OrdersList() {
               { key: 2, name: 'Выполняются', value: 'on_the_way' },
               { key: 3, name: 'Завершенные', value: 'completed' },
               { key: 4, name: 'Отмененные', value: 'closed' },
+              { key: 5, name: 'Все', value: null },
             ]
           }}
           id={"id"}
