@@ -20,6 +20,7 @@ import {
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
+import moment from 'moment'
 
 const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
 
@@ -28,8 +29,10 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
     const [innerFilter, setInnerFilter] = useState(0)
     const [paginationValue, setPaginationValue] = useState(1);
     const [page, setPage] = useState(0);
+    const [orderDirection, setorderDirection] = useState(false);
+    const [orderType, setorderType] = useState('id');
     let new_query_filter = query_filter
-    new_query_filter.order = 'id DESC'
+    new_query_filter.order = `${orderType} ${orderDirection ? 'ASC' : 'DESC'}`
 
     const getField = (prop) => {
         let p = {}
@@ -89,7 +92,7 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
     }, [querydata.data, countdata.data])
 
     return (
-        <>
+        <div className='list-table'>
             {filters && <Card className='mb-2 p-2'>
                 <Filters filters={filters} filter={filter} setfilter={setfilter} />
             </Card>}
@@ -101,9 +104,11 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                         className="mb-0">
                         {title}
                     </CardTitle>
+
                     {innerFilters && <InnerFilters filters={innerFilters} filter={innerFilter} setfilter={setInnerFilter} />}
+
                     <div className='d-flex justify-content-between align-items-center'>
-                        <Input className={'mr-3'} type='select' width={1} onChange={(e) => {
+                        <Input className={'mr-3 w-25'} type='select' width={1} onChange={(e) => {
                             setPaginationValue(parseInt(e.target.value))
                             setPage(0)
                         }}>
@@ -128,7 +133,15 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                                 <th><input type='checkbox' /></th>
                                 {headers.map((item, key) => {
                                     return (
-                                        <th key={key} scope="col">{item.name}</th>
+                                        item.excludeFilter && item.excludeFilter.includes(filter) ?
+                                            null : <th key={key} scope="col"
+                                                onClick={() => {
+                                                    if (item.sort) {
+                                                        setorderType(item.sort)
+                                                        setorderDirection(!orderDirection)
+                                                    }
+                                                }}
+                                            ><strong>{item.name} {item.sort ? <i className='fa fa-sort' /> : null}</strong></th>
                                     )
                                 })}
                                 <th scope="col" />
@@ -145,13 +158,15 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                                             // console.log(e.target.tagName);
                                             if (e.target.tagName !== 'A' && e.target.tagName !== 'I' && e.target.tagName !== 'INPUT')
                                                 view_link ? history.push(`${view_link}/${item[id]}`) :
-                                                    history.push(`${edit_link}/${item[id]}`)
+                                                    edit_link ? history.push(`${edit_link}/${item[id]}`) : console.log('');
+
                                         }}>
                                         <td><input type='checkbox' /></td>
                                         {headers.map((header, key) => {
                                             return (
                                                 // <td key={key} scope="col">{item[header.key]}</td>
-                                                <CustomTd item={item} header={header} key={key} data={data} />
+                                                header.excludeFilter && header.excludeFilter.includes(filter) ?
+                                                    null : <CustomTd item={item} header={header} key={key} data={data} />
                                             )
                                         })}
                                         <td className="text-right" name='options'>
@@ -258,19 +273,51 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                 </CardFooter>
             </Card>
 
-        </>
+        </div>
     )
 }
 
 export default withRouter(ListTable)
 
 const CustomTd = ({ item, header, key }) => {
-    if (header.media) {
+    if (header.date) {
+        return (
+            <td key={key} scope="col">
+                {moment(item[header.key]).format('DD.MM.YYYY')}
+            </td>
+        )
+    } else if (header.datentime) {
+        return (
+            <td key={key} scope="col">
+                {moment(item[header.key]).format('DD.MM.YYYY')} в {moment(item[header.key]).format('hh:mm')}
+            </td>
+        )
+    } else if (header.time) {
+        console.log(header.keys[0]);
+
+        let tditem = [
+            <div>
+                {item[header.keys[0]] && item[header.keys[1]]
+                    ? moment(item[header.keys[1]]).diff(moment(item[header.keys[0]]), 'hours')
+                    : '0'} часов
+                </div>
+        ]
+        {
+            header.keys.map((keyItem) => {
+                tditem.push(<div>{getProp(item, keyItem) && moment(getProp(item, keyItem)).format('DD.MM.YYYY') || header.def_val}</div>)
+            })
+        }
+        return (
+            <td key={key} scope="col">
+                {tditem}
+            </td>
+        )
+    } else if (header.media) {
         return (
             <td key={key} scope="col">
                 <Media className="align-items-center">
                     <a
-                        className="avatar rounded-circle mr-3"
+                        className="avatar rounded mr-3"
                         href="#pablo"
                         onClick={e => e.preventDefault()}
                     >
@@ -291,12 +338,12 @@ const CustomTd = ({ item, header, key }) => {
         let tditem = []
         {
             header.keys.map((keyItem) => {
-                tditem.push(<div>{getProp(item, keyItem) || header.def_val}</div>)
+                tditem.push(<div className='mr-1'>{getProp(item, keyItem) || header.def_val}</div>)
             })
         }
         return (
             <td key={key} scope="col">
-                {tditem}
+                <div className='d-flex flex-wrap'>{tditem}</div>
             </td>
         )
     } else if (header.key) {
@@ -343,7 +390,7 @@ const Filters = ({ filters, filter, setfilter }) => {
 
 const InnerFilters = ({ filters, filter, setfilter }) => {
     return (
-        <div className='inner-filters'>
+        <div className='inner-filters mr-3'>
             {filters.data.map((item, key) => {
                 return (
                     <Button

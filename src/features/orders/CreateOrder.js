@@ -9,8 +9,9 @@ import { getUsers } from '../users/query';
 
 export default withRouter(function CreateOrder({ history, title, data }) {
 
-  const usersdata = useQuery(['users'], getUsers)
+  const usersdata = useQuery(['users',{filter:JSON.stringify({'sort':"id DESC"})}], getUsers)
   const [users, setUsers] = useState([])
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     let cancel = false
@@ -47,7 +48,7 @@ export default withRouter(function CreateOrder({ history, title, data }) {
   }
 
   return (
-    <>
+    <div className='create-order'>
       <Row className='mb-3'>
         <Col>
           <div className='d-flex justify-content-between align-items-center'>
@@ -74,7 +75,7 @@ export default withRouter(function CreateOrder({ history, title, data }) {
           <form onSubmit={handleSubmit} className="form">
             {submitError && <div className="text-red text-center">{submitError}</div>}
 
-            <Row className='mb-3 create-order'>
+            <Row className='mb-3 '>
               {/* {JSON.stringify(values)} */}
               <Col className='d-flex justify-content-between'>
                 <Card className='p-3 w-100'>
@@ -117,8 +118,9 @@ export default withRouter(function CreateOrder({ history, title, data }) {
                             <InputGroup className="input-group-alternative">
                               <Input type='select' id='input-id' className='p-1'
                                 name={props.input.name}
-                                onChange={() => {
-                                  props.input.onChange({ ...props.input.value, ...users[0] })
+                                onChange={(e) => {
+                                  console.log(e.target.value)
+                                  props.input.onChange({ ...props.input.value, ...users[e.target.value] })
                                 }
                                 }
                                 value={props.input.value.id}
@@ -298,6 +300,6 @@ export default withRouter(function CreateOrder({ history, title, data }) {
           </form>
         )
         } />
-    </>
+    </div>
   );
 })

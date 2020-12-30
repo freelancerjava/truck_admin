@@ -14,7 +14,7 @@ export default function TransactionsList() {
           query_key={"transactions"}
           title={"Лист транзакций"}
           add_link={"/admin/transactions/index/add"}
-          edit_link={"/admin/transactions/index/update"}
+          // edit_link={"/admin/transactions/index/update"}
           query_filter={{ include: ['user', 'client', 'order'] }}
           filters={{
             field: 'type',
@@ -38,35 +38,28 @@ export default function TransactionsList() {
           headers={
             [
               {
-                name: 'ID',
+                name: 'ID транзакции',
                 key: 'id',
                 type: {
                   name: 'text'
                 }
               },
               {
-                name: 'Тип оплаты',
-                key: 'type',
+                name: 'ID заказа',
+                key: 'order.id',
                 type: {
                   name: 'text'
                 }
               },
+              // {
+              //   name: 'Тип оплаты',
+              //   key: 'type',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
-                name: 'ФИО (user)',
-                keys: [
-                  'user.first_name',
-                  'user.second_name',
-                  'user.phone',
-                  'user.email',
-                  'user.username',
-                ],
-                type: {
-                  name: 'text'
-                }
-              },
-
-              {
-                name: 'ФИО (client)',
+                name: 'Заказщик',
                 keys: [
                   'client.first_name',
                   'client.second_name',
@@ -79,12 +72,50 @@ export default function TransactionsList() {
                 }
               },
               {
-                name: 'Запись',
-                key: 'note',
+                name: 'Исполнитель',
+                keys: [
+                  'user.first_name',
+                  'user.second_name',
+                  'user.phone',
+                  'user.email',
+                  'user.username',
+                ],
                 type: {
                   name: 'text'
                 }
               },
+              {
+                name: 'Партнер',
+                keys: [
+                  'client.first_name',
+                  'client.second_name',
+                  'client.phone',
+                  'client.email',
+                  'client.username',
+                ],
+              },
+              {
+                name: 'Дата заказа',
+                key: 'createdAt',
+                datentime: true,
+              },
+              {
+                name: 'Дата транзакции',
+                key: 'createdAt',
+                datentime: true,
+              },
+              {
+                name: 'Дата изменения',
+                key: 'updatedAt',
+                datentime: true,
+              },
+              // {
+              //   name: 'Запись',
+              //   key: 'note',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               // {
               //   name: 'Баланс',
               //   key: 'balance',

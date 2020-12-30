@@ -47,9 +47,36 @@ export default function TransportsList() {
                 key: 'id'
               },
               {
-                name: "Государственный\nномер",
-                key: 'gos_number'
+                name: "Ф.И.О. водителя",
+                keys: [
+                  'driver.first_name',
+                  'driver.second_name',
+                  'driver.middle_name',
+                ]
               },
+              {
+                name: "Марка",
+                keys: [
+                  'make.name',
+                ]
+              },
+              {
+                name: "Модель",
+                keys: [
+                  'model.name',
+                ]
+              },
+              {
+                name: "Категория авто",
+                keys: [
+                  'category.name_ru',
+                  'category.type'
+                ]
+              },
+              // {
+              //   name: "Государственный\nномер",
+              //   key: 'gos_number'
+              // },
               // {
               //   name: 'Непромодерированный',
               //   key: 'need_moderation',
@@ -65,117 +92,100 @@ export default function TransportsList() {
               //     name: 'text'
               //   }
               // },
-              {
-                name: "Transport 1",
-                key: 'attachment.transport1.preview',
-                media: true
-              },
-              {
-                name: "Transport 2",
-                key: 'attachment.transport2.preview',
-                media: true
-              },
-              {
-                name: "Transport 3",
-                key: 'attachment.transport3.preview',
-                media: true
-              },
-              {
-                name: "Transport 4",
-                key: 'attachment.transport4.preview',
-                media: true
-              },
-              {
-                name: "Transport Register 1",
-                key: 'attachment.transport_register1.preview',
-                media: true
-              },
-              {
-                name: "Transport Register 2",
-                key: 'attachment.transport_register2.preview',
-                media: true
-              },
-              {
-                name: "Authorization 1",
-                key: 'attachment.authorization1.preview',
-                media: true
-              },
-              {
-                name: "Authorization 2",
-                key: 'attachment.authorization2.preview',
-                media: true
-              },
-              {
-                name: "Мин. цена",
-                key: 'min_price'
-              },
-              {
-                name: "Цена за км.",
-                key: 'one_km_price'
-              },
-              {
-                name: "Цена за ожидание",
-                key: 'waiting_price'
-              },
-              {
-                name: "Цена за час",
-                key: 'one_hour_price'
-              },
-              {
-                name: "Мин. цена за час",
-                key: 'min_hour_price'
-              },
-              {
-                name: "Мин. цена за аренду",
-                key: 'min_rent_price'
-              },
-              {
-                name: "Мин. время",
-                key: 'min_hour'
-              },
+              // {
+              //   name: "Transport 1",
+              //   key: 'attachment.transport1.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Transport 2",
+              //   key: 'attachment.transport2.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Transport 3",
+              //   key: 'attachment.transport3.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Transport 4",
+              //   key: 'attachment.transport4.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Transport Register 1",
+              //   key: 'attachment.transport_register1.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Transport Register 2",
+              //   key: 'attachment.transport_register2.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Authorization 1",
+              //   key: 'attachment.authorization1.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Authorization 2",
+              //   key: 'attachment.authorization2.preview',
+              //   media: true
+              // },
+              // {
+              //   name: "Мин. цена",
+              //   key: 'min_price'
+              // },
+              // {
+              //   name: "Цена за км.",
+              //   key: 'one_km_price'
+              // },
+              // {
+              //   name: "Цена за ожидание",
+              //   key: 'waiting_price'
+              // },
+              // {
+              //   name: "Цена за час",
+              //   key: 'one_hour_price'
+              // },
+              // {
+              //   name: "Мин. цена за час",
+              //   key: 'min_hour_price'
+              // },
+              // {
+              //   name: "Мин. цена за аренду",
+              //   key: 'min_rent_price'
+              // },
+              // {
+              //   name: "Мин. время",
+              //   key: 'min_hour'
+              // },
               {
                 name: "Статус",
                 key: 'status'
               },
-              {
-                name: "Год выпуска",
-                key: 'year'
-              },
-              {
-                name: "Цвет",
-                key: 'color'
-              },
-              {
-                name: "Год выпуска",
-                key: 'year'
-              },
-              {
-                name: "Водитель",
-                keys: [
-                  'driver.first_name',
-                  'driver.second_name',
-                  'driver.phone',
-                ]
-              },
-              {
-                name: "Категория",
-                keys: [
-                  'category.name_ru',
-                  'category.type'
-                ]
-              },
-              {
-                name: "Производитель",
-                keys: [
-                  'make.name',
-                ]
-              },
-              {
-                name: "Модель",
-                keys: [
-                  'model.name',
-                ]
-              },
+              // {
+              //   name: "Год выпуска",
+              //   key: 'year'
+              // },
+              // {
+              //   name: "Цвет",
+              //   key: 'color'
+              // },
+              // {
+              //   name: "Год выпуска",
+              //   key: 'year'
+              // },
+              // {
+              //   name: "Водитель",
+              //   keys: [
+              //     'driver.first_name',
+              //     'driver.second_name',
+              //     'driver.phone',
+              //   ]
+              // },
+              
+              
             ]
           }
         />

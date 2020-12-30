@@ -13,7 +13,7 @@ export default function OrdersList() {
           query_fn={getOrders}
           query_key={"orders"}
           title={"Лист Заказов"}
-          add_link={"/admin/orders/index/add"}
+          add_link={"/admin/orders/index/create"}
           edit_link={"/admin/orders/index/update"}
           view_link={"/admin/orders/index/update"}
           query_filter={{ include: ['category', 'transport', 'driver', 'creator'] }}
@@ -25,7 +25,15 @@ export default function OrdersList() {
               { key: 2, name: 'Выполняются', value: 'on_the_way' },
               { key: 3, name: 'Завершенные', value: 'completed' },
               { key: 4, name: 'Отмененные', value: 'closed' },
-              { key: 5, name: 'Все', value: null },
+              { key: 5, name: 'Все'},
+            ]
+          }}
+          innerFilters={{
+            field: 'type',
+            data: [
+              { key: 0, name: 'Все' },
+              { key: 1, name: 'Грузоперевозки', value: 'cargo' },
+              { key: 2, name: 'Аренда', value: 'rent' },
             ]
           }}
           id={"id"}
@@ -33,11 +41,13 @@ export default function OrdersList() {
             [
               {
                 name: "ID",
-                key: 'id'
+                key: 'id',
+                sort:'id'
               },
               {
                 name: "Тип",
-                key: 'type'
+                key: 'type',
+                sort:'type'
               },
               {
                 name: "Заказчик",
@@ -52,7 +62,16 @@ export default function OrdersList() {
               },
               {
                 name: "Тип кузова",
-                key: 'transport.gos_num'
+                key: 'category.type'
+              },
+              {
+                name: "Дата и время заказа",
+                time: true,
+                def_val: 'Время не установлено',
+                keys: [
+                  'start_date',
+                  'end_date'
+                ]
               },
               {
                 name: "Маршрут",
@@ -63,7 +82,7 @@ export default function OrdersList() {
               },
               {
                 name: "Тип оплаты",
-                key: 'payment.type'
+                key: 'payment.type',
               },
               {
                 name: "Сумма",
