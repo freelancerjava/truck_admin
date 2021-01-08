@@ -7,6 +7,7 @@ import CustomForm from '../../extrafunc/Crud/CustomForm';
 import { withRouter } from 'react-router-dom';
 import { getCats } from '../categories/query';
 import { getTransports } from '../transports/query';
+import OrdersUploader from './uploaders/OrdersUploader';
 
 
 function Order({ history }) {
@@ -57,6 +58,16 @@ function Order({ history }) {
                 key: 'toAddress',
                 type: {
                   name: 'text'
+                }
+              },
+              {
+                name: 'Файлы',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'media',
+                  uploader: OrdersUploader
                 }
               },
               {

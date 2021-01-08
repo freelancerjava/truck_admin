@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUsers, getCount } from './query';
+import { getUsers, getCount, delUser } from './query';
 import ListTable from '../../extrafunc/Crud/ListTable';
 import { Container, Row, Col } from 'reactstrap';
 // import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ export default function UserList() {
     <Row>
       <Col>
         <ListTable
+          mut_delete_fn={delUser}
           query_fn={getUsers}
           cnt_query_fn={getCount}
           query_key={"users"}
@@ -23,6 +24,7 @@ export default function UserList() {
               { key: 1, name: 'Исполнители', value: 'driver' },
               { key: 2, name: 'Партнеры', value: null },
               { key: 3, name: 'Сотрудники', value: 'default' },
+              { key: 4, name: 'Все' },
             ]
           }}
           innerFilters={{
@@ -33,7 +35,7 @@ export default function UserList() {
               { key: 2, name: 'Need registration', value: 'need_registration' },
               { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
               { key: 4, name: 'Deactivated', value: 'deactivated' },
-              { key: 5, name: 'All', value: null},
+              { key: 5, name: 'All', value: null },
             ]
           }}
           id={"id"}
@@ -48,7 +50,7 @@ export default function UserList() {
                 name: 'Фото',
                 key: 'attachments.main.result',
                 media: true,
-                excludeFilter: [0,1,2]
+                excludeFilter: [0, 1, 2]
               },
               {
                 name: 'Ф.И.О.',
@@ -113,9 +115,9 @@ export default function UserList() {
               {
                 name: 'Роль',
                 key: 'role',
-                excludeFilter: [0,1,2],
+                excludeFilter: [0, 1, 2],
               },
-              
+
 
               {
                 name: 'E-mail',
@@ -125,13 +127,13 @@ export default function UserList() {
               {
                 name: 'Пароль',
                 key: 'password',
-                excludeFilter: [0,1,2]
+                excludeFilter: [0, 1, 2]
               },
               {
                 name: 'Логин',
                 key: 'username',
                 sort: 'username',
-                excludeFilter: [0,1,2]
+                excludeFilter: [0, 1, 2]
               },
               {
                 name: 'Номер телефона',

@@ -1,8 +1,9 @@
 import React from 'react';
 import { CardBody, CardTitle, Card } from 'reactstrap';
+import moment from 'moment'
 // import PropTypes from 'prop-types';
 
-export default function OrderDetailCard() {
+export default function OrderDetailCard({ order }) {
   return (
     <Card className='mb-3'>
       <CardBody>
@@ -11,23 +12,28 @@ export default function OrderDetailCard() {
         </h4>
         <div className='d-flex justify-content-between mb-1'>
           <span className='text-muted'><small>Дата заказа</small></span>
-          <span className='text-dark h5'>30.11.2020</span>
+          <span className='text-dark h5'>{order.createdAt && moment(order.createdAt).format('DD.MM.YYYY') || '30.11.2020'}</span>
         </div>
         <div className='d-flex justify-content-between mb-1'>
           <span className='text-muted'><small>Время заказа</small></span>
-          <span className='text-dark h5'>21:01</span>
+          <span className='text-dark h5'>{order.createdAt && moment(order.createdAt).format('hh:mm') || '21:01'}</span>
         </div>
         <div className='d-flex justify-content-between mb-1'>
-          <span className='text-muted'><small>Выбранный тип авто</small></span>
-          <span className='text-dark h5'>от 1 кг до 1 т</span>
+          <span className='text-muted'><small>{'Выбранный тип авто'}</small></span>
+          <span className='text-dark h5'>{
+            order.category
+            && order.category.parent
+            && order.category.parent.parent
+            && order.category.parent.parent.name_ru
+            || 'от 1 кг до 1 т'}</span>
         </div>
         <div className='d-flex justify-content-between mb-1'>
           <span className='text-muted'><small>Дата погрузки</small></span>
-          <span className='text-dark h5'>25.08 в 12:42</span>
+          {/* <span className='text-dark h5'>{order.receipt && JSON.stringify(order.receipt) ||  '25.08 в 12:42'}</span> */}
         </div>
         <div className='d-flex justify-content-between mb-1'>
           <span className='text-muted'><small>Метод оплаты</small></span>
-          <span className='text-dark h5'>UzCard</span>
+          <span className='text-dark h5'>{order.payment && order.payment.type || 'UzCard'}</span>
         </div>
         <div className='d-flex justify-content-between mb-1'>
           <span className='text-muted'><small>Разрешить догруз</small></span>
@@ -36,9 +42,7 @@ export default function OrderDetailCard() {
         <div className='d-flex justify-content-between flex-column'>
           <span className='text-muted mb-1'><small>Комментарий</small></span>
           <span className='text-dark h5'>
-            Нужно перевезти бытовую технику:
-            стиральную машину и газовую плиту
-            в пределах Ташкента
+            {order.comment || 'Комментарий отсутствует'}
               </span>
         </div>
       </CardBody>

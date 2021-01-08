@@ -33,7 +33,7 @@ const MapWrapper = withScriptjs(withGoogleMap(props => {
    return (
       <GoogleMap {...props}
          ref={mapRef}
-         defaultZoom={12}
+         defaultZoom={5}
          defaultCenter={{ lat: 40.748817, lng: -73.985428 }}>
          {props.markers.length > 0 && props.markers.map((mar, i) => (
             <CustomMarker 
@@ -53,7 +53,7 @@ export const Map = (props) => {
    return (
       <MapWrapper
          markers={props.markers}
-         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzAzAsm1HvI55ct6cCoRRir06Sis_ss7g"
+         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1B5r4XRhhqx05ZTcVmqOPoM-MyLMUu2Q"
          loadingElement={<div style={{ height: `100%` }} />}
          containerElement={
             <div

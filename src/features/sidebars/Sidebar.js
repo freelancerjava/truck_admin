@@ -48,7 +48,6 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
   const closeCollapse = () => {
     setcollapseOpen(false);
   };
-  console.log("routes", routes);
 
   const createLinks = (routes, path) => {
     return routes.childRoutes.map((prop, key) => {

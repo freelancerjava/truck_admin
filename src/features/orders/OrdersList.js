@@ -13,10 +13,10 @@ export default function OrdersList() {
           query_fn={getOrders}
           query_key={"orders"}
           title={"Лист Заказов"}
-          add_link={"/admin/orders/index/create"}
+          add_link={"/admin/orders/index/add"}
           edit_link={"/admin/orders/index/update"}
-          view_link={"/admin/orders/index/update"}
-          query_filter={{ include: ['category', 'transport', 'driver', 'creator'] }}
+          view_link={"/admin/orders/index/view"}
+          query_filter={{ include: [{category: ['rootCategory', 'parent']}, 'transport', 'driver', 'creator'] }}
           filters={{
             field: 'status',
             data: [
@@ -24,8 +24,9 @@ export default function OrdersList() {
               { key: 1, name: 'Принятые', value: 'arrived' },
               { key: 2, name: 'Выполняются', value: 'on_the_way' },
               { key: 3, name: 'Завершенные', value: 'completed' },
-              { key: 4, name: 'Отмененные', value: 'closed' },
-              { key: 5, name: 'Все'},
+              { key: 4, name: 'Закрытые', value: 'closed' },
+              { key: 5, name: 'Отмененные', value: 'canceled' },
+              { key: 6, name: 'Все'},
             ]
           }}
           innerFilters={{
@@ -44,11 +45,11 @@ export default function OrdersList() {
                 key: 'id',
                 sort:'id'
               },
-              {
-                name: "Тип",
-                key: 'type',
-                sort:'type'
-              },
+              // {
+              //   name: "Тип",
+              //   key: 'type',
+              //   sort:'type'
+              // },
               {
                 name: "Заказчик",
                 keys: [
@@ -57,33 +58,57 @@ export default function OrdersList() {
                 ]
               },
               {
-                name: "Тип авто",
-                key: 'category.name_ru'
+                name: "Дата и время поступления",
+                key: 'createdAt',
+                datentime: true
+              },
+              // {
+              //   name: "Статус",
+              //   key: 'status'
+              // },
+              {
+                name: "Тип оплаты",
+                key: 'payment.type',
+                sort: 'payment'
               },
               {
-                name: "Тип кузова",
-                key: 'category.type'
-              },
-              {
-                name: "Дата и время заказа",
-                time: true,
-                def_val: 'Время не установлено',
-                keys: [
-                  'start_date',
-                  'end_date'
-                ]
-              },
-              {
-                name: "Маршрут",
+                name: "Маршрут (От-До)",
                 keys: [
                   'fromAddress',
                   'toAddress'
                 ]
               },
               {
-                name: "Тип оплаты",
-                key: 'payment.type',
+                name: "Тип авто",
+                key: 'category.rootCategory.name_ru'
               },
+              {
+                name: "Тип кузова",
+                key: 'category.parent.name_ru'
+              },
+              {
+                name: "Комментарий",
+                key: 'comment'
+              },
+              {
+                name: "Водитель",
+                keys: [
+                  'driver.first_name',
+                  'creator.second_name',
+                  'creator.middle_name',
+                ]
+              },
+              {
+                name: "Дата и время заказа",
+                time: true,
+                def_val: 'Время не установлено',
+                keys: [
+                  'createdAt',
+                  'end_date'
+                ]
+              },
+              
+              
               {
                 name: "Сумма",
                 key: 'total_price'

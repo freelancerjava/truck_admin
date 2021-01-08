@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 // import PropTypes from 'prop-types';
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -20,12 +20,14 @@ import {
   Media
 } from "reactstrap";
 import { NotificationSVG } from '../../extrafunc/svg';
+import { user } from '../../axios';
 
 
-export default function AdminNavbar({ brandText, toggleMini }) {
+function AdminNavbar({ brandText, toggleMini }) {
   return (
     <>
       <Navbar className="navbar-top navbar-light bg-white header p-2" expand="md" id="navbar-main">
+
         <Container fluid>
           {/* <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -35,7 +37,7 @@ export default function AdminNavbar({ brandText, toggleMini }) {
           </Link> */}
           <div className='d-flex'>
             <button
-              className="navbar-toggler-2"
+              className="btn navbar-toggler-2"
               type="button"
               onClick={toggleMini}
             >
@@ -64,29 +66,17 @@ export default function AdminNavbar({ brandText, toggleMini }) {
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Кабинет</h6>
+                  <DropdownItem to="/admin/users/index/add" tag={Link}>
+                    <i className="fa fa-user" />
+                    <span>Пользователя</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-single-02" />
-                    <span>Мой профиль</span>
+                  <DropdownItem to="/admin/transports/index/add" tag={Link}>
+                    <i className="fa fa-truck" />
+                    <span>Транспорт</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-settings-gear-65" />
-                    <span>Настройки</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <DropdownItem to="/admin/orders/index/add" tag={Link}>
                     <i className="ni ni-calendar-grid-58" />
-                    <span>Статистика</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-support-16" />
-                    <span>Поддержка</span>
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="ni ni-user-run" />
-                    <span>Выход</span>
+                    <span>Заказ</span>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -98,7 +88,7 @@ export default function AdminNavbar({ brandText, toggleMini }) {
                     <NotificationSVG />
                   </Media>
                 </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
+                {/* <DropdownMenu className="dropdown-menu-arrow" right>
                   <DropdownItem className="noti-title" header tag="div">
                     <h6 className="text-overflow m-0">Кабинет</h6>
                   </DropdownItem>
@@ -123,7 +113,7 @@ export default function AdminNavbar({ brandText, toggleMini }) {
                     <i className="ni ni-user-run" />
                     <span>Выход</span>
                   </DropdownItem>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </UncontrolledDropdown>
             </Nav>
             <Nav className="align-items-center d-none d-md-flex" navbar>
@@ -131,21 +121,23 @@ export default function AdminNavbar({ brandText, toggleMini }) {
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
+                      {console.log(user)}
                       <img
                         alt="..."
-                        src={require("../../assets/img/avatar.png")}
+                        src={user && user.user.attachments && user.user.attachments.main && user.user.attachments.main.result
+                          || require("../../assets/img/avatar.png")}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
                         {/* {JSON.parse(localStorage.getItem('user')).username} */}
-                      Sardor Akhmedjanov
+                      {user && `${user.user.first_name} ` + ` ${user.user.second_name}` || 'Sardor Akhmedjanov'}
                     </span>
                     </Media>
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
+                  {/* <DropdownItem className="noti-title" header tag="div">
                     <h6 className="text-overflow m-0">Кабинет</h6>
                   </DropdownItem>
                   <DropdownItem to="/admin/user-profile" tag={Link}>
@@ -163,9 +155,9 @@ export default function AdminNavbar({ brandText, toggleMini }) {
                   <DropdownItem to="/admin/user-profile" tag={Link}>
                     <i className="ni ni-support-16" />
                     <span>Поддержка</span>
-                  </DropdownItem>
+                  </DropdownItem> */}
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem to="/auth/login" tag={Link}>
                     <i className="ni ni-user-run" />
                     <span>Выход</span>
                   </DropdownItem>
@@ -178,6 +170,8 @@ export default function AdminNavbar({ brandText, toggleMini }) {
     </>
   )
 };
+
+export default withRouter(AdminNavbar)
 
 AdminNavbar.propTypes = {};
 AdminNavbar.defaultProps = {};

@@ -24,7 +24,7 @@ export default function UserInfoCard({ title, accLink, accData = {} }) {
           </div>
           <div className='details'>
             <div className='name text-dark font-weight-bold'>
-              {accData.first_name || 'Константин · ID 9541'}
+              {accData.first_name || 'Константин'}
               {accData.second_name || 'Константинопольский · ID 9541'}
               {` · ID ${accData.id || '9541'}`}
             </div>

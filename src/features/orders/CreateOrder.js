@@ -114,13 +114,13 @@ export default withRouter(function CreateOrder({ history, title, data }) {
                             </InputGroup>
                           </FormGroup>
                           <FormGroup key={3} className="mb-1 p-1">
-                            <Label for='nput-id'>Пользователь</Label>
+                            <Label for='user-id'>Пользователь</Label>
                             <InputGroup className="input-group-alternative">
-                              <Input type='select' id='input-id' className='p-1'
+                              <Input type='select' id='user-id' className='p-1'
                                 name={props.input.name}
                                 onChange={(e) => {
                                   console.log(e.target.value)
-                                  props.input.onChange({ ...props.input.value, ...users[e.target.value] })
+                                  props.input.onChange({ ...props.input.value, ...users.filter(item=>item.id == e.target.value)[0] })
                                 }
                                 }
                                 value={props.input.value.id}
@@ -150,9 +150,9 @@ export default withRouter(function CreateOrder({ history, title, data }) {
                       </InputGroup>
                     </FormGroup>
                     <FormGroup key={null} className="mb-3 p-1">
-                      <Label for='nput-id'>Статус</Label>
+                      <Label for='status'>Статус</Label>
                       <InputGroup className="input-group-alternative">
-                        <Input type='text' id='input-id' className='p-1' />
+                        <Input type='text' id='status' className='p-1' />
                       </InputGroup>
                     </FormGroup>
                     <FormGroup key={null} className="mb-3 p-1">
@@ -185,9 +185,9 @@ export default withRouter(function CreateOrder({ history, title, data }) {
                       </InputGroup>
                     </FormGroup>
                     <FormGroup key={null} className="mb-3 p-1">
-                      <Label for='nput-id'>Статус</Label>
+                      <Label for='status'>Статус</Label>
                       <InputGroup className="input-group-alternative">
-                        <Input type='text' id='input-id' className='p-1' />
+                        <Input type='text' id='status' className='p-1' />
                       </InputGroup>
                     </FormGroup>
                     <FormGroup key={null} className="mb-3 p-1">

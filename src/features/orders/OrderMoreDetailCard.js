@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 // import PropTypes from 'prop-types';
 
-export default function OrderMoreDetailCard() {
+export default function OrderMoreDetailCard({ order }) {
   return (
     <Card>
       <CardBody>
@@ -19,11 +19,18 @@ export default function OrderMoreDetailCard() {
         </div>
         <div className='d-flex justify-content-between'>
           <span className='text-muted'><small>Выбранный кузов</small></span>
-          <span className='text-dark h5'>Пикап</span>
+          <span className='text-dark h5'>{
+            order.category
+            && order.category.name_ru
+            || 'Пикап'}</span>
         </div>
         <div className='d-flex justify-content-between'>
           <span className='text-muted'><small>Выбранный тип кузова</small></span>
-          <span className='text-dark h5'>Открытый</span>
+          <span className='text-dark h5'>{
+            order.category
+            && order.category.parent
+            && order.category.parent.name_ru
+            || 'Открытый'}</span>
         </div>
         <div className='d-flex justify-content-between'>
           <span className='text-muted'><small>Сумма заказа</small></span>

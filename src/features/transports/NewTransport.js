@@ -6,6 +6,7 @@ import CustomForm from '../../extrafunc/Crud/CustomForm';
 
 import { getCats } from '../categories/query';
 import { getMakes, getModels } from '../../axios/query';
+import TransportFileUploader from './uploaders/TransportFileUploader';
 
 export default function NewTransport() {
   const catsdata = useQuery(['cats'], getCats)
@@ -61,19 +62,99 @@ export default function NewTransport() {
                 }
               },
               {
-                name: 'Год проблемы',
-                key: 'year_of_issue',
+                name: 'Transport 1',
+                key: 'attachment',
+                media: true,
                 type: {
-                  name: 'text'
+                  name: 'media',
+                  subType: 'transport1',
+                  uploader: TransportFileUploader
                 }
               },
               {
-                name: 'Активный',
-                key: 'is_active',
+                name: 'Transport 2',
+                key: 'attachment',
+                media: true,
                 type: {
-                  name: 'text'
+                  name: 'media',
+                  subType: 'transport2',
+                  uploader: TransportFileUploader
                 }
               },
+              {
+                name: 'Transport 3',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport3',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport 4',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport4',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport Register 1',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport_register1',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Transport Register 2',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'transport_register2',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Authorization 1',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'authorization1',
+                  uploader: TransportFileUploader
+                }
+              },
+              {
+                name: 'Authorization 2',
+                key: 'attachment',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'authorization2',
+                  uploader: TransportFileUploader
+                }
+              },
+              // {
+              //   name: 'Год проблемы',
+              //   key: 'year_of_issue',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Активный',
+              //   key: 'is_active',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: "Мин. цена",
                 key: 'min_price',
@@ -109,13 +190,13 @@ export default function NewTransport() {
                   name: 'text'
                 }
               },
-              {
-                name: 'Статус',
-                key: 'status',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Статус',
+              //   key: 'status',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: "Мин. цена заказа",
                 key: 'min_order_price',

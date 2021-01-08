@@ -1,5 +1,6 @@
-import { strapi } from "../../axios";
-const token = JSON.parse(localStorage.getItem('user')) ? `access_token=${JSON.parse(localStorage.getItem('user')).id}` : ''
+import { strapi, user } from "../../axios";
+
+const token = user ? `access_token=${user.id}` : ''
 
 export const getUsers = async (key, { filter } = { filter: false }) => {
     const path = filter != false ? `users?${token}&filter=${filter}` : `users?${token}`
@@ -35,5 +36,13 @@ export const getCount = async (key, {where}={where:{}}) => {
     const path = where ? `users/count?${token}&where=${where}` : `users/count?${token}`
     const data = await strapi.request('get', path)
     // const data = await strapi.request('get', `users/count?${token}`)
+    return data
+};
+
+export const delUser = async ({ id }) => {
+    const data = await strapi.request(
+        'delete',
+        `users/${id}?${token}`
+    )
     return data
 };

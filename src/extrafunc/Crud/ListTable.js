@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import {
     Table,
     Media,
@@ -15,24 +16,42 @@ import {
     CardFooter,
     Pagination,
     PaginationItem,
-    PaginationLink
+    PaginationLink,
+    Spinner,
+    Container,
+    Jumbotron,
+    Fade
 } from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 import moment from 'moment'
+import { getParameterByName } from '..';
 
-const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
+const ListTable = ({ router, history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
 
 
-    const [filter, setfilter] = useState(0)
-    const [innerFilter, setInnerFilter] = useState(0)
-    const [paginationValue, setPaginationValue] = useState(1);
-    const [page, setPage] = useState(0);
+    const [filter, setfilter] = useState(router.location.query.fltr || 0)
+    const [innerFilter, setInnerFilter] = useState(router.location.query.in_fltr || 0)
+    const [paginationValue, setPaginationValue] = useState(parseInt(router.location.query.pagging) || 1);
+    const [page, setPage] = useState(router.location.query.page || 0);
+
+    useEffect(() => {
+        if (router.action === 'POP') {
+            setfilter(router.location.query.fltr || 0)
+            setInnerFilter(router.location.query.in_fltr || 0)
+            setPaginationValue(parseInt(router.location.query.pagging) || 1)
+            setPage(router.location.query.page || 0)
+        }
+        return () => {
+        }
+    }, [setfilter, router]);
+
+
     const [orderDirection, setorderDirection] = useState(false);
     const [orderType, setorderType] = useState('id');
     let new_query_filter = query_filter
-    new_query_filter.order = `${orderType} ${orderDirection ? 'ASC' : 'DESC'}`
+    new_query_filter.order = [`${orderType} ${orderDirection ? 'ASC' : 'DESC'}`]
 
     const getField = (prop) => {
         let p = {}
@@ -85,7 +104,7 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
             if (countdata.data) {
                 setCount(parseInt(countdata.data.count))
             } else {
-                setData(0)
+                setCount(0)
             }
             cancel = true
         }
@@ -94,7 +113,7 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
     return (
         <div className='list-table'>
             {filters && <Card className='mb-2 p-2'>
-                <Filters filters={filters} filter={filter} setfilter={setfilter} />
+                <Filters filters={filters} filter={filter} setfilter={setfilter} history={history} setPage={setPage} />
             </Card>}
             <Card>
                 <CardHeader
@@ -105,115 +124,129 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                         {title}
                     </CardTitle>
 
-                    {innerFilters && <InnerFilters filters={innerFilters} filter={innerFilter} setfilter={setInnerFilter} />}
+                    {innerFilters && <InnerFilters setPage={setPage} history={history} filters={innerFilters} filter={innerFilter} setfilter={setInnerFilter} />}
 
                     <div className='d-flex justify-content-between align-items-center'>
-                        <Input className={'mr-3 w-25'} type='select' width={1} onChange={(e) => {
-                            setPaginationValue(parseInt(e.target.value))
-                            setPage(0)
-                        }}>
+                        <Input className={'mr-3 w-25'} type='select' width={1}
+                            value={paginationValue}
+                            onChange={(e) => {
+                                setPaginationValue(parseInt(e.target.value))
+                                historyCorrect({ history: history, param: { name: 'pagging', value: e.target.value } })
+                                setPage(0)
+                            }}>
                             <option value={1}>10</option>
                             <option value={2}>20</option>
                             <option value={3}>30</option>
                             <option value={4}>40</option>
                         </Input>
                         <Input type='text' placeholder='Поиск' className='mr-5' width={2} />
-                        <Link to={add_link}>
+                        {add_link && <Link to={add_link}>
                             <Button color={"primary"} size={'sm'}>
                                 Добавить запись
                         </Button>
-                        </Link>
+                        </Link>}
                     </div>
 
                 </CardHeader>
                 <CardBody>
-                    <Table className="align-items-center table-flush p-small" responsive>
-                        <thead className="">
-                            <tr>
-                                <th><input type='checkbox' /></th>
-                                {headers.map((item, key) => {
-                                    return (
-                                        item.excludeFilter && item.excludeFilter.includes(filter) ?
-                                            null : <th key={key} scope="col"
-                                                onClick={() => {
-                                                    if (item.sort) {
-                                                        setorderType(item.sort)
-                                                        setorderDirection(!orderDirection)
-                                                    }
-                                                }}
-                                            ><strong>{item.name} {item.sort ? <i className='fa fa-sort' /> : null}</strong></th>
-                                    )
-                                })}
-                                <th scope="col" />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data && data.map((item, key) => {
-                                return (
-                                    <tr
-                                        className={`hoverable ${key % 2 == 0 ? 'odd' : ''}`}
-                                        name='trow'
-                                        key={key}
-                                        onClick={(e) => {
-                                            // console.log(e.target.tagName);
-                                            if (e.target.tagName !== 'A' && e.target.tagName !== 'I' && e.target.tagName !== 'INPUT')
-                                                view_link ? history.push(`${view_link}/${item[id]}`) :
-                                                    edit_link ? history.push(`${edit_link}/${item[id]}`) : console.log('');
-
-                                        }}>
-                                        <td><input type='checkbox' /></td>
-                                        {headers.map((header, key) => {
+                    {countdata.isLoading || querydata.isLoading ?
+                        <div className='d-flex justify-content-center align-items-center w-100 p-5'>
+                            <Spinner style={{ width: '3rem', height: '3rem' }} color="primary" />
+                        </div>
+                        :
+                        <Fade in={true}>
+                            <Table className="align-items-center table-flush p-small" responsive>
+                                <thead className="">
+                                    <tr>
+                                        <th><input type='checkbox' /></th>
+                                        {headers.map((item, key) => {
                                             return (
-                                                // <td key={key} scope="col">{item[header.key]}</td>
-                                                header.excludeFilter && header.excludeFilter.includes(filter) ?
-                                                    null : <CustomTd item={item} header={header} key={key} data={data} />
+                                                item.excludeFilter && item.excludeFilter.includes(filter) ?
+                                                    null : <th key={key} scope="col"
+                                                        onClick={() => {
+                                                            if (item.sort) {
+                                                                setorderType(item.sort)
+                                                                setorderDirection(!orderDirection)
+                                                            }
+                                                        }}
+                                                    ><strong className={`${item.sort ? 'hoverable' : ''}`}>{item.name} {item.sort ? <i className={`fa fa-sort hoverable`} /> : null}</strong></th>
                                             )
                                         })}
-                                        <td className="text-right" name='options'>
-                                            <UncontrolledDropdown>
-                                                <DropdownToggle
-                                                    className="btn-icon-only text-light"
-                                                    href="#pablo"
-                                                    role="button"
-                                                    size="sm"
-                                                    color=""
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    <i className="fas fa-ellipsis-v" />
-                                                </DropdownToggle>
-                                                <DropdownMenu className="dropdown-menu-arrow" right>
-                                                    <Link
-                                                        to={`${edit_link}/${item[id]}`}>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                        >Изменить</DropdownItem>
-                                                    </Link>
-                                                    <DropdownItem
-                                                        href="#123"
-                                                        onClick={e => {
-                                                            e.preventDefault()
-                                                            delMut({ id: item.id })
-                                                        }}
-                                                    >Удалить</DropdownItem>
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                        </td>
+                                        <th scope="col" />
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {data && data.map((item, key) => {
+                                        return (
+                                            <tr
+                                                className={`hoverable ${key % 2 == 0 ? 'odd' : ''}`}
+                                                name='trow'
+                                                key={key}
+                                                onClick={(e) => {
+                                                    // console.log(e.target.tagName);
+                                                    if (e.target.tagName !== 'A' && e.target.tagName !== 'I' && e.target.tagName !== 'INPUT')
+                                                        view_link ? history.push(`${view_link}/${item[id]}`) :
+                                                            edit_link ? history.push(`${edit_link}/${item[id]}`) : console.log('');
 
-                                )
-                            })}
-                        </tbody>
-                    </Table>
+                                                }}>
+                                                <td><input type='checkbox' /></td>
+                                                {headers.map((header, key) => {
+                                                    return (
+                                                        // <td key={key} scope="col">{item[header.key]}</td>
+                                                        header.excludeFilter && header.excludeFilter.includes(filter) ?
+                                                            null : <CustomTd item={item} header={header} key={key} data={data} />
+                                                    )
+                                                })}
+                                                <td className="text-right" name='options'>
+                                                    <UncontrolledDropdown>
+                                                        <DropdownToggle
+                                                            className="btn-icon-only text-light"
+                                                            href="#pablo"
+                                                            role="button"
+                                                            size="sm"
+                                                            color=""
+                                                            onClick={e => e.preventDefault()}
+                                                        >
+                                                            <i className="fas fa-ellipsis-v" />
+                                                        </DropdownToggle>
+                                                        <DropdownMenu className="dropdown-menu-arrow" right>
+                                                            <Link
+                                                                to={`${edit_link}/${item[id]}`}>
+                                                                <DropdownItem
+                                                                    href="#pablo"
+                                                                >Изменить</DropdownItem>
+                                                            </Link>
+                                                            <DropdownItem
+                                                                href="#123"
+                                                                onClick={e => {
+                                                                    e.preventDefault()
+                                                                    delMut({ id: item.id })
+                                                                }}
+                                                            >Удалить</DropdownItem>
+                                                        </DropdownMenu>
+                                                    </UncontrolledDropdown>
+                                                </td>
+                                            </tr>
+
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        </Fade>
+                    }
                 </CardBody>
                 <CardFooter>
                     <nav aria-label="...">
-                        {console.log('ceil', Math.ceil(count / (paginationValue * 10)), page)}
-                        <Pagination
+                        {/* {console.log('ceil', Math.ceil(count / (paginationValue * 10)), page)} */}
+                        {count > 0 && <Pagination
                             className="pagination justify-start mb-0"
                             listClassName="justify-content-start mb-0"
                         >
                             <PaginationItem className={`${page == 0 ? 'disabled' : ''}`} onClick={() => {
-                                page != 0 && setPage(page - 1)
+                                if (page != 0) {
+                                    setPage(page - 1)
+                                    historyCorrect({ history: history, param: { name: 'page', value: page - 1 } })
+                                }
                             }}>
                                 <PaginationLink
                                     href="#pablo"
@@ -225,50 +258,45 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
                                 </PaginationLink>
                             </PaginationItem>
                             {Array.from({ length: Math.ceil(count / (paginationValue * 10)) }, (v, k) => {
-                                // if (k == 0) return k
-                                // else if (k == Math.ceil(count / paginationValue) - 1) return k
-                                // else if (k == Math.ceil(count / paginationValue / 2)) return k
-                                // else if (k == Math.ceil(count / paginationValue / 5)) return k
+                                if (k == 0) return k
+                                // if (k == 1) return k
+                                if (k == Math.ceil(count / (paginationValue * 10)) - 1) return k
+                                // if (k == Math.ceil(count / (paginationValue * 10)) - 2) return k
+                                if (k == page - 1) return k
+                                if (k == page) return k
+                                if (k == page + 1) return k
+                                // else if (k == Math.ceil(count / paginationValue * 10 / 2)) return k
+                                // else if (k == Math.ceil(count / paginationValue * 10 / 5)) return k
                                 // else return k
-                                return k
+                                // return k
                             }).map((item, key) => {
                                 return (
-                                    <PaginationItem className={`${page == item ? 'active' : ''}`}
-                                        onClick={() => {
-                                            setPage(item)
-                                        }}>
-                                        <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
-                                            {item + 1}{" "}
-                                        </PaginationLink>
-                                    </PaginationItem>
+                                    item != null ?
+                                        <PaginationItem className={`${page == item ? 'active' : ''}`}
+                                            onClick={() => {
+                                                setPage(item)
+                                                historyCorrect({ history: history, param: { name: 'page', value: item } })
+                                            }}>
+                                            <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
+                                                {item + 1}{" "}
+                                            </PaginationLink>
+                                        </PaginationItem> : <span>.</span>
                                 )
                             })}
-                            {/* <PaginationItem className="active">
-                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
-                                    1{" "}
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
-                                    2 <span className="sr-only"> (current) </span>{" "}
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
-                                    3{" "}
-                                </PaginationLink>
-                            </PaginationItem> */}
                             <PaginationItem
                                 className={`${page == Math.ceil(count / (paginationValue * 10)) - 1 ? 'disabled' : ''}`}
                                 onClick={() => {
-                                    page != Math.ceil(count / (paginationValue * 10)) - 1 && setPage(page + 1)
+                                    if (page != Math.ceil(count / (paginationValue * 10)) - 1) {
+                                        setPage(page + 1)
+                                        historyCorrect({ history: history, param: { name: 'page', value: page + 1 } })
+                                    }
                                 }}>
                                 <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()} >
                                     <i className="fas fa-angle-right" />
                                     <span className="sr-only"> Next </span>{" "}
                                 </PaginationLink>
                             </PaginationItem>
-                        </Pagination>
+                        </Pagination>}
                     </nav>
                 </CardFooter>
             </Card>
@@ -277,7 +305,9 @@ const ListTable = ({ history, title, headers, edit_link, view_link, add_link, id
     )
 }
 
-export default withRouter(ListTable)
+export default withRouter(connect((state) => {
+    return { router: state.router }
+})(ListTable))
 
 const CustomTd = ({ item, header, key }) => {
     if (header.date) {
@@ -293,7 +323,7 @@ const CustomTd = ({ item, header, key }) => {
             </td>
         )
     } else if (header.time) {
-        console.log(header.keys[0]);
+        // console.log(header.keys[0]);
 
         let tditem = [
             <div>
@@ -368,7 +398,7 @@ const getProp = (object, props) => {
     return prop
 }
 
-const Filters = ({ filters, filter, setfilter }) => {
+const Filters = ({ filters, filter, setfilter, history, setPage }) => {
     return (
         <div>
             {filters.data.map((item, key) => {
@@ -377,6 +407,8 @@ const Filters = ({ filters, filter, setfilter }) => {
                         size={'sm'}
                         onClick={() => {
                             setfilter(key)
+                            setPage(0)
+                            historyCorrect({ history: history, param: { name: 'fltr', value: key }, page: true })
                         }}
                         key={key}
                         color={`${(filter == key) ? 'primary' : ''}`}>
@@ -388,7 +420,7 @@ const Filters = ({ filters, filter, setfilter }) => {
     )
 }
 
-const InnerFilters = ({ filters, filter, setfilter }) => {
+const InnerFilters = ({ filters, filter, setfilter, history, setPage }) => {
     return (
         <div className='inner-filters mr-3'>
             {filters.data.map((item, key) => {
@@ -397,6 +429,8 @@ const InnerFilters = ({ filters, filter, setfilter }) => {
                         size={'sm'}
                         onClick={() => {
                             setfilter(key)
+                            setPage(0)
+                            historyCorrect({ history: history, param: { name: 'in_fltr', value: key }, page: true })
                         }}
                         key={key}
                         color={`${(filter == key) ? 'primary' : ''}`}>
@@ -406,4 +440,20 @@ const InnerFilters = ({ filters, filter, setfilter }) => {
             })}
         </div>
     )
+}
+
+const historyCorrect = ({ history, param, page = false }) => {
+    const path = []
+    let pathname = '?'
+    page ? path.push('page=0') : path.push(`page=${param.name === 'page' ? param.value : getParameterByName('page')}`)
+    path.push(`pagging=${param.name === 'pagging' ? param.value : getParameterByName('pagging')}`)
+    path.push(`fltr=${param.name === 'fltr' ? param.value : getParameterByName('fltr')}`)
+    path.push(`in_fltr=${param.name === 'in_fltr' ? param.value : getParameterByName('in_fltr')}`)
+    path.map((item, key) => {
+        let amp = key != path.length - 1 ? '&' : ''
+        if (!item.includes('null')) pathname = pathname + item + amp
+    })
+    history.push(history.location.pathname + pathname)
+
+    return pathname
 }

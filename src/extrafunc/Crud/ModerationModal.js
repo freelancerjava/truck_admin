@@ -7,7 +7,7 @@ import { strapi } from '../../axios';
 
 const ModerationModal = ({ history, id, mut_query }) => {
     const [modal, setmodal] = useState(false);
-    const [moderationData, setModerationData] = useState({ status: 'canceled_by_moderator', moderation_message: 'Why?', is_active: true });
+    const [moderationData, setModerationData] = useState({ status: 'canceled_by_moderator', moderation_message: '', is_active: true });
     const [moderateMut, moderateMutRes] = useMutation(mut_query, {
         onSuccess: () => {
             setmodal(false)
@@ -29,15 +29,15 @@ const ModerationModal = ({ history, id, mut_query }) => {
                 }}>Checking</Button>
                 <Button color={'warning'} onClick={() => {
                     onSubmit({ status: 'need_registration', moderation_message: null, is_active: true })
-                }}>Need Registration</Button>
+                }}>Need Registration</Button>                
+                <Button color={'orange'} onClick={() => {
+                    setModerationData({ status: 'canceled_by_moderator', moderation_message: '', is_active: true })
+                    setmodal(true)
+                }}>Reject</Button>
                 <Button color={'danger'} onClick={() => {
-                    setModerationData({ status: 'deactivated', moderation_message: 'Why?', is_active: false })
+                    setModerationData({ status: 'deactivated', moderation_message: '', is_active: false })
                     setmodal(true)
                 }}>Deactivate</Button>
-                <Button color={'orange'} onClick={() => {
-                    setModerationData({ status: 'canceled_by_moderator', moderation_message: 'Why?', is_active: false })
-                    setmodal(true)
-                }}>Cancel</Button>
             </div>
             <Modal isOpen={modal}>
                 <Form

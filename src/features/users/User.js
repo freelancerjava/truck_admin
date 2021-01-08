@@ -187,27 +187,27 @@ function User({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'Зарегистрирован',
-                key: 'isRegistered',
-                type: {
-                  name: 'checkbox'
-                }
-              },
-              {
-                name: 'Публичный',
-                key: 'public_id',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'Приватный',
-                key: 'private_id',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Зарегистрирован',
+              //   key: 'isRegistered',
+              //   type: {
+              //     name: 'checkbox'
+              //   }
+              // },
+              // {
+              //   name: 'Публичный',
+              //   key: 'public_id',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Приватный',
+              //   key: 'private_id',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
 
               {
                 name: 'Запись',
@@ -230,13 +230,13 @@ function User({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'Комиссия',
-                key: 'commission',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Комиссия',
+              //   key: 'commission',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Язык',
                 key: 'language',
@@ -258,34 +258,34 @@ function User({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'ИНН',
-                key: 'inn',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'Номер аккаунта',
-                key: 'account_number',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'МФО банк',
-                key: 'mfo_bank',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'НДС',
-                key: 'nds',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'ИНН',
+              //   key: 'inn',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Номер аккаунта',
+              //   key: 'account_number',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'МФО банк',
+              //   key: 'mfo_bank',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'НДС',
+              //   key: 'nds',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: 'Сфера',
                 key: 'realm',
@@ -301,14 +301,13 @@ function User({ history }) {
                   name_field: 'name'
                 }
               },
-
-              {
-                name: 'Подтвержден',
-                key: 'emailVerified',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Подтвержден',
+              //   key: 'emailVerified',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
             ]
           }
         />

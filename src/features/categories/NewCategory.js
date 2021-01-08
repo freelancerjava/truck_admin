@@ -57,6 +57,14 @@ export default function NewCategory() {
                     name: 'text'
                   }
                 },
+                {
+                  name: "Эмблема",
+                  key: 'icon',
+                  proptype: 'obj',
+                  type: {
+                    name: 'file'
+                  }
+                },
                 // {
                 //   name: "Эмблема",
                 //   key: 'icon',

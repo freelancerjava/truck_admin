@@ -1,6 +1,7 @@
 @import '../../styles/mixins';
 
 .acc_details{
+    padding: 8px;
     .header{
         display: flex;
         justify-content: space-between;
@@ -21,8 +22,8 @@
         border-radius: 5px;
         padding: 10px;
         img{
-            width: 120px;
-            height: 114px;
+            width: 60px;
+            height: 50px;
         }
     }
 
@@ -34,6 +35,9 @@
         flex-direction: column;
         width: 80%;
         padding: 10px 0;
+        .contact{
+            font-size: 11px;
+        }
     }
 
     .contact{

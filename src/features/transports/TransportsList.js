@@ -44,7 +44,8 @@ export default function TransportsList() {
             [
               {
                 name: "ID",
-                key: 'id'
+                key: 'id',
+                sort:'id'
               },
               {
                 name: "Ф.И.О. водителя",
@@ -52,26 +53,30 @@ export default function TransportsList() {
                   'driver.first_name',
                   'driver.second_name',
                   'driver.middle_name',
-                ]
+                ],
+                sort:'driverId'
               },
               {
                 name: "Марка",
                 keys: [
                   'make.name',
-                ]
+                ],
+                sort: 'makeId'
               },
               {
                 name: "Модель",
                 keys: [
                   'model.name',
-                ]
+                ],
+                sort: 'modelId'
               },
               {
                 name: "Категория авто",
                 keys: [
                   'category.name_ru',
                   'category.type'
-                ]
+                ],
+                sort: 'modelId'
               },
               // {
               //   name: "Государственный\nномер",
@@ -162,7 +167,8 @@ export default function TransportsList() {
               // },
               {
                 name: "Статус",
-                key: 'status'
+                key: 'status',
+                sort:'status'
               },
               // {
               //   name: "Год выпуска",

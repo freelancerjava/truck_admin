@@ -13,7 +13,7 @@ export default function TransactionsList() {
           cnt_query_fn={getCount}
           query_key={"transactions"}
           title={"Лист транзакций"}
-          add_link={"/admin/transactions/index/add"}
+          // add_link={"/admin/transactions/index/add"}
           // edit_link={"/admin/transactions/index/update"}
           query_filter={{ include: ['user', 'client', 'order'] }}
           filters={{
@@ -46,7 +46,7 @@ export default function TransactionsList() {
               },
               {
                 name: 'ID заказа',
-                key: 'order.id',
+                key: 'orderId',
                 type: {
                   name: 'text'
                 }

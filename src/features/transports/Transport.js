@@ -69,20 +69,20 @@ function Transport({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'Непромодерированный',
-                key: 'need_moderation',
-                type: {
-                  name: 'checkbox'
-                }
-              },
-              {
-                name: 'Сообщение о модерации',
-                key: 'moderateMessage',
-                type: {
-                  name: 'textarea',
-                }
-              },
+              // {
+              //   name: 'Непромодерированный',
+              //   key: 'need_moderation',
+              //   type: {
+              //     name: 'checkbox'
+              //   }
+              // },
+              // {
+              //   name: 'Сообщение о модерации',
+              //   key: 'moderateMessage',
+              //   type: {
+              //     name: 'textarea',
+              //   }
+              // },
               {
                 name: 'Transport 1',
                 key: 'attachment',
@@ -163,20 +163,20 @@ function Transport({ history }) {
                   uploader: TransportFileUploader
                 }
               },
-              {
-                name: 'Год проблемы',
-                key: 'year_of_issue',
-                type: {
-                  name: 'text'
-                }
-              },
-              {
-                name: 'Активный',
-                key: 'is_active',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Год проблемы',
+              //   key: 'year_of_issue',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
+              // {
+              //   name: 'Активный',
+              //   key: 'is_active',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: "Мин. цена",
                 key: 'min_price',
@@ -212,13 +212,13 @@ function Transport({ history }) {
                   name: 'text'
                 }
               },
-              {
-                name: 'Статус',
-                key: 'status',
-                type: {
-                  name: 'text'
-                }
-              },
+              // {
+              //   name: 'Статус',
+              //   key: 'status',
+              //   type: {
+              //     name: 'text'
+              //   }
+              // },
               {
                 name: "Мин. цена заказа",
                 key: 'min_order_price',

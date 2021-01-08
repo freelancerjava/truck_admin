@@ -88,7 +88,13 @@ function Category({ history }) {
                 key: 'parentId',
                 type: {
                   name: 'select',
-                  options: cats,
+                  options: cats.map(item => {
+                    const parent = item && item.parent && item.parent.name_ru || ''
+                    return {
+                      id: item.id,
+                      name_ru: item.name_ru + ' - ' + parent
+                    }
+                  }),
                   value_field: 'id',
                   name_field: 'name_ru'
                 }
@@ -98,7 +104,13 @@ function Category({ history }) {
                 key: 'rootCategoryId',
                 type: {
                   name: 'select',
-                  options: cats,
+                  options: cats.map(item => {
+                    const parent = item && item.parent && item.parent.name_ru || ''
+                    return {
+                      id: item.id,
+                      name_ru: item.name_ru + ' - ' + parent
+                    }
+                  }),
                   value_field: 'id',
                   name_field: 'name_ru'
                 }

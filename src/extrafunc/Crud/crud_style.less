@@ -1,33 +1,38 @@
-.form-control{
+.form-control {
     color: #081a3d !important;
     font-weight: 600;
     height: 30px !important;
     padding: 5px !important;
 }
 
-.table{
+.table {
     border: 1px solid #F2F2F2;
     border-radius: 7px !important;
 }
 
-.hoverable{
-    &:hover{
+.hoverable {
+    &:hover {
         cursor: pointer;
         // border: 1px solid #081a3d !important;
     }
 }
 
-.odd{
+.odd {
     background-color: #F6F6FA;
 }
 
-table.p-small{
-    tr, th, td, tbody, thead{
+table.p-small {
+
+    tr,
+    th,
+    td,
+    tbody,
+    thead {
         // padding: 3px !important;
     }
 }
 
-.file_prev{
+.file_prev {
     height: 100px;
     width: auto;
 }
@@ -47,12 +52,21 @@ table.p-small{
     margin: 0;
     width: 100% !important;
 }
-.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
+
+.files input:focus {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
- }
-.files{ position:relative}
-.files:after {  pointer-events: none;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    border: 1px solid #92b0b3;
+}
+
+.files {
+    position: relative
+}
+
+.files:after {
+    pointer-events: none;
     position: absolute;
     top: 60px;
     left: 0;
@@ -66,11 +80,16 @@ table.p-small{
     background-size: 100%;
     background-repeat: no-repeat;
 }
-.color input{ background-color:#f1f1f1;}
+
+.color input {
+    background-color: #f1f1f1;
+}
+
 .files:before {
     position: absolute;
     bottom: 10px;
-    left: 0;  pointer-events: none;
+    left: 0;
+    pointer-events: none;
     width: 100%;
     right: 0;
     height: 57px;
@@ -96,23 +115,26 @@ table.p-small{
     // border-color: #2D2E80 !important;
 }
 
-.nav-link.active{
+.nav-link.active {
     color: #2D2E80 !important;
 }
 
-.inner-filters{
+.inner-filters {
     display: flex;
     overflow: hidden;
     padding: 0;
     border-radius: 5px;
-    button{
+
+    button {
         margin: 0;
         border-radius: 0;
         box-shadow: none;
     }
+
     .btn:not(:last-child) {
         margin: 0;
     }
+
     .btn:last-child {
         margin: 0;
     }
@@ -124,10 +146,25 @@ table.p-small{
     border-radius: 5px !important;
 }
 
-.list-table{
-    td, th{
+.list-table {
+
+    td,
+    th {
         padding: 4px !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon{
+    background-color: #000000 !important;
+}
+
+.carousel-indicators .active {
+    background-color: rgb(4, 55, 112) !important;
+}
+
+.carousel-indicators li {
+    border: 1px solid rgb(4, 55, 112) !important;
 }

@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import CustomForm from '../../extrafunc/Crud/CustomForm';
 import { getCats } from '../categories/query';
 import { getTransports } from '../transports/query';
+import OrdersUploader from './uploaders/OrdersUploader';
 
 export default function NewOrder() {
   const catsdata = useQuery(['cats'], getCats)
@@ -50,6 +51,16 @@ export default function NewOrder() {
                 key: 'toAddress',
                 type: {
                   name: 'text'
+                }
+              },
+              {
+                name: 'Файлы',
+                key: 'attachments',
+                media: true,
+                type: {
+                  name: 'media',
+                  subType: 'media',
+                  uploader: OrdersUploader
                 }
               },
               {

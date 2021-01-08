@@ -7,17 +7,16 @@ import { CardTitle } from 'reactstrap';
 import './crud_style.less'
 import { withRouter } from 'react-router-dom';
 
-import { strapi, myAxios } from '../../axios';
+import { strapi, myAxios, user } from '../../axios';
 import { onFileUpload } from '../../axios/query';
 import ViewNav from '../../features/elements/ViewNav';
 import ModerationModal from './ModerationModal';
 import FileUploader from './FileUploader';
+import arrayMutators from 'final-form-arrays'
+
 
 
 const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav }) => {
-
-
-
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
@@ -34,7 +33,9 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
     })
 
     const [mutUpdate, mutUpdateRes] = useMutation(mut_update_fn, {
-        onSuccess: () => {
+        onSuccess: (data) => {
+            if (user.user.id == data.id)
+                localStorage.setItem('user', JSON.stringify(data))
             history.goBack()
         }
     })
@@ -119,6 +120,12 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
         <Card>
             <CardHeader className='d-flex justify-content-between align-items-center'>
                 <CardTitle tag='h5' className='mb-0'>
+                    <Button color='white' className='shadow-hover'
+                        onClick={() => {
+                            history.goBack()
+                        }}>
+                        <i className='fa fa-angle-left' />
+                    </Button>
                     {id == null ? 'Создание' : 'Редактирование'}
                     <ViewNav
                         title={title || ''}
@@ -136,64 +143,71 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
             <CardBody>
                 <Form
                     onSubmit={onSubmit}
+                    mutators={{
+                        ...arrayMutators
+                    }}
                     // validate={validate}
                     initialValues={data || {}}
-                    render={({ handleSubmit, submitError, values, form }) => (
-                        <form onSubmit={handleSubmit} className="form">
-                            {submitError && <div className="text-red text-center">{submitError}</div>}
-                            <Row>
-                                <Col lg='6'>
-                                    {/* {JSON.stringify(values)} */}
-                                    {fields.map((item, key) => {
-                                        return (
-                                            <FormGroup key={key} className="mb-3">
-                                                <Label for={`${item.key}_id`}>{item.name}</Label>
-                                                <InputGroup className="input-group-alternative">
-                                                    <CustomInput
-                                                        loading={loading}
-                                                        item={item}
-                                                        onFileChange={onFileChange}
-                                                        onFileUpload={onFileUpload1}
-                                                        values={values}
-                                                        selectedFile={selectedFile}
-                                                        fileUploadProgress={fileUploadProgress}
-                                                    />
-                                                </InputGroup>
-                                            </FormGroup>
-                                        )
-                                    })}
-                                </Col>
-                            </Row>
+                    render={({ handleSubmit, submitError, values, form, form: {
+                        mutators: { push, pop }
+                    } }) => (
+                            <form onSubmit={handleSubmit} className="form">
+                                {submitError && <div className="text-red text-center">{submitError}</div>}
+                                <Row>
+                                    <Col lg='6'>
+                                        {/* {JSON.stringify(values.attachments)} */}
+                                        {fields.map((item, key) => {
+                                            return (
+                                                <FormGroup key={key} className="mb-3">
+                                                    <Label for={`${item.key}_id`}>{item.name}</Label>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <CustomInput
+                                                            loading={loading}
+                                                            item={item}
+                                                            onFileChange={onFileChange}
+                                                            onFileUpload={onFileUpload1}
+                                                            values={values}
+                                                            selectedFile={selectedFile}
+                                                            fileUploadProgress={fileUploadProgress}
+                                                            push={push}
+                                                            pop={pop}
+                                                        />
+                                                    </InputGroup>
+                                                </FormGroup>
+                                            )
+                                        })}
+                                    </Col>
+                                </Row>
 
-                            <Row>
-                                <Col className="justify-content-center d-flex">
-                                    {loading ? <i className='fa fa-spinner fa-spin' /> :
-                                        <FormGroup>
-                                            <InputGroup>
-                                                <Button
-                                                    color="primary"
-                                                    size='sm'
-                                                    onClick={e => {
-                                                        e.preventDefault()
-                                                        form.reset()
-                                                    }}
-                                                >Сбросить</Button>
-                                                <Button
-                                                    color="primary"
-                                                    size='sm'
-                                                    onClick={e => {
-                                                        e.preventDefault()
-                                                        handleSubmit(values)
-                                                    }}
-                                                >
-                                                    {id == null ? 'Создать' : 'Обновить'}
-                                                </Button>
-                                            </InputGroup>
-                                        </FormGroup>}
-                                </Col>
-                            </Row>
-                        </form>
-                    )
+                                <Row>
+                                    <Col className="justify-content-center d-flex">
+                                        {loading ? <i className='fa fa-spinner fa-spin' /> :
+                                            <FormGroup>
+                                                <InputGroup>
+                                                    <Button
+                                                        color="primary"
+                                                        size='sm'
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            form.reset()
+                                                        }}
+                                                    >Сбросить</Button>
+                                                    <Button
+                                                        color="primary"
+                                                        size='sm'
+                                                        onClick={e => {
+                                                            e.preventDefault()
+                                                            handleSubmit(values)
+                                                        }}
+                                                    >
+                                                        {id == null ? 'Создать' : 'Обновить'}
+                                                    </Button>
+                                                </InputGroup>
+                                            </FormGroup>}
+                                    </Col>
+                                </Row>
+                            </form>
+                        )
                     } />
             </CardBody >
         </Card >
@@ -207,7 +221,7 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
 export default withRouter(CustomForm);
 
 
-const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, loading, fileUploadProgress }) => {
+const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, loading, fileUploadProgress, push, pop }) => {
     if (item.type.name === 'text') {
         return (<Field name={item.key}>
             {props => (
@@ -278,7 +292,7 @@ const CustomInput = ({ item, onFileChange, onFileUpload, values, selectedFile, l
             <div className='file-prev-cont w-100'>
                 <Field name={item.key}>
                     {props => (
-                        <item.type.uploader {...props} id={`${item.key}_id`} type={item.type.subType}/>
+                        <item.type.uploader {...props} id={`${item.key}_id`} type={item.type.subType} push={push} pop={pop} />
                     )}
                 </Field>
             </div>
