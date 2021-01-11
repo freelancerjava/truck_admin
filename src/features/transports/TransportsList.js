@@ -21,6 +21,7 @@ export default function TransportsList() {
           title={"Лист транспортов"}
           add_link={"/admin/transports/index/add"}
           edit_link={"/admin/transports/index/update"}
+          view_link={"/admin/transports/index/view"}
           query_filter={{ include: ['category', 'driver', 'make', 'model'] }}
           filters={{
             field: 'category.type',
@@ -37,6 +38,7 @@ export default function TransportsList() {
               { key: 2, name: 'Need registration', value: 'need_registration' },
               { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
               { key: 4, name: 'Deactivated', value: 'deactivated' },
+              { key: 4, name: 'All' },
             ]
           }}
           id={"id"}

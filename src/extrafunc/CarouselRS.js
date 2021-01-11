@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import 'react-image-lightbox/style.css';
+import './Carousel.scss';
+import Lightbox from 'react-image-lightbox';
 import {
   Carousel,
   CarouselItem,
@@ -25,9 +28,14 @@ const items = [
   }
 ];
 
+
+
 const CarouselRS = (props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [multiple, setmultiple] = useState(true);
+  console.log('asd',props.data);
+
 
   const next = () => {
     if (animating) return;
@@ -46,7 +54,7 @@ const CarouselRS = (props) => {
     setActiveIndex(newIndex);
   }
 
-  const slides = props.data.map((item,key) => {
+  const slides = props.data.map((item, key) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
@@ -60,17 +68,59 @@ const CarouselRS = (props) => {
   });
 
   return (
-    <Carousel
-      activeIndex={activeIndex}
-      next={next}
-      previous={previous}
-    >
-      <CarouselIndicators items={props.data} activeIndex={activeIndex} onClickHandler={goToIndex} />
-      {slides}
-      <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-      <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-    </Carousel>
+    <div className='w-100'>
+      <div className='d-flex justify-content-end mb-2'>
+        <i class="fa fa-border-all hoverable" onClick={() => setmultiple(true)}></i>
+        <i class="fa fa-border-style ml-2 hoverable" onClick={() => setmultiple(false)}></i>
+      </div>
+      {multiple ? <Images images={props.data.map((item, key) => {
+        return item.data.result
+      }) || []} />
+        : <Carousel
+          activeIndex={activeIndex}
+          next={next}
+          previous={previous}
+        >
+          <CarouselIndicators items={props.data} activeIndex={activeIndex} onClickHandler={goToIndex} />
+          {slides}
+          <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+          <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+        </Carousel>}
+    </div>
   );
+}
+
+const Images = ({ images }) => {
+  const [isopen, setisopen] = useState(false);
+  const [photoIndex, setphotoIndex] = useState(0);
+  return (<>
+    <div className='images'>
+      {images && images.map((item, key) => {
+        return (
+          <div className='image hoverable'>
+            <img src={item} alt={item} onClick={() => {
+              setisopen(true)
+              setphotoIndex(key)
+            }} />
+          </div>
+        )
+      })}
+
+    </div>
+    {isopen ? <Lightbox
+      mainSrc={images[photoIndex]}
+      nextSrc={images[(photoIndex + 1) % images.length]}
+      prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+      onCloseRequest={() => setisopen(false)}
+      onMovePrevRequest={() =>
+        setphotoIndex((photoIndex + images.length - 1) % images.length)
+      }
+      onMoveNextRequest={() =>
+        setphotoIndex((photoIndex + 1) % images.length)
+      }
+       /> : <></>}
+  </>
+  )
 }
 
 export default CarouselRS

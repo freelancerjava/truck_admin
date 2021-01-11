@@ -9,8 +9,9 @@ export const getTransports = async (key, { filter } = { filter: false }) => {
     return data
 };
 
-export const getTransport = async (key, { id }) => {
-    const data = await strapi.request('get', `transports/${id}?${token}`)
+export const getTransport = async (key, { id, filter}) => {
+    const path = filter != false ? `transports/${id}?${token}&filter=${filter}` : `transports/${id}?${token}`
+    const data = await strapi.request('get', path)
     return data
 };
 

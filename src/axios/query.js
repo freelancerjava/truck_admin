@@ -2,7 +2,7 @@ import strapi2, { strapi, user, setToken } from ".";
 
 // const token = user ? `access_token=${user.id}` : ''
 
-setToken(user.id)
+user && setToken(user.id)
 
 export const getMakes = async (key, { filter } = { filter: false }) => {
 

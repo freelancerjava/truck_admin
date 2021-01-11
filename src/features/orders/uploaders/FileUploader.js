@@ -47,7 +47,7 @@ const FileUploader = ({ id, type, value, onChange, ...props }) => {
                         }
                         } />
                     <img src={value && value.result
-                        || require('../../../assets/img/addFiles.png')}
+                        || require('../../../assets/img/tempfile.png')}
                         className='file_prev' />
                     {/* <Img
                         // src={['https://www.example.com/foo.jpg', 'https://www.example.com/bar.jpg']}
@@ -57,20 +57,21 @@ const FileUploader = ({ id, type, value, onChange, ...props }) => {
                     /> */}
                 </div>
             </label>
-            <p className='text-success'>{selectedFile ? selectedFile.name : 'Click to choose file'}</p>
             <Progress animated={fileUploadProgress < 100 ? true : false}
                 color="success"
                 value={fileUploadProgress}
                 className='w-75' />
             <Input hidden type='file' onChange={onFileChange} id={`${id}`} />
             {loading ? <i className='fa fa-spinner fa-spin' /> :
-                <Button
+                selectedFile ? <i
+                    className='fa fa-upload'
                     size='sm'
                     color={selectedFile ? 'info' : 'default'}
                     disabled={selectedFile ? false : true} onClick={(e) => {
                         e.preventDefault();
                         onFileUpload(value, onChange, selectedFile)
-                    }}>Upload</Button>
+                    }}/> : <label for={`${id}`}><i className='fa fa-plus'/></label>
+
             }
         </div>
     );

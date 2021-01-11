@@ -55,12 +55,14 @@ export default function OrdersList() {
                 keys: [
                   'creator.first_name',
                   'creator.second_name',
-                ]
+                ],
+                sort:'creatorId'
               },
               {
                 name: "Дата и время поступления",
                 key: 'createdAt',
-                datentime: true
+                datentime: true,
+                sort:'createdAt'
               },
               // {
               //   name: "Статус",
@@ -80,11 +82,13 @@ export default function OrdersList() {
               },
               {
                 name: "Тип авто",
-                key: 'category.rootCategory.name_ru'
+                key: 'category.rootCategory.name_ru',
+                sort:'categoryId'
               },
               {
                 name: "Тип кузова",
-                key: 'category.parent.name_ru'
+                key: 'category.parent.name_ru',
+                sort:'categoryId'
               },
               {
                 name: "Комментарий",
@@ -94,9 +98,10 @@ export default function OrdersList() {
                 name: "Водитель",
                 keys: [
                   'driver.first_name',
-                  'creator.second_name',
-                  'creator.middle_name',
-                ]
+                  'driver.second_name',
+                  'driver.middle_name',
+                ],
+                sort:'driverId'
               },
               {
                 name: "Дата и время заказа",
@@ -107,11 +112,10 @@ export default function OrdersList() {
                   'end_date'
                 ]
               },
-              
-              
               {
                 name: "Сумма",
-                key: 'total_price'
+                key: 'total_price',
+                sort:'total_price'
               },
             ]
           }

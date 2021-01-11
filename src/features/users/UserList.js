@@ -35,7 +35,7 @@ export default function UserList() {
               { key: 2, name: 'Need registration', value: 'need_registration' },
               { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
               { key: 4, name: 'Deactivated', value: 'deactivated' },
-              { key: 5, name: 'All', value: null },
+              { key: 5, name: 'All' },
             ]
           }}
           id={"id"}

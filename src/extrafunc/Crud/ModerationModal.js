@@ -21,20 +21,20 @@ const ModerationModal = ({ history, id, mut_query }) => {
     return (
         <>
             <div>
-                <Button color={'success'} onClick={() => {
+                <Button size='sm' color={'success'} onClick={() => {
                     onSubmit({ status: 'active', moderation_message: null, is_active: true })
                 }}>Activate</Button>
-                <Button color={'info'} onClick={() => {
+                <Button size='sm' color={'info'} onClick={() => {
                     onSubmit({ status: 'checking', moderation_message: null, is_active: true })
                 }}>Checking</Button>
-                <Button color={'warning'} onClick={() => {
+                <Button size='sm' color={'warning'} onClick={() => {
                     onSubmit({ status: 'need_registration', moderation_message: null, is_active: true })
                 }}>Need Registration</Button>                
-                <Button color={'orange'} onClick={() => {
+                <Button size='sm' color={'orange'} onClick={() => {
                     setModerationData({ status: 'canceled_by_moderator', moderation_message: '', is_active: true })
                     setmodal(true)
                 }}>Reject</Button>
-                <Button color={'danger'} onClick={() => {
+                <Button size='sm' color={'danger'} onClick={() => {
                     setModerationData({ status: 'deactivated', moderation_message: '', is_active: false })
                     setmodal(true)
                 }}>Deactivate</Button>

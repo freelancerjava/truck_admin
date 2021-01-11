@@ -121,7 +121,7 @@ function AdminNavbar({ brandText, toggleMini }) {
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      {console.log(user)}
+                      {/* {console.log(user)} */}
                       <img
                         alt="..."
                         src={user && user.user.attachments && user.user.attachments.main && user.user.attachments.main.result

@@ -26,6 +26,7 @@ import { Link, withRouter, useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 import moment from 'moment'
+import { Checkbox } from '@buffetjs/core';
 import { getParameterByName } from '..';
 
 const ListTable = ({ router, history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
@@ -97,7 +98,12 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
         let cancel = false
         if (!cancel) {
             if (querydata.data) {
-                setData(querydata.data)
+                setData(querydata.data.map((item, key) => {
+                    return {
+                        ...item,
+                        check: false
+                    }
+                }))
             } else {
                 setData([])
             }
@@ -109,6 +115,29 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
             cancel = true
         }
     }, [querydata.data, countdata.data])
+
+    /** Checkboxes **/
+
+    const areAllCheckboxesSelected = data.map(
+        key => key.check === true
+    );
+
+    const hasSomeCheckboxesSelected = data.some(
+        key => key.check === true
+    );
+
+    const handleChange = () => {
+        const valueToSet = !areAllCheckboxesSelected;
+
+        setData(prevState => {
+            return data.reduce((acc, current) => {
+                acc[current] = valueToSet;
+                return acc;
+            }, {});
+        });
+    };
+
+    /** Checkboxes **/
 
     return (
         <div className='list-table'>
@@ -158,7 +187,13 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                             <Table className="align-items-center table-flush p-small" responsive>
                                 <thead className="">
                                     <tr>
-                                        <th><input type='checkbox' /></th>
+                                        <th>
+                                            <Checkbox
+                                                // onChange={data && handleChange}
+                                                // someChecked={data && hasSomeCheckboxesSelected && !areAllCheckboxesSelected}
+                                                // value={data && areAllCheckboxesSelected}
+                                            />
+                                        </th>
                                         {headers.map((item, key) => {
                                             return (
                                                 item.excludeFilter && item.excludeFilter.includes(filter) ?

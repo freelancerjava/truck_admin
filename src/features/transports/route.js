@@ -7,6 +7,7 @@ import { Layout } from '../categories';
 import TransportsList from './TransportsList';
 import Transport from './Transport';
 import NewTransport from './NewTransport';
+import ViewTransport from './ViewTransport';
 
 export default {
   path: 'transports',
@@ -14,6 +15,7 @@ export default {
   childRoutes: [
     { path: "index", component: TransportsList, isIndex: true, name: "Автопарк", icon: "fa fa-truck" },
     { path: "index/update/:id", component: Transport, name: "Редактирование транспорта", icon: "fa fa-truck", inner: true },
+    { path: "index/view/:id", component: ViewTransport, name: "Редактирование транспорта", icon: "fa fa-truck", inner: true },
     { path: "index/add", component: NewTransport, name: "Создание транспорта", icon: "fa fa-truck", inner: true },
   ],
 };

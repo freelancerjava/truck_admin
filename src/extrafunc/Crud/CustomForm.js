@@ -13,10 +13,11 @@ import ViewNav from '../../features/elements/ViewNav';
 import ModerationModal from './ModerationModal';
 import FileUploader from './FileUploader';
 import arrayMutators from 'final-form-arrays'
+import ReactImgCrop from '../ReactImgCrop';
 
 
 
-const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav }) => {
+const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav, array_fields }) => {
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
@@ -120,7 +121,7 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
         <Card>
             <CardHeader className='d-flex justify-content-between align-items-center'>
                 <CardTitle tag='h5' className='mb-0'>
-                    <Button color='white' className='shadow-hover'
+                    <Button color='white' className='shadow-hover' size='sm'
                         onClick={() => {
                             history.goBack()
                         }}>
@@ -153,31 +154,67 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
                     } }) => (
                             <form onSubmit={handleSubmit} className="form">
                                 {submitError && <div className="text-red text-center">{submitError}</div>}
-                                <Row>
-                                    <Col lg='6'>
-                                        {/* {JSON.stringify(values.attachments)} */}
-                                        {fields.map((item, key) => {
-                                            return (
-                                                <FormGroup key={key} className="mb-3">
-                                                    <Label for={`${item.key}_id`}>{item.name}</Label>
-                                                    <InputGroup className="input-group-alternative">
-                                                        <CustomInput
-                                                            loading={loading}
-                                                            item={item}
-                                                            onFileChange={onFileChange}
-                                                            onFileUpload={onFileUpload1}
-                                                            values={values}
-                                                            selectedFile={selectedFile}
-                                                            fileUploadProgress={fileUploadProgress}
-                                                            push={push}
-                                                            pop={pop}
-                                                        />
-                                                    </InputGroup>
-                                                </FormGroup>
-                                            )
-                                        })}
-                                    </Col>
-                                </Row>
+                                {array_fields ? <>
+                                {/* {console.log(fields)} */}
+                                
+                                    {fields.map((rows, key) => {
+                                        return (<Row>
+                                            {
+                                                rows.map((cols, key) => {
+                                                    return (<Col>
+                                                        {
+                                                            cols.map((inner_fields, key) => {
+                                                                return (
+                                                                    <FormGroup key={key} className="mb-3">
+                                                                        <Label for={`${inner_fields.key}_id`}>{inner_fields.name}</Label>
+                                                                        <InputGroup className="input-group-alternative">
+                                                                            <CustomInput
+                                                                                loading={loading}
+                                                                                item={inner_fields}
+                                                                                onFileChange={onFileChange}
+                                                                                onFileUpload={onFileUpload1}
+                                                                                values={values}
+                                                                                selectedFile={selectedFile}
+                                                                                fileUploadProgress={fileUploadProgress}
+                                                                                push={push}
+                                                                                pop={pop}
+                                                                            />
+                                                                        </InputGroup>
+                                                                    </FormGroup>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Col>)
+                                                })
+                                            }
+                                        </Row>)
+                                    })}
+                                </>
+                                    : <Row>
+                                        <Col lg='6'>
+                                            {/* {JSON.stringify(values.attachments)} */}
+                                            {fields.map((item, key) => {
+                                                return (
+                                                    <FormGroup key={key} className="mb-3">
+                                                        <Label for={`${item.key}_id`}>{item.name}</Label>
+                                                        <InputGroup className="input-group-alternative">
+                                                            <CustomInput
+                                                                loading={loading}
+                                                                item={item}
+                                                                onFileChange={onFileChange}
+                                                                onFileUpload={onFileUpload1}
+                                                                values={values}
+                                                                selectedFile={selectedFile}
+                                                                fileUploadProgress={fileUploadProgress}
+                                                                push={push}
+                                                                pop={pop}
+                                                            />
+                                                        </InputGroup>
+                                                    </FormGroup>
+                                                )
+                                            })}
+                                        </Col>
+                                    </Row>}
 
                                 <Row>
                                     <Col className="justify-content-center d-flex">
@@ -210,6 +247,9 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
                         )
                     } />
             </CardBody >
+            <CardFooter>
+                {/* <ReactImgCrop/> */}
+            </CardFooter>
         </Card >
     );
 

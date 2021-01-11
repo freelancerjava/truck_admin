@@ -26,10 +26,12 @@ export default function Dashboard() {
           Карта новых заказов
           </CardTitle>
         <CardBody>
-          <Map markers={useOrdersGeo('on_the_way').map(item=>{return {
-            label: item.fromAddress,
-            position: item.fromCoordinates
-          }}) || []} />
+          <Map markers={
+          //   useOrdersGeo('on_the_way').map(item=>{return {
+          //   label: item.fromAddress,
+          //   position: item.fromCoordinates
+          // }}) ||
+           []} />
         </CardBody>
       </Card>
     </>
