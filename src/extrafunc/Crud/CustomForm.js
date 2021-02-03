@@ -67,9 +67,6 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
             selectedFile,
             // selectedFile.name
         );
-        // console.log(selectedFile);
-        // console.log(values);
-        // console.log(field);
         const token = JSON.parse(localStorage.getItem('user')).id
         const data = await myAxios.post(`admins/file?access_token=${token}&folder=upload`, formData,
             {
@@ -101,15 +98,10 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
                 }
             }
         })
-        // temp.date = moment().format("YYYY-MM-DD")
-        // // temp.user = user.id
-        // temp.command = user.command.id
-        // // temp.file = 1
 
         if (data == null) mutCreate({ body: temp }); else
             mutUpdate({ id: id, body: temp })
         // console.log(temp);
-        // repMutRes.onSuccess(repdata.refetch())
     }
 
     const onFileChange = event => {

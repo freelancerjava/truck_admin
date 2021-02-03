@@ -171,21 +171,36 @@ export default function NewUser() {
             // },              
             [
               [
+                // {
+                //   name: 'Роль',
+                //   key: 'role',
+                //   type: {
+                //     name: 'text'
+                //   }
+                // },
+                // {
+                //   name: 'Статус',
+                //   key: 'status',
+                //   type: {
+                //     name: 'select',
+                //     options: [
+                //       { key: 0, name: 'Активный', value: 'active' },
+                //       { key: 1, name: 'Деактивированный', value: 'inactive' }
+                //     ],
+                //     value_field: 'value',
+                //     name_field: 'name'
+                //   }
+                // },
                 {
-                  name: 'Роль',
-                  key: 'role',
-                  type: {
-                    name: 'text'
-                  }
-                },
-                {
-                  name: 'Статус',
-                  key: 'status',
+                  name: 'Сфера',
+                  key: 'realm',
                   type: {
                     name: 'select',
                     options: [
-                      { key: 0, name: 'Активный', value: 'active' },
-                      { key: 1, name: 'Деактивированный', value: 'inactive' }
+                      { key: 0, name: 'Заказчики', value: 'client' },
+                      { key: 1, name: 'Исполнители', value: 'driver' },
+                      { key: 2, name: 'Партнеры', value: null },
+                      { key: 3, name: 'Сотрудники', value: 'default' },
                     ],
                     value_field: 'value',
                     name_field: 'name'
@@ -313,21 +328,21 @@ export default function NewUser() {
                 //     name: 'text'
                 //   }
                 // },
-                {
-                  name: 'Сфера',
-                  key: 'realm',
-                  type: {
-                    name: 'select',
-                    options: [
-                      { key: 0, name: 'Заказчики', value: 'client' },
-                      { key: 1, name: 'Исполнители', value: 'driver' },
-                      { key: 2, name: 'Партнеры', value: null },
-                      { key: 3, name: 'Сотрудники', value: 'default' },
-                    ],
-                    value_field: 'value',
-                    name_field: 'name'
-                  }
-                },
+                // {
+                //   name: 'Сфера',
+                //   key: 'realm',
+                //   type: {
+                //     name: 'select',
+                //     options: [
+                //       { key: 0, name: 'Заказчики', value: 'client' },
+                //       { key: 1, name: 'Исполнители', value: 'driver' },
+                //       { key: 2, name: 'Партнеры', value: null },
+                //       { key: 3, name: 'Сотрудники', value: 'default' },
+                //     ],
+                //     value_field: 'value',
+                //     name_field: 'name'
+                //   }
+                // },
 
                 // {
                 //   name: 'Подтвержден',

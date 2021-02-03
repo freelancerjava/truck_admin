@@ -7,9 +7,13 @@ const TransportFileUploader = ({id, type, ...props}) => {
     const [selectedFile, setSelectedFile] = useState(null)
     const [fileUploadProgress, setFileUploadProgress] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [upImg, setUpImg] = useState();
 
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
+        const reader = new FileReader();
+        reader.addEventListener('load', () => setUpImg(reader.result));
+        reader.readAsDataURL(event.target.files[0]);
         setFileUploadProgress(0)
     };
 
@@ -43,19 +47,21 @@ const TransportFileUploader = ({id, type, ...props}) => {
             <label for={`${type}`}>
                 <img src={props.input.value[type]
                     && props.input.value[type]['result']
+                    || upImg
                     || require('../../../assets/img/tempfile.png')}
                     className='file_prev' />
             </label>
-            <p className='text-success'>{selectedFile ? selectedFile.name : 'Выберите файл'}</p>
+            {/* <p className='text-success'>{selectedFile ? selectedFile.name : 'Выберите файл'}</p> */}
             <Progress value={fileUploadProgress} className='w-75' />
             <Input hidden type='file' onChange={onFileChange} id={`${type}`} />
             {loading ? <i className='fa fa-spinner fa-spin' /> :
                 <Button
+                    size='sm'
                     color={selectedFile ? 'info' : 'defautl'}
                     disabled={selectedFile ? false : true} onClick={(e) => {
                         e.preventDefault();
                         onFileUpload(props.input.value, props.input.onChange, selectedFile)
-                    }}>Загрузить</Button>
+                    }}><i className='fa fa-upload'/></Button>
             }
         </div>
     );

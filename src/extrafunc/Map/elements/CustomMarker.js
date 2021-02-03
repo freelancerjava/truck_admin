@@ -6,7 +6,7 @@ import moment from 'moment';
 import upArr from '../icons/up-arrow.svg';
 import location from '../icons/up-arrow2.svg';
 
-export const CustomMarker = ({ iconDeg, label, position, index, age, speed }) => {
+export const CustomMarker = ({ iconDeg, label, position, index, age, speed, draggable, iconpin }) => {
    const user = JSON.parse(localStorage.getItem('user'));
    const [counter, setCounter] = useState(1);
    const [open, setopen] = useState(true);
@@ -45,11 +45,12 @@ export const CustomMarker = ({ iconDeg, label, position, index, age, speed }) =>
    return (
       <span ref={iconRef}>
          <Marker
+            draggable={draggable}
             onClick={() => setopen(!open)}
             icon={{
-               anchor: { x: 15, y: 15 },
-               url: speed > 0 ? upArr : location,
-               scaledSize: { width: 30, height: 30 },
+               anchor: { x: 16, y: 49 },
+               url: iconpin ? iconpin : location,
+               // scaledSize: { width: 30, height: 30 },
                origin: { x: .5, y: .5 },
             }}
             position={position}

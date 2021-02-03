@@ -14,8 +14,9 @@ export default function UserList() {
           cnt_query_fn={getCount}
           query_key={"users"}
           title={"Лист пользователей"}
-          add_link={"/admin/users/index/add"}
-          edit_link={"/admin/users/index/update"}
+          add_link={"/admin/users/add"}
+          edit_link={"/admin/users/update"}
+          view_link={"/admin/users/view"}
           query_filter={{ include: [] }}
           filters={{
             field: 'realm',

@@ -22,8 +22,8 @@ export default function CategoryList() {
           query_fn={getCats}
           query_key={"cats"}
           title={"Лист категорий"}
-          add_link={"/admin/categories/index/add"}
-          edit_link={"/admin/categories/index/update"}
+          add_link={"/admin/categories/add"}
+          edit_link={"/admin/categories/update"}
           query_filter={{ include: ['parent', 'rootCategory'] }}
           id={"id"}
           headers={
@@ -47,7 +47,7 @@ export default function CategoryList() {
               },
               {
                 name: "Описание",
-                key: 'description'
+                key: 'description_ru'
               },
               {
                 name: "Родительская\nкатегория",

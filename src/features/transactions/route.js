@@ -7,13 +7,17 @@ import {
   Transaction,
   NewTransaction
 } from './';
+import { PageNotFound } from '../common';
+import TransactionView from './TransactionView';
 
 export default {
   path: 'transactions',
   component: Layout,
   childRoutes: [
-    { path: "index", component: TransactionsList, isIndex: true, name: "Транзакции", icon: "fa fa-credit-card" },
-    { path: "index/update/:id", component: Transaction, name: "Редактирование Транзакции", icon: "fa fa-credit-card", inner: true },
-    { path: "index/add", component: NewTransaction, name: "Создание Транзакции", icon: "fa fa-credit-card", inner: true },
+    { path: "", component: TransactionsList, name: "Транзакции", icon: "fa fa-credit-card" },
+    { path: "update/:id", component: Transaction, name: "Редактирование Транзакции", icon: "fa fa-credit-card", inner: true },
+    { path: "view/:id", component: TransactionView, name: "Редактирование Транзакции", icon: "fa fa-credit-card", inner: true },
+    { path: "add", component: NewTransaction, name: "Создание Транзакции", icon: "fa fa-credit-card", inner: true },
+    { path: '*', name: 'Page not found', component: PageNotFound, inner: true },
   ],
 };

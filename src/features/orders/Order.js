@@ -88,7 +88,8 @@ function Order({ history }) {
                         { key: 1, name: 'Принятые', value: 'arrived' },
                         { key: 2, name: 'Выполняются', value: 'on_the_way' },
                         { key: 3, name: 'Завершенные', value: 'completed' },
-                        { key: 4, name: 'Отмененные', value: 'closed' },
+                        { key: 4, name: 'Закрытые', value: 'closed' },
+                        { key: 5, name: 'Отмененные', value: 'canceled' },
                       ],
                       value_field: 'value',
                       name_field: 'name'
@@ -128,7 +129,19 @@ function Order({ history }) {
                     name: 'Тип',
                     key: 'type',
                     type: {
-                      name: 'text'
+                      name: 'select',
+                      options: [
+                        {
+                          value: 'cargo',
+                          name: 'Грузоперевозки'
+                        },
+                        {
+                          value: 'rent',
+                          name: 'Аренда'
+                        }
+                      ],
+                      value_field: 'value',
+                      name_field: 'name'
                     }
                   },
                 ],

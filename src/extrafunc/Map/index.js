@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import mapStyle from './map.json';
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 
@@ -10,10 +10,10 @@ const MapWrapper = withScriptjs(withGoogleMap(props => {
    const mapRef = useRef(null);
    useEffect(() => {
       let mapRender = +localStorage.getItem('mapRender') || 0;
-      if(mapRender === 0) {
+      if (mapRender === 0) {
          let map = mapRef.current;
          const bounds = new window.google.maps.LatLngBounds();
-         if(props.markers.length > 1) {
+         if (props.markers.length > 1) {
             props.markers.forEach(place => {
                bounds.extend(place.position);
             });
@@ -21,39 +21,43 @@ const MapWrapper = withScriptjs(withGoogleMap(props => {
          } else {
             const defaultCenter = { lat: 40.748817, lng: -73.985428 }
             const center = props.markers[0] ? props.markers[0].position : defaultCenter;
-            for(let i=0; i<100; i++) {
+            for (let i = 0; i < 100; i++) {
                bounds.extend(randomGeo(center, 500));
             }
             map.fitBounds(bounds);
          }
-         localStorage.setItem('mapRender', mapRender+1);
+         localStorage.setItem('mapRender', mapRender + 1);
       }
    }, [props.markers]);
 
    return (
       <GoogleMap {...props}
          ref={mapRef}
-         defaultZoom={5}
+         defaultZoom={13}
          defaultCenter={{ lat: 40.748817, lng: -73.985428 }}>
          {props.markers.length > 0 && props.markers.map((mar, i) => (
-            <CustomMarker 
+            <CustomMarker
+               iconpin={mar.icon}
+               draggable={props.draggable}
                index={i}
                key={i}
                age={mar.age}
                speed={mar.speed}
-               iconDeg={mar.iconDeg} 
+               iconDeg={mar.iconDeg}
                position={mar.position}
                label={mar.label} />
-         )) }
+         ))}
       </GoogleMap>
    )
 }));
 
 export const Map = (props) => {
+   const api_key = process.env.REACT_APP_MAP_API_KEY
    return (
       <MapWrapper
+         draggable={props.draggable}
          markers={props.markers}
-         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1B5r4XRhhqx05ZTcVmqOPoM-MyLMUu2Q"
+         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${api_key}`}
          loadingElement={<div style={{ height: `100%` }} />}
          containerElement={
             <div

@@ -42,22 +42,19 @@ export const delOrder = async ({ id }) => {
 };
 
 export const getCount = async (key, { where } = { where: {} }) => {
-  const data = await strapi.request('get', `orders/count?${token}&where=${where}`)
+  const path = where ? `orders/count?${token}&where=${where}` : `orders/count?${token}`
+  const data = await strapi.request('get', path )
   // const data = await strapi.request('get', `orders/count`)
   return data
 };
 
 
-export const useOrders = (status) => {
-  const { isLoading, error, data, isFetching } = useQuery(['ordersbytype', status], async () => {
-    const data = await strapi.request('get', `orders/count?${token}&where=${JSON.stringify({ status: status })}`)
+export const useOrders = (filter) => {
+  const data = useQuery(['ordersbytype'+filter.status], async () => {
+    const data = await strapi.request('get', `orders/count?${token}&where=${JSON.stringify(filter)}`)
     return data
   })
-
-  // console.log(data);
-  
-
-  return data 
+  return data.data && data.data.count || 0
 }
 
 export const useOrdersGeo = (status) => {
@@ -66,4 +63,38 @@ export const useOrdersGeo = (status) => {
     return data
   })
   return data.data && data.data || []
+}
+
+export const useActiveOrders = (filter) => {
+  const data = useQuery(['ordersgeo'], async () => {
+    const data = await strapi.request('get', `orders?${token}&filter=${JSON.stringify(filter)}`)
+    return data
+  })
+  return data.data && data.data || []
+}
+
+export const getMainTransaction = async (key, { id, filter }) => {
+  const path = filter ? `mains/transaction/${id}?${token}&filter=${filter}` : `mains/transaction/${id}?${token}`
+  const data = await strapi.request('get', path)
+  return data
+};
+
+
+export const searchLocation = async (input) => {
+  const KEY = process.env.REACT_APP_MAP_API_KEY || 'AIzaSyC1OC2iyKiTe7GiBv0-z-WtZIaMWGJ6NSA';
+  const country = 'us';
+  const cors = 'https://fork.uz';
+  const googleUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&components=country:${country}&key=${KEY}`;
+
+  let predictions = [];
+
+  const { data } = await strapi.request('get', googleUrl);
+
+  if (data.status === 'OK') {
+     predictions = data.predictions.map(el => ({
+        value: el.description, label: el.description
+     }))
+  }
+
+  return predictions
 }

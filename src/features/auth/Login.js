@@ -39,7 +39,7 @@ export default withRouter(function Login({ history }) {
       if (!window.location.origin.includes('localhost')) {
         // await notifyMut();
       }
-      window.location = '/admin/index'
+      window.location = '/admin/dashboard'
     }
     if (res == null || res.id == null) {
       console.log(res, "flag")

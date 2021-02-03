@@ -5,6 +5,7 @@
         align-items: center;
         flex-wrap: wrap;
         width: 100%;
+        overflow-y: auto;
 
         .image {
             border-radius: 10px;
@@ -13,11 +14,24 @@
             height: 80px;
             width: 80px;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
 
             img {
-                width: 100% !important;
-                height: 100% !important;
+                min-width: 80px;
+                min-height: 80px;
             }
         }
+    }
+}
+
+img.hoverable{
+    transition: ease 0.4s ;
+    &:hover{
+        opacity: 0.8;
+        transform: scale(1.1);
+        transition: ease 0.4s ;
     }
 }

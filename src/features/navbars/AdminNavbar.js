@@ -21,12 +21,13 @@ import {
 } from "reactstrap";
 import { NotificationSVG } from '../../extrafunc/svg';
 import { user } from '../../axios';
+import SearchBar from './SearchBar';
 
 
 function AdminNavbar({ brandText, toggleMini }) {
   return (
     <>
-      <Navbar className="navbar-top navbar-light bg-white header p-2" expand="md" id="navbar-main">
+      <Navbar className="navbar-top  navbar-light bg-white header p-2" fixed expand="md" id="navbar-main">
 
         <Container fluid>
           {/* <Link
@@ -51,7 +52,7 @@ function AdminNavbar({ brandText, toggleMini }) {
                       <i className="fas fa-search " />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Поиск" type="text" />
+                  <SearchBar/>
                 </InputGroup>
               </FormGroup>
             </Form>
@@ -66,15 +67,15 @@ function AdminNavbar({ brandText, toggleMini }) {
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem to="/admin/users/index/add" tag={Link}>
+                  <DropdownItem to="/admin/users/add" tag={Link}>
                     <i className="fa fa-user" />
                     <span>Пользователя</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/transports/index/add" tag={Link}>
+                  <DropdownItem to="/admin/transports/add" tag={Link}>
                     <i className="fa fa-truck" />
                     <span>Транспорт</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/orders/index/add" tag={Link}>
+                  <DropdownItem to="/admin/orders/add" tag={Link}>
                     <i className="ni ni-calendar-grid-58" />
                     <span>Заказ</span>
                   </DropdownItem>

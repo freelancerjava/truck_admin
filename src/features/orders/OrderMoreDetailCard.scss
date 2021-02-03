@@ -2,4 +2,15 @@
 
 .orders-order-more-detail-card {
 
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 2px 5px;
+        font-size: 10px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+
 }

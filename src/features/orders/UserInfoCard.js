@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import ImageShow from '../../extrafunc/ImageShow';
 // import PropTypes from 'prop-types';
 
 export default function UserInfoCard({ title, accLink, accData = {} }) {
@@ -17,15 +18,19 @@ export default function UserInfoCard({ title, accLink, accData = {} }) {
         </div>
         <div className='body'>
           <div className='img'>
-            <img src={accData.attachments
+            {/* <img src={accData.attachments
               && accData.attachments.main
               && accData.attachments.main.result
-              || require('../../assets/img/acc_img.png')} />
+              || require('../../assets/img/acc_img.png')} /> */}
+              <ImageShow image={{url:accData.attachments
+              && accData.attachments.main
+              && accData.attachments.main.result
+              || require('../../assets/img/acc_img.png')}}/>
           </div>
           <div className='details'>
             <div className='name text-dark font-weight-bold'>
               {accData.first_name || 'Константин'}
-              {accData.second_name || 'Константинопольский · ID 9541'}
+              {accData.second_name || 'Константинопольский'}
               {` · ID ${accData.id || '9541'}`}
             </div>
             <div className='legacy text-muted small'>Физическое лицо</div>

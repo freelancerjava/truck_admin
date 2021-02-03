@@ -32,8 +32,15 @@ export const addTransaction = async ({ body }) => {
 
 
 export const getCount = async (key, { where }) => {
-    const path = where ? `transactions/count?${token}&where=${where}` : `transactions/count?${token}` 
+    const path = where ? `transactions/count?${token}&where=${where}` : `transactions/count?${token}`
     const data = await strapi.request('get', path)
     // const data = await strapi.request('get', `transactions/count?${token}`)
     return data
 };
+
+export const getTransactionData = async (key, { id, filter = {} }) => {
+    const path = filter != false ? `transactions/${id}?${token}&filter=${filter}` : `transactions/${id}?${token}`
+    const data = await strapi.request('get', path)
+    return data
+};
+

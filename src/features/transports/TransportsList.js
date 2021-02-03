@@ -19,10 +19,10 @@ export default function TransportsList() {
           query_fn={getTransports}
           query_key={"transports"}
           title={"Лист транспортов"}
-          add_link={"/admin/transports/index/add"}
-          edit_link={"/admin/transports/index/update"}
-          view_link={"/admin/transports/index/view"}
-          query_filter={{ include: ['category', 'driver', 'make', 'model'] }}
+          add_link={"/admin/transports/add"}
+          edit_link={"/admin/transports/update"}
+          view_link={"/admin/transports/view"}
+          query_filter={{ include: [{category:['parent']}, 'driver', 'make', 'model'] }}
           filters={{
             field: 'category.type',
             data: [
@@ -78,7 +78,15 @@ export default function TransportsList() {
                   'category.name_ru',
                   'category.type'
                 ],
-                sort: 'modelId'
+                sort: 'categoryId'
+              },
+              {
+                name: "Подкатегория авто",
+                keys: [
+                  'category.parent.name_ru',
+                  'category.parent.type'
+                ],
+                sort: 'categoryId'
               },
               // {
               //   name: "Государственный\nномер",
@@ -167,6 +175,12 @@ export default function TransportsList() {
               //   name: "Мин. время",
               //   key: 'min_hour'
               // },
+              {
+                name:'Дата добавления',
+                key:'createdAt',
+                sort:'createdAt',
+                datentime: true
+              },
               {
                 name: "Статус",
                 key: 'status',

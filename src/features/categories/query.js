@@ -3,7 +3,7 @@ import { strapi, user } from "../../axios";
 const token = user ? `access_token=${user.id}` : ''
 
 
-export const getCats = async (key,{filter}={filter:JSON.stringify({include:['parent']})}) => {    
+export const getCats = async (key,{filter}={filter:JSON.stringify({include:[{parent:['parent']}]})}) => {    
     const path = filter != false ? `categories?${token}&filter=${filter}` : `categories?${token}` 
     const data = await strapi.request('get', path)
     return data

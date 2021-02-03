@@ -52,14 +52,14 @@ export default function Layout({ history, children }) {
           imgAlt: "...",
         }}
       />
-      <div className={`main-content ${mini ? 'big-content' : ''}`} ref={(el) => (mainRef.current = el)}>
+      <div className={`main-content  ${mini ? 'big-content' : ''}`} ref={(el) => (mainRef.current = el)}>
         <AdminNavbar
           toggleMini={toggleMini}
           // {...this.props}
           brandText={getBrandText(history.location.pathname)}
         />
         {/* <Header /> */}
-        <Container className={'pt-7 pb-3'} fluid>
+        <Container className={'pt-7 pb-3 '} fluid>
           {children}
         </Container>
       </div>

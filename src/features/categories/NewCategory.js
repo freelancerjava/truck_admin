@@ -25,6 +25,11 @@ export default function NewCategory() {
     <Row>
       <Col>
         <CustomForm
+          title={'Новая категория'}
+          parentNav={{
+            url: '/admin/categories',
+            title: 'Категории'
+          }}
           mut_create_fn={addCat}
           query_key={'newcat'}
           array_fields={true}
@@ -56,6 +61,36 @@ export default function NewCategory() {
                   {
                     name: "Наименование hr",
                     key: 'name_hr',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                ],
+                [
+                  {
+                    name: "Описание uz",
+                    key: 'description_uz',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание ru",
+                    key: 'description_ru',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание en",
+                    key: 'description_en',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание hr",
+                    key: 'description_hr',
                     type: {
                       name: 'text'
                     }

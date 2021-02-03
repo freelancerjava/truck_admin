@@ -30,11 +30,11 @@ const items = [
 
 
 
-const CarouselRS = (props) => {
+const CarouselRS = ({ show_type = true, ...props }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const [multiple, setmultiple] = useState(true);
-  console.log('asd',props.data);
+  const [multiple, setmultiple] = useState(false);
+  console.log('asd', props.data);
 
 
   const next = () => {
@@ -69,10 +69,10 @@ const CarouselRS = (props) => {
 
   return (
     <div className='w-100'>
-      <div className='d-flex justify-content-end mb-2'>
+      {show_type && <div className='d-flex justify-content-end mb-2'>
         <i class="fa fa-border-all hoverable" onClick={() => setmultiple(true)}></i>
         <i class="fa fa-border-style ml-2 hoverable" onClick={() => setmultiple(false)}></i>
-      </div>
+      </div>}
       {multiple ? <Images images={props.data.map((item, key) => {
         return item.data.result
       }) || []} />
@@ -118,7 +118,7 @@ const Images = ({ images }) => {
       onMoveNextRequest={() =>
         setphotoIndex((photoIndex + 1) % images.length)
       }
-       /> : <></>}
+    /> : <></>}
   </>
   )
 }

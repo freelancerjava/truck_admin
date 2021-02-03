@@ -31,7 +31,7 @@ function Category({ history }) {
         <CustomForm
           title={'Категория #529440'}
           parentNav={{
-            url: '/admin/categories/index',
+            url: '/admin/categories',
             title: 'Категории'
           }}
           id={id}
@@ -67,6 +67,36 @@ function Category({ history }) {
                   {
                     name: "Наименование hr",
                     key: 'name_hr',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                ],
+                [
+                  {
+                    name: "Описание uz",
+                    key: 'description_uz',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание ru",
+                    key: 'description_ru',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание en",
+                    key: 'description_en',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Описание hr",
+                    key: 'description_hr',
                     type: {
                       name: 'text'
                     }

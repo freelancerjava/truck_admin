@@ -30,6 +30,13 @@ import ordersroute from "../orders/route";
 import transportsroute from "../transports/route";
 import usersroute from "../users/route";
 import transactionsroute from "../transactions/route";
+import { Menu } from "antd";
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import SubMenu from "antd/lib/menu/SubMenu";
+import chatsroute from "../chats/route";
+import notificationsroute from "../notifications/route";
+import modelroute from "../model/route";
+import makeroute from "../make/route";
 
 var ps;
 
@@ -51,7 +58,7 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
 
   const createLinks = (routes, path) => {
     return routes.childRoutes.map((prop, key) => {
-      if (prop.path !== "" && !prop.childRoutes && !prop.inner)
+      if (!prop.childRoutes && !prop.inner)
         return (
           <NavItem key={key}>
             <NavLink
@@ -218,8 +225,14 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
             {createLinks(ordersroute, "/admin/")}
             {createLinks(usersroute, "/admin/")}
             {createLinks(transportsroute, "/admin/")}
+            {createLinks(notificationsroute, "/admin/")}
             {createLinks(transactionsroute, "/admin/")}
+            {createLinks(chatsroute, "/admin/")}
             {createLinks(categoryroute, "/admin/")}
+            {createLinks(modelroute, "/admin/")}
+            {createLinks(makeroute, "/admin/")}
+            
+
           </Nav>
           {/* Divider */}
           <hr className="my-3" />

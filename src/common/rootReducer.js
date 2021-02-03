@@ -20,6 +20,10 @@ import transportsReducer from '../features/transports/redux/reducer';
 import usersReducer from '../features/users/redux/reducer';
 import elementsReducer from '../features/elements/redux/reducer';
 import transactionsReducer from '../features/transactions/redux/reducer';
+import chatsReducer from '../features/chats/redux/reducer';
+import notificationsReducer from '../features/notifications/redux/reducer';
+import modelReducer from '../features/model/redux/reducer';
+import makeReducer from '../features/make/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -46,6 +50,10 @@ const reducerMap = {
   users: usersReducer,
   elements: elementsReducer,
   transactions: transactionsReducer,
+  chats: chatsReducer,
+  notifications: notificationsReducer,
+  model: modelReducer,
+  make: makeReducer,
 };
 
 export default combineReducers(reducerMap);

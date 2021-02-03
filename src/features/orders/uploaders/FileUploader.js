@@ -7,9 +7,13 @@ const FileUploader = ({ id, type, value, onChange, ...props }) => {
     const [selectedFile, setSelectedFile] = useState(null)
     const [fileUploadProgress, setFileUploadProgress] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [upImg, setUpImg] = useState();
 
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
+        const reader = new FileReader();
+        reader.addEventListener('load', () => setUpImg(reader.result));
+        reader.readAsDataURL(event.target.files[0]);
         setFileUploadProgress(0)
     };
 
@@ -47,6 +51,7 @@ const FileUploader = ({ id, type, value, onChange, ...props }) => {
                         }
                         } />
                     <img src={value && value.result
+                        || upImg
                         || require('../../../assets/img/tempfile.png')}
                         className='file_prev' />
                     {/* <Img
@@ -63,14 +68,13 @@ const FileUploader = ({ id, type, value, onChange, ...props }) => {
                 className='w-75' />
             <Input hidden type='file' onChange={onFileChange} id={`${id}`} />
             {loading ? <i className='fa fa-spinner fa-spin' /> :
-                selectedFile ? <i
-                    className='fa fa-upload'
+                <Button
                     size='sm'
-                    color={selectedFile ? 'info' : 'default'}
+                    color={selectedFile ? 'info' : 'defautl'}
                     disabled={selectedFile ? false : true} onClick={(e) => {
                         e.preventDefault();
                         onFileUpload(value, onChange, selectedFile)
-                    }}/> : <label for={`${id}`}><i className='fa fa-plus'/></label>
+                    }}><i className='fa fa-upload' /></Button>
 
             }
         </div>

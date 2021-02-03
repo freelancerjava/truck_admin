@@ -7,7 +7,6 @@ import { Map } from '../../extrafunc/Map';
 // import PropTypes from 'prop-types';
 
 export default function TransportDetailCard({ transport }) {
-    const [checked, setChecked] = useState(true)
     return (
         <>
             <Card className='mb-3'>
@@ -17,11 +16,11 @@ export default function TransportDetailCard({ transport }) {
                     </h4>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Статус модерации</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('DD.MM.YYYY') || '30.11.2020'}</span>
+                        <span className='text-dark h5'>{transport.status || 'Без статуса'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Категория</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('hh:mm') || '21:01'}</span>
+                        <span className='text-dark h5'>{transport.category && transport.category.name_ru || 'Без категории'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Кузов</small></span>
@@ -30,35 +29,35 @@ export default function TransportDetailCard({ transport }) {
                             && transport.category.parent
                             && transport.category.parent.parent
                             && transport.category.parent.parent.name_ru
-                            || 'от 1 кг до 1 т'}</span>
+                            || 'Без кузова'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Марка</small></span>
-                        {/* <span className='text-dark h5'>{transport.receipt && JSON.stringify(transport.receipt) ||  '25.08 в 12:42'}</span> */}
+                        <span className='text-dark h5'>{transport.make && transport.make.name ||  'Без марки'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Модель</small></span>
-                        <span className='text-dark h5'>{transport.payment && transport.payment.type || 'UzCard'}</span>
+                        <span className='text-dark h5'>{transport.model && transport.model.name ||  'Без модели'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Гос. номер</small></span>
-                        <span className='text-danger h5'>Нет</span>
+                        <span className='text-danger h5'>{transport.gos_number || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Год выпуска</small></span>
-                        <span className='text-danger h5'>Нет</span>
+                        <span className='text-dark h5'>{transport.year || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Типы осей</small></span>
-                        <span className='text-danger h5'>Нет</span>
+                        <span className='text-dark h5'>{transport.x || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Тип топлива</small></span>
-                        <span className='text-danger h5'>Нет</span>
+                        <span className='text-dark h5'>{transport.x || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Лошадиных сил</small></span>
-                        <span className='text-danger h5'>Нет</span>
+                        <span className='text-dark h5'>{transport.x || 'Нет'}</span>
                     </div>
                 </CardBody>
             </Card>
@@ -69,19 +68,17 @@ export default function TransportDetailCard({ transport }) {
                     </h4>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Минимальный тариф за рейс</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('DD.MM.YYYY') || '30.11.2020'}</span>
+                        <span className='text-dark h5'>{transport.min_price || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Цена за 1 км</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('hh:mm') || '21:01'}</span>
+                        <span className='text-dark h5'>{transport.one_km_price || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-ищдв'><small>Используется для грузоперевозок</small></span>
                         <DragSwitch
-                            checked={checked}
-                            onChange={c => {
-                                setChecked(!checked)
-                            }}
+                            checked={transport.enabled_cargo}
+                            disabled
                         />
                     </div>
                 </CardBody>
@@ -93,23 +90,21 @@ export default function TransportDetailCard({ transport }) {
                     </h4>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Цена за один час</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('DD.MM.YYYY') || '30.11.2020'}</span>
+                        <span className='text-dark h5'>{transport.one_hour_price || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Мин. кол-во часов аренды</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('hh:mm') || '21:01'}</span>
+                        <span className='text-dark h5'>{transport.min_hour || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-muted'><small>Мин. тариф за вызовы</small></span>
-                        <span className='text-dark h5'>{transport.createdAt && moment(transport.createdAt).format('hh:mm') || '21:01'}</span>
+                        <span className='text-dark h5'>{transport.min_order_price || 'Нет'}</span>
                     </div>
                     <div className='d-flex justify-content-between mb-1'>
                         <span className='text-ищдв'><small>Сдается в аренду</small></span>
                         <DragSwitch
-                            checked={checked}
-                            onChange={c => {
-                                setChecked(!checked)
-                            }}
+                            checked={transport.enabled_rent && true}
+                            disabled
                         />
                     </div>
                 </CardBody>

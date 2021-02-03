@@ -13,9 +13,10 @@ export default function TransactionsList() {
           cnt_query_fn={getCount}
           query_key={"transactions"}
           title={"Лист транзакций"}
+          view_link={"/admin/transactions/view"}
           // add_link={"/admin/transactions/index/add"}
           // edit_link={"/admin/transactions/index/update"}
-          query_filter={{ include: ['user', 'client', 'order'] }}
+          query_filter={{ include: [{user:['partner']}, 'client', 'order'] }}
           filters={{
             field: 'type',
             data: [
@@ -42,14 +43,16 @@ export default function TransactionsList() {
                 key: 'id',
                 type: {
                   name: 'text'
-                }
+                },
+                sort:'id'
               },
               {
                 name: 'ID заказа',
                 key: 'orderId',
                 type: {
                   name: 'text'
-                }
+                },
+                sort:'orderId'
               },
               // {
               //   name: 'Тип оплаты',
@@ -69,7 +72,8 @@ export default function TransactionsList() {
                 ],
                 type: {
                   name: 'text'
-                }
+                },
+                sort:'clientId'
               },
               {
                 name: 'Исполнитель',
@@ -82,32 +86,37 @@ export default function TransactionsList() {
                 ],
                 type: {
                   name: 'text'
-                }
+                },
+                sort:'userId'
               },
               {
                 name: 'Партнер',
                 keys: [
-                  'client.first_name',
-                  'client.second_name',
-                  'client.phone',
-                  'client.email',
-                  'client.username',
+                  'user.partner.first_name',
+                  'user.partner.second_name',
+                  'user.partner.phone',
+                  'user.partner.email',
+                  'user.partner.username',
                 ],
+                sort:'userId'
               },
               {
                 name: 'Дата заказа',
                 key: 'createdAt',
                 datentime: true,
+                sort:'createdAt'
               },
               {
                 name: 'Дата транзакции',
                 key: 'createdAt',
                 datentime: true,
+                sort:'createdAt'
               },
               {
                 name: 'Дата изменения',
                 key: 'updatedAt',
                 datentime: true,
+                sort:'updatedAt'
               },
               // {
               //   name: 'Запись',

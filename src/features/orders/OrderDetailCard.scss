@@ -1,5 +1,10 @@
 @import '../../styles/mixins';
 
-.orders-order-detail-card {
+.orders-order-detail-card {}
 
+.status-badge {
+    border-radius: 36px;
+    font-size: 12px;
+    color: #ffffff;
+    padding: 2px 10px;
 }

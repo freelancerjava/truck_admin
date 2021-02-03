@@ -19,6 +19,10 @@ import transportsRoute from '../features/transports/route';
 import usersRoute from '../features/users/route';
 import elementsRoute from '../features/elements/route';
 import transactionsRoute from '../features/transactions/route';
+import chatsRoute from '../features/chats/route';
+import notificationsRoute from '../features/notifications/route';
+import modelRoute from '../features/model/route';
+import makeRoute from '../features/make/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -41,6 +45,10 @@ const childRoutes = [
   usersRoute,
   elementsRoute,
   transactionsRoute,
+  chatsRoute,
+  notificationsRoute,
+  modelRoute,
+  makeRoute,
 ];
 
 // const logout = [
@@ -61,6 +69,8 @@ const routes = [{
   childRoutes: [
     ...childRoutes,
     { path: '*', name: 'Page not found', component: PageNotFound },
+    { path: 'admin', name: 'Page not found', component: PageNotFound },
+    { path: 'auth', name: 'Page not found', component: PageNotFound },
   ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
 }];
 

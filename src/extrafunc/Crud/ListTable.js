@@ -26,19 +26,20 @@ import { Link, withRouter, useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import { delCat } from '../../features/categories/query';
 import moment from 'moment'
-import { Checkbox } from '@buffetjs/core';
 import { getParameterByName } from '..';
 
 const ListTable = ({ router, history, title, headers, edit_link, view_link, add_link, id, query_key, query_fn, cnt_query_fn, query_filter, mut_delete_fn, filters, innerFilters }) => {
 
 
+    const [searchfilter, setsearchfilter] = useState(router.location.query.srchfltr || '')
     const [filter, setfilter] = useState(router.location.query.fltr || 0)
     const [innerFilter, setInnerFilter] = useState(router.location.query.in_fltr || 0)
     const [paginationValue, setPaginationValue] = useState(parseInt(router.location.query.pagging) || 1);
-    const [page, setPage] = useState(router.location.query.page || 0);
+    const [page, setPage] = useState(parseInt(router.location.query.page) || 0);
+    const [checked, setChecked] = useState(router.location.query.checked || null);
 
     useEffect(() => {
-        if (router.action === 'POP') {
+        if (router.action === 'POP' || router.action === 'PUSH') {
             setfilter(router.location.query.fltr || 0)
             setInnerFilter(router.location.query.in_fltr || 0)
             setPaginationValue(parseInt(router.location.query.pagging) || 1)
@@ -70,6 +71,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
 
     new_query_filter = { ...new_query_filter, limit: 10 * paginationValue, skip: 10 * page * paginationValue }
 
+
     if (filters) {
         let sort = filters.data.filter((item, key) => key == filter)[0]
         new_query_filter['where'] = {};
@@ -80,6 +82,12 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
         !new_query_filter['where'] && (new_query_filter['where'] = {})
         sort && (new_query_filter['where'][innerFilters.field] = sort.value)
     }
+
+    if (searchfilter) {
+        !new_query_filter['where'] && (new_query_filter['where'] = {})
+        new_query_filter['where']['id'] = searchfilter
+    }
+
     let countWhere = JSON.stringify(new_query_filter.where)
     new_query_filter = JSON.stringify(new_query_filter)
     const querydata = useQuery([query_key, { filter: new_query_filter }], query_fn)
@@ -91,6 +99,17 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
     })
     const [data, setData] = useState([])
     const [count, setCount] = useState(0)
+
+    const pagesArrayLength = Math.ceil(count / (paginationValue * 10))
+    const pagesArr = Array.from({ length: pagesArrayLength }, (v, k) => {
+        if (k == 0) return k
+        if (k == pagesArrayLength - 1) return k
+        if (k == page - 1) return k
+        if (k == page) return k
+        if (k == page + 1) return k
+        // else return null
+        // return k
+    })
 
 
 
@@ -113,12 +132,13 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                 setCount(0)
             }
             cancel = true
+
         }
     }, [querydata.data, countdata.data])
 
     /** Checkboxes **/
 
-    const areAllCheckboxesSelected = data.map(
+    const areAllCheckboxesSelected = data.every(
         key => key.check === true
     );
 
@@ -128,28 +148,30 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
 
     const handleChange = () => {
         const valueToSet = !areAllCheckboxesSelected;
+        setData(
+            data.map((item, key) => {
+                item.check = valueToSet;
+                return item;
+            })
+        )
 
-        setData(prevState => {
-            return data.reduce((acc, current) => {
-                acc[current] = valueToSet;
-                return acc;
-            }, {});
-        });
     };
 
     /** Checkboxes **/
 
     return (
         <div className='list-table'>
-            {filters && <Card className='mb-2 p-2'>
-                <Filters filters={filters} filter={filter} setfilter={setfilter} history={history} setPage={setPage} />
-            </Card>}
+            {filters &&
+                <div className='mb-2 p-2'>
+                    <Filters filters={filters} filter={filter} setfilter={setfilter} history={history} setPage={setPage} />
+                </div>
+            }
             <Card>
                 <CardHeader
                     className="d-flex justify-content-between align-items-center">
                     <CardTitle
-                        tag="h5"
-                        className="mb-0">
+                        tag="h2"
+                        className="mb-0 fw-700">
                         {title}
                     </CardTitle>
 
@@ -160,7 +182,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                             value={paginationValue}
                             onChange={(e) => {
                                 setPaginationValue(parseInt(e.target.value))
-                                historyCorrect({ history: history, param: { name: 'pagging', value: e.target.value } })
+                                historyCorrect({ history: history, param: { name: 'pagging', value: e.target.value }, page: true })
                                 setPage(0)
                             }}>
                             <option value={1}>10</option>
@@ -168,16 +190,22 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                             <option value={3}>30</option>
                             <option value={4}>40</option>
                         </Input>
-                        <Input type='text' placeholder='Поиск' className='mr-5' width={2} />
+                        <Input type='text' placeholder='Поиск' className='mr-5' width={2} onChange={(e) => {
+                            console.log('value', e.target.value);
+                            setsearchfilter(e.target.value)
+                        }} />
                         {add_link && <Link to={add_link}>
                             <Button color={"primary"} size={'sm'}>
                                 Добавить запись
-                        </Button>
+                            </Button>
                         </Link>}
                     </div>
 
                 </CardHeader>
                 <CardBody>
+                    {/* <div className='w-100 d-flex justify-content-start p-2'>
+                        {hasSomeCheckboxesSelected && <><Button color='danger' size='sm'>Delete</Button></>}
+                    </div> */}
                     {countdata.isLoading || querydata.isLoading ?
                         <div className='d-flex justify-content-center align-items-center w-100 p-5'>
                             <Spinner style={{ width: '3rem', height: '3rem' }} color="primary" />
@@ -188,12 +216,14 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                 <thead className="">
                                     <tr>
                                         <th>
-                                            <Checkbox
-                                                // onChange={data && handleChange}
-                                                // someChecked={data && hasSomeCheckboxesSelected && !areAllCheckboxesSelected}
-                                                // value={data && areAllCheckboxesSelected}
+                                            <input type='checkbox'
+                                                indeterminate={hasSomeCheckboxesSelected && !areAllCheckboxesSelected}
+                                                onChange={handleChange}
+                                                // someChecked={hasSomeCheckboxesSelected && !areAllCheckboxesSelected}
+                                                checked={areAllCheckboxesSelected}
                                             />
                                         </th>
+                                        {/* <th>#</th> */}
                                         {headers.map((item, key) => {
                                             return (
                                                 item.excludeFilter && item.excludeFilter.includes(filter) ?
@@ -214,17 +244,37 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                     {data && data.map((item, key) => {
                                         return (
                                             <tr
-                                                className={`hoverable ${key % 2 == 0 ? 'odd' : ''}`}
+                                                className={`${key % 2 == 0 ? 'odd' : ''} hoverable`}
                                                 name='trow'
                                                 key={key}
                                                 onClick={(e) => {
                                                     // console.log(e.target.tagName);
+                                                    setChecked(item.id)
+                                                    historyCorrect({ history: history, param: { name: 'checked', value: item.id } })
+                                                    setData(data.map((checkitem, index) => {
+                                                        if (key == index) checkitem.check = !item.check
+                                                        return checkitem
+                                                    }));
                                                     if (e.target.tagName !== 'A' && e.target.tagName !== 'I' && e.target.tagName !== 'INPUT')
                                                         view_link ? history.push(`${view_link}/${item[id]}`) :
                                                             edit_link ? history.push(`${edit_link}/${item[id]}`) : console.log('');
 
                                                 }}>
-                                                <td><input type='checkbox' /></td>
+                                                <td>
+                                                    <input type='checkbox'
+                                                        checked={item.check || checked == item.id}
+                                                        onChange={(e) => {
+                                                            if (item.id == checked) setChecked(null)
+                                                            else setChecked(item.id)
+                                                            // historyCorrect({ history: history, param: { name: 'checked', value: item.id == checked && null || item.id } })
+                                                            setData(data.map((checkitem, index) => {
+                                                                if (key == index) checkitem.check = !item.check
+                                                                return checkitem
+                                                            }));
+                                                        }}
+                                                    />
+                                                </td>
+                                                {/* <th>{key + 1}</th> */}
                                                 {headers.map((header, key) => {
                                                     return (
                                                         // <td key={key} scope="col">{item[header.key]}</td>
@@ -275,7 +325,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                         {/* {console.log('ceil', Math.ceil(count / (paginationValue * 10)), page)} */}
                         {count > 0 && <Pagination
                             className="pagination justify-start mb-0"
-                            listClassName="justify-content-start mb-0"
+                            listClassName="justify-content-start mb-0 align-items-center"
                         >
                             <PaginationItem className={`${page == 0 ? 'disabled' : ''}`} onClick={() => {
                                 if (page != 0) {
@@ -292,19 +342,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                     <span className="sr-only"> Previous </span>{" "}
                                 </PaginationLink>
                             </PaginationItem>
-                            {Array.from({ length: Math.ceil(count / (paginationValue * 10)) }, (v, k) => {
-                                if (k == 0) return k
-                                // if (k == 1) return k
-                                if (k == Math.ceil(count / (paginationValue * 10)) - 1) return k
-                                // if (k == Math.ceil(count / (paginationValue * 10)) - 2) return k
-                                if (k == page - 1) return k
-                                if (k == page) return k
-                                if (k == page + 1) return k
-                                // else if (k == Math.ceil(count / paginationValue * 10 / 2)) return k
-                                // else if (k == Math.ceil(count / paginationValue * 10 / 5)) return k
-                                // else return k
-                                // return k
-                            }).map((item, key) => {
+                            {pagesArr.map((item, key) => {
                                 return (
                                     item != null ?
                                         <PaginationItem className={`${page == item ? 'active' : ''}`}
@@ -315,15 +353,16 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                             <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()}>
                                                 {item + 1}{" "}
                                             </PaginationLink>
-                                        </PaginationItem> : <span>.</span>
+                                        </PaginationItem> : <span className={`${key === Math.ceil(pagesArrayLength / 2) || key == page + 2 || key == page - 2 ? 'paginationLink' : ''} `}></span>
                                 )
                             })}
                             <PaginationItem
-                                className={`${page == Math.ceil(count / (paginationValue * 10)) - 1 ? 'disabled' : ''}`}
+                                className={`${page == pagesArrayLength ? 'disabled' : ''}`}
                                 onClick={() => {
                                     if (page != Math.ceil(count / (paginationValue * 10)) - 1) {
-                                        setPage(page + 1)
-                                        historyCorrect({ history: history, param: { name: 'page', value: page + 1 } })
+                                        let p = parseInt(page)
+                                        setPage(p + 1)
+                                        historyCorrect({ history: history, param: { name: 'page', value: p + 1 } })
                                     }
                                 }}>
                                 <PaginationLink href="#pablo" onClick={(e) => e.preventDefault()} >
@@ -331,6 +370,9 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                     <span className="sr-only"> Next </span>{" "}
                                 </PaginationLink>
                             </PaginationItem>
+                            <Button size='sm' color='white' className='ml-2' close>
+                                Total: {count}
+                            </Button>
                         </Pagination>}
                     </nav>
                 </CardFooter>
@@ -388,7 +430,7 @@ const CustomTd = ({ item, header, key }) => {
                     >
                         <img
                             alt={header.key}
-                            src={getProp(item, header.key) || require("../../assets/img/tempfile.png")}
+                            src={getProp(item, header.key, true) || require("../../assets/img/tempfile.png")}
                         />
                     </a>
                     <Media>
@@ -419,7 +461,7 @@ const CustomTd = ({ item, header, key }) => {
 
 }
 
-const getProp = (object, props) => {
+const getProp = (object, props, media = false) => {
     const arrprop = props.split('.')
 
     let prop = object
@@ -430,6 +472,9 @@ const getProp = (object, props) => {
     // if(prop == 1) return '1'
     if (prop === true) return 'true'
     if (prop === false) return 'false'
+    if (prop && prop.length > 25 && !media) {
+        prop = prop.substr(0, 25) + ' ... '
+    }
     return prop
 }
 
@@ -439,6 +484,7 @@ const Filters = ({ filters, filter, setfilter, history, setPage }) => {
             {filters.data.map((item, key) => {
                 return (
                     <Button
+                        className={(filter == key) ? item.class : null}
                         size={'sm'}
                         onClick={() => {
                             setfilter(key)
@@ -446,7 +492,7 @@ const Filters = ({ filters, filter, setfilter, history, setPage }) => {
                             historyCorrect({ history: history, param: { name: 'fltr', value: key }, page: true })
                         }}
                         key={key}
-                        color={`${(filter == key) ? 'primary' : ''}`}>
+                        color={`${(filter == key) ? 'primary' : 'link'}`}>
                         {item.name}
                     </Button>
                 )
@@ -484,6 +530,7 @@ const historyCorrect = ({ history, param, page = false }) => {
     path.push(`pagging=${param.name === 'pagging' ? param.value : getParameterByName('pagging')}`)
     path.push(`fltr=${param.name === 'fltr' ? param.value : getParameterByName('fltr')}`)
     path.push(`in_fltr=${param.name === 'in_fltr' ? param.value : getParameterByName('in_fltr')}`)
+    path.push(`checked=${param.name === 'checked' ? param.value : getParameterByName('checked')}`)
     path.map((item, key) => {
         let amp = key != path.length - 1 ? '&' : ''
         if (!item.includes('null')) pathname = pathname + item + amp
@@ -492,3 +539,4 @@ const historyCorrect = ({ history, param, page = false }) => {
 
     return pathname
 }
+

@@ -1,0 +1,19 @@
+@import '../../styles/mixins';
+
+.chats-view-chat {
+
+}
+
+.rce-item{
+    border: none;
+}
+
+.right-apponent{
+    .rce-citem{
+        display: flex;
+        flex-direction: row-reverse;
+        .rce-citem-avatar{
+            padding-left: 0;
+        }
+    }
+}

@@ -2,19 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody } from 'reactstrap';
 import CarouselRS from '../../extrafunc/CarouselRS';
+import ImageShow from '../../extrafunc/ImageShow';
 
-const TransportAttachments = ({transport}) => {
+const TransportAttachments = ({ transport }) => {
     return (
         <div>
             <Card className='mb-3'>
                 <CardBody>
                     <h4 className='title font-weight-bold text-primary text-uppercase'>
-                        Фото заказа
+                        Фото техники
                     </h4>
                     <div className='attachments'>
-                        
+
                         {transport.attachment && transport.attachment
-                            ? <CarouselRS data={
+                            ? <CarouselRS show_type={true} data={
                                 transport && [
                                     {
                                         data: {
@@ -36,26 +37,26 @@ const TransportAttachments = ({transport}) => {
                                             result: transport.attachment.transport4 && transport.attachment.transport4.result || require('../../assets/img/tempfile.png')
                                         }
                                     },
-                                    {
-                                        data: {
-                                            result: transport.attachment.transport_register1 && transport.attachment.transport_register1.result || require('../../assets/img/tempfile.png')
-                                        }
-                                    },
-                                    {
-                                        data: {
-                                            result: transport.attachment.transport_register2 && transport.attachment.transport_register2.result || require('../../assets/img/tempfile.png')
-                                        }
-                                    },
-                                    {
-                                        data: {
-                                            result: transport.attachment.authorization1 && transport.attachment.authorization1.result || require('../../assets/img/tempfile.png')
-                                        }
-                                    },
-                                    {
-                                        data: {
-                                            result: transport.attachment.authorization2 && transport.attachment.authorization2.result || require('../../assets/img/tempfile.png')
-                                        }
-                                    }
+                                    // {
+                                    //     data: {
+                                    //         result: transport.attachment.transport_register1 && transport.attachment.transport_register1.result || require('../../assets/img/tempfile.png')
+                                    //     }
+                                    // },
+                                    // {
+                                    //     data: {
+                                    //         result: transport.attachment.transport_register2 && transport.attachment.transport_register2.result || require('../../assets/img/tempfile.png')
+                                    //     }
+                                    // },
+                                    // {
+                                    //     data: {
+                                    //         result: transport.attachment.authorization1 && transport.attachment.authorization1.result || require('../../assets/img/tempfile.png')
+                                    //     }
+                                    // },
+                                    // {
+                                    //     data: {
+                                    //         result: transport.attachment.authorization2 && transport.attachment.authorization2.result || require('../../assets/img/tempfile.png')
+                                    //     }
+                                    // }
                                 ]
                             } />
                             : <div>
@@ -77,9 +78,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport_register1
+                                        && transport.attachment.transport_register1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -90,9 +93,12 @@ const TransportAttachments = ({transport}) => {
                                 Фото свидетельства
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <i className='fa fa-check-circle' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport_register2
+                                        && transport.attachment.transport_register2.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -115,9 +121,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -128,9 +136,12 @@ const TransportAttachments = ({transport}) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <i className='fa fa-check-circle' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport2
+                                        && transport.attachment.transport2.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -153,9 +164,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -166,9 +179,12 @@ const TransportAttachments = ({transport}) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <i className='fa fa-check-circle' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -191,9 +207,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -204,9 +222,12 @@ const TransportAttachments = ({transport}) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <i className='fa fa-check-circle' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -229,9 +250,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -242,9 +265,7 @@ const TransportAttachments = ({transport}) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <i className='fa fa-check-circle' />\
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -267,9 +288,11 @@ const TransportAttachments = ({transport}) => {
                             </div>
                             <div className='doc-img'>
                                 <i className='fa fa-check-circle' />
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>
@@ -280,9 +303,11 @@ const TransportAttachments = ({transport}) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <img src={transport.attachment && transport.attachment.transport1
-                                    && transport.attachment.transport1.result
-                                    || require('../../assets/img/tempfile.png')} alt='doc' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>

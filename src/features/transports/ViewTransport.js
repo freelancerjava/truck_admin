@@ -58,15 +58,15 @@ export default function ViewTransport() {
         <Col>
           <div className='d-flex justify-content-between align-items-center'>
             <ViewNav
-              title={'Транспорт #529440'}
+              title={'Транспорт'}
               parentNav={{
-                url: '/admin/transports/index',
+                url: '/admin/transports',
                 title: 'Заказы',
                 action: () => {
                   history.goBack()
                 }
               }}
-              edit_link={`/admin/transports/index/update/${id}`}
+              edit_link={`/admin/transports/update/${id}`}
               id={id}
               delMut={() => setmodalopen(true)}
             />
@@ -75,7 +75,7 @@ export default function ViewTransport() {
       </Row>
       <Row>
         <Col xs={12} md={6}>
-          <UserInfoCard title={'Владелец техники'} accLink={transport.driver ? `/admin/users/index/update/${transport.driver.id}` : '#'} accData={transport.driver} />
+          <UserInfoCard title={'Владелец техники'} accLink={transport.driver ? `/admin/users/view/${transport.driver.id}` : '#'} accData={transport.driver} />
 
           <TransportDetailCard transport={transport} />
 

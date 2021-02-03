@@ -2,7 +2,15 @@
 @import '../features/orders/style';
 @import '../features/transactions/style';
 @import '../features/transports/style';
+@import '../features/users/style';
 
 body{
     // min-width: 1920px;
 }
+
+// @import '~antd/dist/antd.css';
+@import '../features/chats/style';
+@import '../features/notifications/style';
+@import '../features/model/style';
+@import '../features/make/style';
+

@@ -9,17 +9,25 @@ import transportsroute from "../transports/route";
 import usersroute from "../users/route";
 import { PageNotFound } from "../common";
 import transactionsroute from "../transactions/route";
+import chatsroute from "../chats/route";
+import notificationsroute from "../notifications/route";
+import modelroute from "../model/route";
+import makeroute from "../make/route";
 
 export default {
   path: "admin",
   component: Layout,
   childRoutes: [
-    { icon: "fa fa-home", path: "index", component: Dashboard, isIndex: true, name: "Главная" },
+    { icon: "fa fa-home", path: "dashboard", component: Dashboard, name: "Главная" },
     categoriesroute,
     ordersroute,
     transportsroute,
     usersroute,
     transactionsroute,
+    chatsroute,
+    notificationsroute,
+    modelroute,
+    makeroute,
     { path: '*', name: 'Page not found', component: PageNotFound, inner: true },
   ],
 };
