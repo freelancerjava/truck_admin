@@ -2,6 +2,7 @@ import React from 'react';
 import ListTable from '../../extrafunc/Crud/ListTable';
 import { Container, Row, Col } from 'reactstrap';
 import { getOrders, getCount } from '../orders/query';
+import { getUsers } from './query';
 // import PropTypes from 'prop-types';
 
 export default function ChatsList() {
@@ -10,8 +11,8 @@ export default function ChatsList() {
       <Col>
         <ListTable
           cnt_query_fn={getCount}
-          query_fn={getOrders}
-          query_key={"orders"}
+          query_fn={getUsers}
+          query_key={"chatusers"}
           title={"Список чатов пользователей"}
           // add_link={"/admin/chats/add"}
           // edit_link={"/admin/chats/update"}
@@ -46,20 +47,24 @@ export default function ChatsList() {
                 sort:'id'
               },
               {
-                name: "Ф.И.О заказчика",
+                name: "Ф.И.О исполнителя",
                 keys: [
-                  'creator.first_name',
-                  'creator.second_name',
+                  'first_name',
+                  'second_name',
                 ],
                 sort:'creatorId'
               },
+              // {
+              //   name: "Ф.И.О исполнителя",
+              //   keys: [
+              //     'driver.first_name',
+              //     'driver.second_name',
+              //   ],
+              //   sort:'driverId'
+              // },
               {
-                name: "Ф.И.О исполнителя",
-                keys: [
-                  'driver.first_name',
-                  'driver.second_name',
-                ],
-                sort:'driverId'
+                name: "Сообщение",
+                key: 'message.text',
               },
               {
                 name: "Дата начала переписки",

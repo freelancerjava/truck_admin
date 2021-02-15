@@ -3,7 +3,9 @@
 //
 
 // General styles
-
+.avatarImg {
+	object-fit: cover;
+}
 .avatar {
 	color: $white;
 	background-color: $gray-500;

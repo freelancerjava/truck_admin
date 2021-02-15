@@ -5,11 +5,12 @@ import moment from 'moment';
 
 import upArr from '../icons/up-arrow.svg';
 import location from '../icons/up-arrow2.svg';
+// import location from '../../svg/left.svg';
 
 export const CustomMarker = ({ iconDeg, label, position, index, age, speed, draggable, iconpin }) => {
    const user = JSON.parse(localStorage.getItem('user'));
    const [counter, setCounter] = useState(1);
-   const [open, setopen] = useState(true);
+   const [open, setopen] = useState(false);
 
    const iconRef = useRef(null);
    const infoRef = useRef(null);
@@ -19,7 +20,7 @@ export const CustomMarker = ({ iconDeg, label, position, index, age, speed, drag
       let timer;
       if (!cancel) {
          timer = setTimeout(() => {
-            let icons = Array.from(document.querySelectorAll(`[src*="up-arrow"]`));
+            let icons = Array.from(document.querySelectorAll(`[src*="truck"]`));
             if (icons[index]) {
                icons[index].style.transform = `rotate(${iconDeg}deg)`;
                icons[index].style.backfaceVisibility = `hidden`;
@@ -50,7 +51,7 @@ export const CustomMarker = ({ iconDeg, label, position, index, age, speed, drag
             icon={{
                anchor: { x: 16, y: 49 },
                url: iconpin ? iconpin : location,
-               // scaledSize: { width: 30, height: 30 },
+               // scaledSize: { width: 50, height: 50 },
                origin: { x: .5, y: .5 },
             }}
             position={position}

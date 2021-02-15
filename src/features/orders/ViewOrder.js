@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, CardBody, CardTitle, Button, Carousel, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 import Gallery from '../elements/Gallery';
-import { Map } from '../../extrafunc/Map'
+import { Map } from './Map'
 import UserInfoCard from './UserInfoCard';
 import OrderDetailCard from './OrderDetailCard';
 import OrderMoreDetailCard from './OrderMoreDetailCard';

@@ -23,7 +23,7 @@ export default function UserList() {
             data: [
               { key: 0, name: 'Заказчики', value: 'client' },
               { key: 1, name: 'Исполнители', value: 'driver' },
-              { key: 2, name: 'Партнеры', value: null },
+              { key: 2, name: 'Партнеры', value: 'partner' },
               { key: 3, name: 'Сотрудники', value: 'default' },
               { key: 4, name: 'Все' },
             ]
@@ -31,12 +31,12 @@ export default function UserList() {
           innerFilters={{
             field: 'status',
             data: [
-              { key: 0, name: 'Active', value: 'active' },
-              { key: 1, name: 'Checking', value: 'checking' },
-              { key: 2, name: 'Need registration', value: 'need_registration' },
-              { key: 3, name: 'Canceled by moderator', value: 'canceled_by_moderator' },
-              { key: 4, name: 'Deactivated', value: 'deactivated' },
-              { key: 5, name: 'All' },
+              { key: 0, name: 'Активный', value: 'active' },
+              { key: 1, name: 'Проверяется', value: 'checking' },
+              { key: 2, name: 'Ждет регистрацию', value: 'need_registration' },
+              { key: 3, name: 'Закрыт модератором', value: 'canceled_by_moderator' },
+              { key: 4, name: 'Деактивированный', value: 'deactivated' },
+              { key: 5, name: 'Все' },
             ]
           }}
           id={"id"}

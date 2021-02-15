@@ -13,8 +13,7 @@ export default function Status({ title, count, icon, period_class, icon_class, p
               tag="h5"
               className=" text-muted mb-0"
             >{title}</CardTitle>}
-            {!!count && <span className="h2 font-weight-bold mb-0">{count}</span>}
-            {console.log(count)}
+            {!!count && <span className="h1 font-weight-bold mb-0 fz-56">{count}</span>}
             
           </div>
           {!!icon && <Col className="col-auto">

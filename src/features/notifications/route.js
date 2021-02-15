@@ -8,6 +8,7 @@ import NotificationsList from './NotificationsList';
 import Notification from './Notification';
 import ViewNotification from './ViewNotification';
 import { PageNotFound } from '../common';
+import NewNotification from './NewNotification';
 
 export default {
   path: 'notifications',
@@ -15,6 +16,7 @@ export default {
   childRoutes: [
     { path: "", component: NotificationsList, name: "Рассылка", icon: "fa fa-bell" },
     { path: "update/:id", component: Notification, name: "Редактирование заказа", icon: "fa fa-car", inner: true },
+    { path: "add", component: NewNotification, name: "Редактирование заказа", icon: "fa fa-car", inner: true },
     { path: "view/:id", component: ViewNotification, name: "Просмотр заказа", icon: "fa fa-car", inner: true },
     { path: '*', name: 'Page not found', component: PageNotFound, inner: true },
   ],

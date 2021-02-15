@@ -39,7 +39,8 @@ export default withRouter(function Login({ history }) {
       if (!window.location.origin.includes('localhost')) {
         // await notifyMut();
       }
-      window.location = '/admin/dashboard'
+      if(res.user.realm === 'admin') window.location = '/admin/dashboard'
+      if(res.user.realm === 'partner_admin') window.location = '/partner/dashboard'
     }
     if (res == null || res.id == null) {
       console.log(res, "flag")

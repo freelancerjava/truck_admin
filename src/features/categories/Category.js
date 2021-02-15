@@ -29,7 +29,7 @@ function Category({ history }) {
     <Row>
       <Col>
         <CustomForm
-          title={'Категория #529440'}
+          title={`Категория ${id}`}
           parentNav={{
             url: '/admin/categories',
             title: 'Категории'
@@ -71,6 +71,21 @@ function Category({ history }) {
                       name: 'text'
                     }
                   },
+                  {
+                    name: "Комиссия",
+                    key: 'commission',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+
+                  {
+                    name: "Процент минималки при отмене (%)",
+                    key: 'cancel_percent',
+                    type: {
+                      name: 'text'
+                    }
+                  },
                 ],
                 [
                   {
@@ -101,6 +116,14 @@ function Category({ history }) {
                       name: 'text'
                     }
                   },
+                  {
+                    name: "Добавленная сумма для отправки отклика",
+                    key: 'offerExtraAmout',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+               
                 ],
                 [
                   {
@@ -127,15 +150,16 @@ function Category({ history }) {
                     }
                   },
                   {
-                    name: "Корневая\nкатегория",
-                    key: 'rootCategoryId',
+                    name: "Оригинальная\nкатегория",
+                    key: 'originalId',
                     type: {
                       name: 'select',
                       options: cats.map(item => {
                         const parent = item && item.parent && item.parent.name_ru || ''
+                        const rootParent = parent && parent.parent && parent.parent.name_ru || ''
                         return {
                           id: item.id,
-                          name_ru: item.name_ru + ' - ' + parent
+                          name_ru: item.name_ru + ' - ' + parent + ' - ' + rootParent
                         }
                       }),
                       value_field: 'id',
@@ -149,25 +173,39 @@ function Category({ history }) {
                       name: 'text'
                     }
                   },
+                  {
+                    name: "Видно водителям",
+                    key: 'driverVisable',
+                    type: {
+                      name: 'checkbox'
+                    }
+                  },
                 ],
                 [
                   {
-                    name: "min_distance",
+                    name: "Минимальная бесплатная дистанция",
                     key: 'min_distance',
                     type: {
                       name: 'text'
                     }
                   },
                   {
-                    name: "min_waiting",
+                    name: "Минимальное бесплатное ожидание",
                     key: 'min_waiting',
                     type: {
                       name: 'text'
                     }
                   },
                   {
-                    name: "position",
+                    name: "Позиция",
                     key: 'position',
+                    type: {
+                      name: 'text'
+                    }
+                  },
+                  {
+                    name: "Время между заказами",
+                    key: 'offerTime',
                     type: {
                       name: 'text'
                     }

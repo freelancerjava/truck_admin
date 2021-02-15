@@ -9,6 +9,14 @@ export const getTransports = async (key, { filter } = { filter: false }) => {
     return data
 };
 
+export const getPartnerTransports = async (key, { filter } = { filter: false }) => {
+    const per_page = parseInt(JSON.parse(filter).limit)
+    const page = parseInt(JSON.parse(filter).skip) / (per_page) + 1
+    const path = filter != false ? `admins/partnertransports?${token}&filter=${filter}&page=${page}&per_page=${per_page}` : `admins/partnertransports?${token}&page=${page}&per_page=${per_page}`
+    const data = await strapi.request('get', path)
+    return data.result.data
+};
+
 export const getTransport = async (key, { id, filter}) => {
     const path = filter != false ? `transports/${id}?${token}&filter=${filter}` : `transports/${id}?${token}`
     const data = await strapi.request('get', path)

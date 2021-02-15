@@ -13,6 +13,8 @@ import chatsroute from "../chats/route";
 import notificationsroute from "../notifications/route";
 import modelroute from "../model/route";
 import makeroute from "../make/route";
+import parkroute from "../park/route";
+import partnermroute from "../partnerm/route";
 
 export default {
   path: "admin",
@@ -28,6 +30,8 @@ export default {
     notificationsroute,
     modelroute,
     makeroute,
+    parkroute,
+    partnermroute,
     { path: '*', name: 'Page not found', component: PageNotFound, inner: true },
   ],
 };

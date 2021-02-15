@@ -82,14 +82,14 @@ export default withRouter(function EditOrder({ history, title }) {
     const onSubmit = (values) => {
         let temp = { ...values }
 
-        temp.categoryId = values.category && values.category.id
-        temp.fromAddress = values.coors && values.coors.fromAddress
-        temp.toAddress = values.coors && values.coors.toAddress
-        temp.fromCoordinates = values.coors && values.coors.from
-        temp.toCoordinates = values.coors && values.coors.to
-        temp.creatorId = values.creator && values.creator.id
-        temp.status = values.status
-        temp.comment = values.comment
+        temp.categoryId = values.category && values.category.id || null
+        temp.fromAddress = values.coors && values.coors.fromAddress || null
+        temp.toAddress = values.coors && values.coors.toAddress || null
+        temp.fromCoordinates = values.coors && values.coors.from || null
+        temp.toCoordinates = values.coors && values.coors.to || null
+        temp.creatorId = values.creator && values.creator.id || null
+        temp.status = values.status || null
+        temp.comment = values.comment || null
 
         // if (data == null) mutCreate({ body: temp }); else
         mutUpdate({ id: id, body: temp })
@@ -220,17 +220,27 @@ export default withRouter(function EditOrder({ history, title }) {
                                             <Field name='category' >
                                                 {({ input }) => (<>
                                                     <FormGroup className="mb-3 p-1">
-                                                        <Label for='cat-id'>Выбранный тип авто</Label>
+                                                        <Label for='cat-parent-parent-id'>Выбранный тип авто</Label>
                                                         <InputGroup className="input-group-alternative">
 
-                                                            <Input type='select' id='cat-id' className='p-1'
-                                                                value={input.value.id}
-                                                                onChange={({ target: { value } }) => input.onChange({ ...categories.filter(item => item.id == value)[0] })}
+                                                            <Input type='select' id='cat-parent-parent-id' className='p-1'
+                                                                value={input.value.parent && input.value.parent.parent && input.value.parent.parent.id || ''}
+                                                                onChange={({ target: { value } }) => {
+                                                                    let categorypp = { ...categories.filter(item => item.id == value)[0] }
+                                                                    let temp = {
+                                                                        parent: {
+                                                                            parent: categorypp
+                                                                        }
+                                                                    }
+
+                                                                    input.onChange(temp)
+                                                                    console.log(temp);
+                                                                }}
                                                             >
                                                                 <option >---</option>
-                                                                {categories.map((item, key) => {
+                                                                {categories.filter(item => item.parent == null).map((item, key) => {
                                                                     return (
-                                                                        <option key={key} value={item.id}>{item.name_ru} - {item.parent && item.parent.name_ru}</option>
+                                                                        <option key={key} value={item.id}>{item.name_ru}</option>
                                                                     )
                                                                 })}
                                                             </Input>
@@ -240,25 +250,47 @@ export default withRouter(function EditOrder({ history, title }) {
                                                     <FormGroup className="mb-3 p-1">
                                                         <Label for='cat-parent-id'>Выбранный тип кузова</Label>
                                                         <InputGroup className="input-group-alternative">
-                                                            <Input
-                                                                disabled
-                                                                type='text'
-                                                                id='cat-parent-id'
-                                                                className='p-1'
-                                                                value={input.value.parent && input.value.parent.name_ru || ''}
-                                                            />
+                                                            <Input type='select' id='cat-parent-id' className='p-1'
+                                                                value={input.value.parent && input.value.parent.id || ''}
+                                                                onChange={({ target: { value } }) => {
+                                                                    let categoryp = { ...categories.filter(item => item.id == value)[0] }
+                                                                    let temp = {
+                                                                        parent: categoryp
+                                                                    }
+
+                                                                    input.onChange(temp)
+                                                                    console.log(temp);
+                                                                }}
+                                                            >
+                                                                <option >---</option>
+                                                                {categories.filter(item => (
+                                                                    input.value.parent && input.value.parent.parent.id ?
+                                                                        item.parentId == input.value.parent.parent.id : false)
+                                                                ).map((item, key) => {
+                                                                    return (
+                                                                        <option key={key} value={item.id}>{item.name_ru}</option>
+                                                                    )
+                                                                })}
+                                                            </Input>
                                                         </InputGroup>
                                                     </FormGroup>
                                                     <FormGroup className="mb-3 p-1">
-                                                        <Label for='cat-parent-parent-id'>Выбранный тип кузова</Label>
+                                                        <Label for='cat-id'>Выбранный кузов</Label>
                                                         <InputGroup className="input-group-alternative">
-                                                            <Input
-                                                                disabled
-                                                                type='text'
-                                                                id='cat-parent-parent-id'
-                                                                className='p-1'
-                                                                value={input.value.parent && input.value.parent.parent && input.value.parent.parent.name_ru || ''}
-                                                            />
+                                                            <Input type='select' id='cat-id' className='p-1'
+                                                                value={input.value.id}
+                                                                onChange={({ target: { value } }) => input.onChange({ ...categories.filter(item => item.id == value)[0] })}
+                                                            >
+                                                                <option >---</option>
+                                                                {categories.filter(item => (
+                                                                    item.parent && input.value.parent && input.value.parent.id ?
+                                                                        item.parent.id == input.value.parent.id : false)
+                                                                ).map((item, key) => {
+                                                                    return (
+                                                                        <option key={key} value={item.id}>{item.name_ru} - {item.parent && item.parent.name_ru}</option>
+                                                                    )
+                                                                })}
+                                                            </Input>
                                                         </InputGroup>
                                                     </FormGroup>
                                                 </>)}
@@ -284,12 +316,12 @@ export default withRouter(function EditOrder({ history, title }) {
                                                                     <option >---</option>
                                                                     {[
                                                                         { key: 0, name: 'Новые', value: 'new', class: 'new-order' },
-                                                                        { key: 10, name: 'Arriving', value: 'arriving', class: 'new-order' },
-                                                                        { key: 110, name: 'Arrived', value: 'arrived', class: 'new-order' },
+                                                                        { key: 10, name: 'Пребывает', value: 'arriving', class: 'new-order' },
+                                                                        { key: 110, name: 'Прибыл', value: 'arrived', class: 'new-order' },
                                                                         { key: 1, name: 'Принятые', value: 'accepted', class: 'accepted-order' },
                                                                         { key: 2, name: 'Выполняются', value: 'on_the_way', class: 'on_the_way-order' },
-                                                                        { key: 12, name: 'Paused', value: 'paused', class: 'on_the_way-order' },
-                                                                        { key: 12, name: 'Delivered', value: 'delivered', class: 'on_the_way-order' },
+                                                                        { key: 12, name: 'Пауза', value: 'paused', class: 'on_the_way-order' },
+                                                                        { key: 12, name: 'Довезён', value: 'delivered', class: 'on_the_way-order' },
                                                                         { key: 3, name: 'Завершенные', value: 'completed', class: 'completed-order' },
                                                                         { key: 4, name: 'Закрытые', value: 'closed', class: 'closed-order' },
                                                                         { key: 5, name: 'Отмененные', value: 'cancel', class: 'canceled-order' },

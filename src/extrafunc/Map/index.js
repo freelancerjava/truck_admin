@@ -10,7 +10,7 @@ const MapWrapper = withScriptjs(withGoogleMap(props => {
    const mapRef = useRef(null);
    useEffect(() => {
       let mapRender = +localStorage.getItem('mapRender') || 0;
-      if (mapRender === 0) {
+      // if (mapRender === 0) {
          let map = mapRef.current;
          const bounds = new window.google.maps.LatLngBounds();
          if (props.markers.length > 1) {
@@ -27,7 +27,7 @@ const MapWrapper = withScriptjs(withGoogleMap(props => {
             map.fitBounds(bounds);
          }
          localStorage.setItem('mapRender', mapRender + 1);
-      }
+      // }
    }, [props.markers]);
 
    return (

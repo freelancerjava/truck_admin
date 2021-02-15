@@ -37,6 +37,8 @@ import chatsroute from "../chats/route";
 import notificationsroute from "../notifications/route";
 import modelroute from "../model/route";
 import makeroute from "../make/route";
+import parkroute from "../park/route";
+import partnermroute from "../partnerm/route";
 
 var ps;
 
@@ -224,6 +226,7 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
             {createLinks(routes, "/")}
             {createLinks(ordersroute, "/admin/")}
             {createLinks(usersroute, "/admin/")}
+            {createLinks(partnermroute, "/admin/")}
             {createLinks(transportsroute, "/admin/")}
             {createLinks(notificationsroute, "/admin/")}
             {createLinks(transactionsroute, "/admin/")}
@@ -231,6 +234,7 @@ const Sidebar = ({ bgColor, routes, logo, location, mini }) => {
             {createLinks(categoryroute, "/admin/")}
             {createLinks(modelroute, "/admin/")}
             {createLinks(makeroute, "/admin/")}
+            {createLinks(parkroute, "/admin/")}
             
 
           </Nav>

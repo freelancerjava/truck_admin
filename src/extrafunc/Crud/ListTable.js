@@ -43,7 +43,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
             setfilter(router.location.query.fltr || 0)
             setInnerFilter(router.location.query.in_fltr || 0)
             setPaginationValue(parseInt(router.location.query.pagging) || 1)
-            setPage(router.location.query.page || 0)
+            setPage(parseInt(router.location.query.page) || 0)
         }
         return () => {
         }
@@ -52,6 +52,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
 
     const [orderDirection, setorderDirection] = useState(false);
     const [orderType, setorderType] = useState('id');
+
     let new_query_filter = query_filter
     new_query_filter.order = [`${orderType} ${orderDirection ? 'ASC' : 'DESC'}`]
 
@@ -74,7 +75,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
 
     if (filters) {
         let sort = filters.data.filter((item, key) => key == filter)[0]
-        new_query_filter['where'] = {};
+        !new_query_filter['where'] && (new_query_filter['where'] = {})
         sort && (new_query_filter['where'][filters.field] = sort.value)
     }
     if (innerFilters) {
@@ -110,6 +111,9 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
         // else return null
         // return k
     })
+
+    // console.log(pagesArr);
+
 
 
 
@@ -250,7 +254,7 @@ const ListTable = ({ router, history, title, headers, edit_link, view_link, add_
                                                 onClick={(e) => {
                                                     // console.log(e.target.tagName);
                                                     setChecked(item.id)
-                                                    historyCorrect({ history: history, param: { name: 'checked', value: item.id } })
+                                                    // historyCorrect({ history: history, param: { name: 'checked', value: item.id } })
                                                     setData(data.map((checkitem, index) => {
                                                         if (key == index) checkitem.check = !item.check
                                                         return checkitem
@@ -429,6 +433,7 @@ const CustomTd = ({ item, header, key }) => {
                         onClick={e => e.preventDefault()}
                     >
                         <img
+                            className="avatarImg"
                             alt={header.key}
                             src={getProp(item, header.key, true) || require("../../assets/img/tempfile.png")}
                         />
@@ -530,7 +535,7 @@ const historyCorrect = ({ history, param, page = false }) => {
     path.push(`pagging=${param.name === 'pagging' ? param.value : getParameterByName('pagging')}`)
     path.push(`fltr=${param.name === 'fltr' ? param.value : getParameterByName('fltr')}`)
     path.push(`in_fltr=${param.name === 'in_fltr' ? param.value : getParameterByName('in_fltr')}`)
-    path.push(`checked=${param.name === 'checked' ? param.value : getParameterByName('checked')}`)
+    // path.push(`checked=${param.name === 'checked' ? param.value : getParameterByName('checked')}`)
     path.map((item, key) => {
         let amp = key != path.length - 1 ? '&' : ''
         if (!item.includes('null')) pathname = pathname + item + amp

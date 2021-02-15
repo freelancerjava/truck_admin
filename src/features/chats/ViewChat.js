@@ -1,15 +1,35 @@
 import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import 'react-chat-elements/dist/main.css';
-import { MessageList, ChatItem } from 'react-chat-elements'
-import { Card, Row, CardHeader, CardBody, Col } from 'reactstrap';
+import { MessageList, ChatItem, Input } from 'react-chat-elements'
+import { Card, Row, CardHeader, CardBody, Col, Button } from 'reactstrap';
 import { getOrder } from '../orders/query';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import { strapi } from '../../axios';
+
+import ChatBox, { ChatFrame } from 'react-chat-plugin';
+import { getMessages, sendMessage } from './query';
+
+import moment from 'moment'
 
 
 
 export default function ViewChat() {
+
+  return (
+    <>
+      <ChatPlugin />
+    </>
+  )
+
+};
+
+ViewChat.propTypes = {};
+ViewChat.defaultProps = {};
+
+const ChatPlugin = () => {
+  const [messages, setMessages] = useState([])
 
   const history = useHistory()
 
@@ -17,17 +37,111 @@ export default function ViewChat() {
 
   const [data, setData] = useState({})
 
-  const order = useQuery(['order', { id: id, filter: JSON.stringify({ include: ['creator', 'driver'] }) }], getOrder)
+  const messagesdata = useQuery(['messages', { secondUserId: id, page: 1 }], getMessages)
+
+  const [sendMut, sendMutRes] = useMutation(sendMessage, {
+    onSuccess: () => {
+      messagesdata.refetch()
+    }
+  })
+
+
+  console.log(messagesdata.data);
 
   useEffect(() => {
-    if (order.data) {
-      setData(order.data)
+    if (messagesdata.data) {
+      setMessages(messagesdata.data.data.slice().reverse().map(item => {
+        return {
+          author: {
+            username: item.fromuser_name,
+            id: item.fromUserId == id ? id : 1,
+            avatarUrl: item.attachments && item.attachments.main && item.attachments.main.result || 'https://image.flaticon.com/icons/svg/2446/2446032.svg',
+          },
+          text: item.text || '',
+          type: item.type || 'text',
+          timestamp: moment(item.createdAt).toISOString(),
+        }
+      }))
     } else {
-      setData(null)
+      setMessages([])
     }
-  }, [order.data]);
+  }, [messagesdata.data, id])
 
-  // const messagesdata = useQuery(['messages', {filter: JSON.stringify({where:{or:{}}})}])
+  const handleOnSendMessage = (message) => {
+    // setMessages([
+    //   ...messages,
+    //   {
+    //     author: {
+    //       username: 'user1',
+    //       id: 1,
+    //       avatarUrl: 'https://image.flaticon.com/icons/svg/2446/2446032.svg',
+    //     },
+    //     text: message,
+    //     timestamp: +new Date(),
+    //     type: 'text'
+    //   }
+    // ])
+    sendMut({
+      toUserId: parseInt(id),
+      message: {
+        type: 'text',
+        text: message
+      }
+    })
+
+
+
+  }
+
+  return (
+    <div className="chats-view-chat">
+      <Card>
+        <Row>
+          <Col>
+            <CardHeader>
+            </CardHeader>
+            <CardBody>
+              <ChatBox
+                messages={messages}
+                userId={1}
+                onSendMessage={handleOnSendMessage}
+                width={'500px'}
+                height={'500px'}
+              />
+            </CardBody>
+          </Col>
+        </Row>
+      </Card>
+
+    </div>
+
+  )
+}
+
+
+const ChatWindow = () => {
+  const history = useHistory()
+
+  const id = history.location.pathname.split("view/")[1]
+
+  const [data, setData] = useState({})
+
+  // const order = useQuery(['order', { id: id, filter: JSON.stringify({ include: ['creator', 'driver'] }) }], getOrder)
+
+  // useEffect(() => {
+  //   if (order.data) {
+  //     setData(order.data)
+  //   } else {
+  //     setData(null)
+  //   }
+  // }, [order.data]);
+
+  const messagesdata = useQuery(['messages'], () => {
+    const data = strapi.request('get', `chats/getmessages/${id}/${1}`)
+  })
+
+  console.log(messagesdata);
+
 
 
   let list = [
@@ -113,6 +227,15 @@ export default function ViewChat() {
                 lockable={true}
                 toBottomHeight={'100%'}
                 dataSource={list} />
+              <Input
+                placeholder="Type here..."
+                multiline={true}
+                rightButtons={
+                  <Button
+                    color='white'
+                    backgroundColor='black'
+                    text='Send' />
+                } />
             </CardBody>
           </Col>
           <Col>
@@ -149,7 +272,4 @@ export default function ViewChat() {
 
     </div>
   );
-};
-
-ViewChat.propTypes = {};
-ViewChat.defaultProps = {};
+}

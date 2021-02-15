@@ -2,7 +2,7 @@
 import React from 'react';
 import ListTable from '../../extrafunc/Crud/ListTable';
 import { Container, Row, Col } from 'reactstrap';
-import { getCount, getPushes } from './query';
+import { getCount, getPushes, delPush } from './query';
 // import PropTypes from 'prop-types';
 
 export default function NotificationsList() {
@@ -12,6 +12,7 @@ export default function NotificationsList() {
         <ListTable
           cnt_query_fn={getCount}
           query_fn={getPushes}
+          mut_delete_fn={delPush}
           query_key={"pushes"}
           title={"Список рассылок"}
           add_link={"/admin/notifications/add"}

@@ -265,7 +265,12 @@ const TransportAttachments = ({ transport }) => {
                                 Фото пасспорта
                             </div>
                             <div className='doc-img'>
-                                <i className='fa fa-check-circle' />\
+                                <i className='fa fa-check-circle' />
+                                <ImageShow image={{
+                                    url: transport.attachment && transport.attachment.transport1
+                                        && transport.attachment.transport1.result
+                                        || require('../../assets/img/tempfile.png')
+                                }} />
                             </div>
                             <div>
                                 <i className='text-success'>Проверено</i>

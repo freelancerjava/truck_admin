@@ -26,7 +26,7 @@ export const addPush = async ({ body }) => {
     const data = await strapi.request(
         'post',
         `pushes?${token}`,
-        { data: { ...body } }
+        { data: { ...body, type: 'news', is_driver: true, userId: user.userId } }
     )
     return data
 };

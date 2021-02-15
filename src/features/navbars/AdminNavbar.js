@@ -86,6 +86,30 @@ function AdminNavbar({ brandText, toggleMini }) {
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
+                    {/* <i className="fa fa-plus mr-2" /> */}
+                    <NotificationSVG />
+                  </Media>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-arrow" right>
+                  <DropdownItem to="/admin/users/?page=0&in_fltr=1&" tag={Link}>
+                    <i className="fa fa-user" />
+                    <span>Yangi foydalanuvchi ro'yxatdan o'tdi</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/transports/?page=0&in_fltr=1&" tag={Link}>
+                    <i className="fa fa-truck" />
+                    <span>Yangi transport qo'shildi</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/orders/" tag={Link}>
+                    <i className="ni ni-calendar-grid-58" />
+                    <span>Yangi buyurtma yaratildi</span>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+            {/* <Nav className="align-items-center d-none d-md-flex" navbar>
+              <UncontrolledDropdown nav>
+                <DropdownToggle className="pr-0" nav>
+                  <Media className="align-items-center">
                     <NotificationSVG />
                   </Media>
                 </DropdownToggle>
@@ -114,9 +138,10 @@ function AdminNavbar({ brandText, toggleMini }) {
                     <i className="ni ni-user-run" />
                     <span>Выход</span>
                   </DropdownItem>
-                </DropdownMenu> */}
+                </DropdownMenu> 
               </UncontrolledDropdown>
             </Nav>
+             */}
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>

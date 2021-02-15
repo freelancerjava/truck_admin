@@ -23,7 +23,7 @@ export default function AuthNavbar() {
       >
         <Container className="px-4">
           <NavbarBrand to="/" tag={Link}>
-            RMS
+            Order Truck
           </NavbarBrand>
           <button className="navbar-toggler" id="navbar-collapse-main">
             <span className="navbar-toggler-icon" />

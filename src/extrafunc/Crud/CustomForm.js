@@ -99,6 +99,9 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
             }
         })
 
+        const userdata = JSON.parse(localStorage.getItem('user'))
+        if (userdata.user.realm === 'partner_admin') temp.partnerId = userdata.userId
+
         if (data == null) mutCreate({ body: temp }); else
             mutUpdate({ id: id, body: temp })
         // console.log(temp);
@@ -147,8 +150,8 @@ const CustomForm = ({ moderation, history, query_key, query_fn, fields, mut_upda
                             <form onSubmit={handleSubmit} className="form">
                                 {submitError && <div className="text-red text-center">{submitError}</div>}
                                 {array_fields ? <>
-                                {/* {console.log(fields)} */}
-                                
+                                    {/* {console.log(fields)} */}
+
                                     {fields.map((rows, key) => {
                                         return (<Row>
                                             {

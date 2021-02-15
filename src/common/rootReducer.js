@@ -24,6 +24,9 @@ import chatsReducer from '../features/chats/redux/reducer';
 import notificationsReducer from '../features/notifications/redux/reducer';
 import modelReducer from '../features/model/redux/reducer';
 import makeReducer from '../features/make/redux/reducer';
+import partnerReducer from '../features/partner/redux/reducer';
+import parkReducer from '../features/park/redux/reducer';
+import partnermReducer from '../features/partnerm/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -54,6 +57,9 @@ const reducerMap = {
   notifications: notificationsReducer,
   model: modelReducer,
   make: makeReducer,
+  partner: partnerReducer,
+  park: parkReducer,
+  partnerm: partnermReducer,
 };
 
 export default combineReducers(reducerMap);

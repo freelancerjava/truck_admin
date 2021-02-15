@@ -1,7 +1,7 @@
 @import '../../styles/mixins';
 
 .acc_details {
-    padding: 8px;
+    padding: 24px 24px 22px 24px;
 
     .header {
         display: flex;
@@ -25,12 +25,14 @@
         align-items: center;
         border-radius: 10px;
         overflow: hidden;
-        width: 60px;
-        height: 50px;
+        width: 90px;
+        height: 90px;
+        border: 1px solid 'green';
 
         img {
-            width: 60px;
-            min-height: 50px;
+            width: 90px;
+            min-height: 90px;
+            border-radius: 10px;
         }
     }
 
@@ -41,7 +43,7 @@
         align-items: stretch;
         flex-direction: column;
         width: 80%;
-        padding: 10px 0;
+        // padding: 10px 0;
         font-size: 11px;
 
         .contact {

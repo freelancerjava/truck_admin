@@ -23,6 +23,9 @@ import chatsRoute from '../features/chats/route';
 import notificationsRoute from '../features/notifications/route';
 import modelRoute from '../features/model/route';
 import makeRoute from '../features/make/route';
+import partnerRoute from '../features/partner/route';
+import parkRoute from '../features/park/route';
+import partnermRoute from '../features/partnerm/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -49,6 +52,9 @@ const childRoutes = [
   notificationsRoute,
   modelRoute,
   makeRoute,
+  partnerRoute,
+  parkRoute,
+  partnermRoute,
 ];
 
 // const logout = [

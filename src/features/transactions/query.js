@@ -7,10 +7,21 @@ export const getTransactions = async (key, { filter } = { filter: false }) => {
     return data
 };
 
+export const getPartnerTransactions = async (key, { filter } = { filter: false }) => {
+    const path = filter != false ? `partner/{me}/transactions?${token}&filter=${filter}` : `partner/{me}/transactions?${token}`
+    const data = await strapi.request('get', path)
+    return data
+};
+
 export const getTransaction = async (key, { id }) => {
     const data = await strapi.request('get', `transactions/${id}?${token}`)
     return data
 };
+
+// export const getPartnerTransaction = async (key, { id }) => {
+//     const data = await strapi.request('get', `partner/{me}/transactions/${id}?${token}`)
+//     return data
+// };
 
 export const updateTransaction = async ({ id, body }) => {
     const data = await strapi.request(
@@ -38,8 +49,21 @@ export const getCount = async (key, { where }) => {
     return data
 };
 
+export const getPartnerCount = async (key, { where }) => {
+    const path = where ? `partner/{me}/transactions/count?${token}&where=${where}` : `partner/{me}/transactions/count?${token}`
+    const data = await strapi.request('get', path)
+    // const data = await strapi.request('get', `transactions/count?${token}`)
+    return data
+};
+
 export const getTransactionData = async (key, { id, filter = {} }) => {
     const path = filter != false ? `transactions/${id}?${token}&filter=${filter}` : `transactions/${id}?${token}`
+    const data = await strapi.request('get', path)
+    return data
+};
+
+export const getPartnerTransactionData = async (key, { id, filter = {} }) => {
+    const path = filter != false ? `partner/{me}/transactions/${id}?${token}&filter=${filter}` : `partner/{me}/transactions/${id}?${token}`
     const data = await strapi.request('get', path)
     return data
 };

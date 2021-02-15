@@ -9,7 +9,7 @@ export default function OrderDetailCard({ order }) {
     <Card className='mb-3'>
       <CardBody>
         <div className='d-flex justify-content-between align-items-center'>
-          <h4 className='title font-weight-bold text-primary text-uppercase'>
+          <h4 className='title text-uppercase' style={{fontSize: 16, fontWeight: '600', color: '#2D2E80'}}>
             Данные заказа
           </h4>
           <StatusBadge status={order.status} />

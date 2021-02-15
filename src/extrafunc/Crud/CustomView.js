@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { CustomInput as CInput, Button, Card, CardBody, CardFooter, CardHeader, Col, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label, Progress } from "reactstrap";
+import { CustomInput as CInput, Button, Media, Card, CardBody, CardFooter, CardHeader, Col, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label, Progress } from "reactstrap";
 import { useMutation, useQuery } from 'react-query';
 import { CardTitle } from 'reactstrap';
+import moment from 'moment'
 
 import './crud_style.less'
 import { withRouter } from 'react-router-dom';
@@ -17,7 +18,7 @@ import ReactImgCrop from '../ReactImgCrop';
 
 
 
-const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav, array_fields }) => {
+const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_update_fn, id, mut_create_fn, title, parentNav, array_fields, edit_link }) => {
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
@@ -31,7 +32,7 @@ const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_upda
         if (querydata.data) {
             setData(querydata.data)
         } else {
-            setData(null)
+            setData({})
         }
     }, [querydata.data]);
 
@@ -47,13 +48,15 @@ const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_upda
                         }}>
                         <i className='fa fa-angle-left' />
                     </Button>
-                    {id == null ? 'Просмотр' : 'Редактирование'}
+                    {id == null ? 'Просмотр' : 'Просмотр'}
                     <ViewNav
                         title={title || ''}
                         parentNav={parentNav || {
                             url: '/admin/orders/index',
                             title: ''
                         }}
+                        edit_link={edit_link}
+                        id={id}
                     />
                 </CardTitle>
 
@@ -74,7 +77,7 @@ const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_upda
                                         {
                                             cols.map((inner_fields, key) => {
                                                 return (
-                                                    <CustomViewField item={item} header={header} key={key} data={data} />
+                                                    <CustomViewField item={inner_fields} header={inner_fields} key={key} data={data} />
                                                 )
                                             })
                                         }
@@ -88,15 +91,11 @@ const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_upda
                         <Col lg='6'>
                             {fields.map((item, key) => {
                                 return (
-                                    <CustomViewField item={item} header={header} key={key} data={data} />
+                                    <CustomViewField item={item} header={item} key={key} data={data} />
                                 )
                             })}
                         </Col>
                     </Row>}
-
-                
-                        )
-                    }
             </CardBody >
             <CardFooter>
             </CardFooter>
@@ -111,76 +110,81 @@ const CustomView = ({ moderation, history, query_key, query_fn, fields, mut_upda
 export default withRouter(CustomView);
 
 
-const CustomViewField = ({ item, header, key }) => {
-    if (header.date) {
-        return (
-            <span key={key} scope="col">
-                {moment(item[header.key]).format('DD.MM.YYYY')}
-            </span>
-        )
-    } else if (header.datentime) {
-        return (
-            <span key={key} scope="col">
-                {moment(item[header.key]).format('DD.MM.YYYY')} в {moment(item[header.key]).format('hh:mm')}
-            </span>
-        )
-    } else if (header.time) {
-        // console.log(header.keys[0]);
+const CustomViewField = ({ item, header, key, data }) => {
+    // if (header.date) {
+    //     return (
+    //         <span key={key} scope="col">
+    //             {moment(item[header.key]).format('DD.MM.YYYY')}
+    //         </span>
+    //     )
+    // } else if (header.datentime) {
+    //     return (
+    //         <span key={key} scope="col">
+    //             {moment(item[header.key]).format('DD.MM.YYYY')} в {moment(item[header.key]).format('hh:mm')}
+    //         </span>
+    //     )
+    // } else if (header.time) {
+    //     // console.log(header.keys[0]);
 
-        let tditem = [
+    //     let tditem = [
+    //         <div>
+    //             {item[header.keys[0]] && item[header.keys[1]]
+    //                 ? moment(item[header.keys[1]]).diff(moment(item[header.keys[0]]), 'hours')
+    //                 : '0'} часов
+    //             </div>
+    //     ]
+    //     {
+    //         header.keys.map((keyItem) => {
+    //             tditem.push(<div>{getProp(item, keyItem) && moment(getProp(item, keyItem)).format('DD.MM.YYYY') || header.def_val}</div>)
+    //         })
+    //     }
+    //     return (
+    //         <span key={key} scope="col">
+    //             {tditem}
+    //         </span>
+    //     )
+    // } else if (header.media) {
+    //     return (
+    //         <span key={key} scope="col">
+    //             <Media className="align-items-center">
+    //                 <a
+    //                     className="avatar rounded mr-3"
+    //                     href="#pablo"
+    //                     onClick={e => e.preventDefault()}
+    //                 >
+    //                     <img
+    //                         alt={header.key}
+    //                         src={getProp(item, header.key) || require("../../assets/img/tempfile.png")}
+    //                     />
+    //                 </a>
+    //                 <Media>
+    //                     <span className="mb-0 text-sm">
+    //                         {/* {"url"} */}
+    //                     </span>
+    //                 </Media>
+    //             </Media>
+    //         </span>
+    //     )
+    // } else if (header.keys) {
+    //     let tditem = []
+    //     {
+    //         header.keys.map((keyItem) => {
+    //             tditem.push(<div className='mr-1'>{getProp(item, keyItem) || header.def_val}</div>)
+    //         })
+    //     }
+    //     return (
+    //         <span key={key} scope="col">
+    //             <div className='d-flex flex-wrap'>{tditem}</div>
+    //         </span>
+    //     )
+    // } else 
+    if (header.key) {
+        return (
             <div>
-                {item[header.keys[0]] && item[header.keys[1]]
-                    ? moment(item[header.keys[1]]).diff(moment(item[header.keys[0]]), 'hours')
-                    : '0'} часов
-                </div>
-        ]
-        {
-            header.keys.map((keyItem) => {
-                tditem.push(<div>{getProp(item, keyItem) && moment(getProp(item, keyItem)).format('DD.MM.YYYY') || header.def_val}</div>)
-            })
-        }
-        return (
-            <span key={key} scope="col">
-                {tditem}
-            </span>
-        )
-    } else if (header.media) {
-        return (
-            <span key={key} scope="col">
-                <Media className="align-items-center">
-                    <a
-                        className="avatar rounded mr-3"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                    >
-                        <img
-                            alt={header.key}
-                            src={getProp(item, header.key) || require("../../assets/img/tempfile.png")}
-                        />
-                    </a>
-                    <Media>
-                        <span className="mb-0 text-sm">
-                            {/* {"url"} */}
-                        </span>
-                    </Media>
-                </Media>
-            </span>
-        )
-    } else if (header.keys) {
-        let tditem = []
-        {
-            header.keys.map((keyItem) => {
-                tditem.push(<div className='mr-1'>{getProp(item, keyItem) || header.def_val}</div>)
-            })
-        }
-        return (
-            <span key={key} scope="col">
-                <div className='d-flex flex-wrap'>{tditem}</div>
-            </span>
-        )
-    } else if (header.key) {
-        return (
-            <span key={key} scope="col">{getProp(item, header.key) || header.def_val}</span>
+                <h3 className='text-muted'>{header.name}:</h3>
+                <h2 key={key} scope="col">{data[header.key]}</h2>
+                {/* <span key={key} scope="col">{getProp(item, header.key) || header.def_val}</span> */}
+            </div>
         )
     }
 

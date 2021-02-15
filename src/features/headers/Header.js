@@ -25,19 +25,7 @@ export default function Header() {
               IconComponent={<NewOrdersSVG />}
             />
           </Col>
-          <Col lg="6" xl="3">
-            <Status
-              title={"Выполненные заказы"}
-              count={useOrders({status:'completed'}) || '0'}
-              icon={"fas fa-thumbs-up"}
-              icon_class={"icon icon-shape bg-warning text-white rounded-circle shadow"}
-              period={"С прошедшей недели"}
-              period_class={"text-danger mr-2"}
-              period_count={"3.48%"}
-              period_icon={"fas fa-arrow-down"}
-              IconComponent={<SuccessSVG />}
-            />
-          </Col>
+       
           <Col lg="6" xl="3">
             <Status
               title={"Активные заказы"}
@@ -49,6 +37,19 @@ export default function Header() {
               period_count={"1.10%"}
               period_icon={"fas fa-arrow-down"}
               IconComponent={<ActiveOrdersSVG />}
+            />
+          </Col>
+          <Col lg="6" xl="3">
+            <Status
+              title={"Выполненные заказы"}
+              count={useOrders({status:'completed'}) || '0'}
+              icon={"fas fa-thumbs-up"}
+              icon_class={"icon icon-shape bg-warning text-white rounded-circle shadow"}
+              period={"С прошедшей недели"}
+              period_class={"text-danger mr-2"}
+              period_count={"3.48%"}
+              period_icon={"fas fa-arrow-down"}
+              IconComponent={<SuccessSVG />}
             />
           </Col>
           <Col lg="6" xl="3">

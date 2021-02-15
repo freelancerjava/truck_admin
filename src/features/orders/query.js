@@ -9,6 +9,14 @@ export const getOrders = async (key, { filter } = { filter: false }) => {
   return data
 };
 
+export const getPartnerOrders = async (key, { filter } = { filter: false }) => {
+  const per_page = parseInt(JSON.parse(filter).limit)
+  const page = parseInt(JSON.parse(filter).skip) / (per_page) + 1
+  const path = `/admins/partnerorders?${token}&page=${page}&per_page=${per_page}`
+  const data = await strapi.request('get', path)
+  return data.result.data
+};
+
 export const getOrder = async (key, { id, filter }) => {
   const path = filter ? `orders/${id}?${token}&filter=${filter}` : `orders/${id}?${token}`
   const data = await strapi.request('get', path)
@@ -25,6 +33,9 @@ export const updateOrder = async ({ id, body }) => {
 };
 
 export const addOrder = async ({ body }) => {
+  body.payment = {type:'cash'}
+  body.status = 'new'
+  body.type = 'cargo'
   const data = await strapi.request(
     'post',
     `orders?${token}`,
@@ -43,14 +54,14 @@ export const delOrder = async ({ id }) => {
 
 export const getCount = async (key, { where } = { where: {} }) => {
   const path = where ? `orders/count?${token}&where=${where}` : `orders/count?${token}`
-  const data = await strapi.request('get', path )
+  const data = await strapi.request('get', path)
   // const data = await strapi.request('get', `orders/count`)
   return data
 };
 
 
 export const useOrders = (filter) => {
-  const data = useQuery(['ordersbytype'+filter.status], async () => {
+  const data = useQuery(['ordersbytype' + filter.status], async () => {
     const data = await strapi.request('get', `orders/count?${token}&where=${JSON.stringify(filter)}`)
     return data
   })
@@ -91,9 +102,9 @@ export const searchLocation = async (input) => {
   const { data } = await strapi.request('get', googleUrl);
 
   if (data.status === 'OK') {
-     predictions = data.predictions.map(el => ({
-        value: el.description, label: el.description
-     }))
+    predictions = data.predictions.map(el => ({
+      value: el.description, label: el.description
+    }))
   }
 
   return predictions

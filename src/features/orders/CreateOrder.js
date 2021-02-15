@@ -88,6 +88,8 @@ export default withRouter(function CreateOrder({ history, title }) {
     temp.status = values.status
     temp.comment = values.comment
 
+    const userdata = JSON.parse(localStorage.getItem('user'))
+    if(userdata.user.realm === 'partner_admin') temp.partnerId = userdata.userId
     // if (data == null) 
     mutCreate({ body: temp });
     console.log(temp);
@@ -297,12 +299,12 @@ export default withRouter(function CreateOrder({ history, title }) {
                                   <option >---</option>
                                   {[
                                     { key: 0, name: 'Новые', value: 'new', class: 'new-order' },
-                                    { key: 10, name: 'Arriving', value: 'arriving', class: 'new-order' },
-                                    { key: 110, name: 'Arrived', value: 'arrived', class: 'new-order' },
+                                    { key: 10, name: 'Пребывает', value: 'arriving', class: 'new-order' },
+                                    { key: 110, name: 'Прибыл', value: 'arrived', class: 'new-order' },
                                     { key: 1, name: 'Принятые', value: 'accepted', class: 'accepted-order' },
                                     { key: 2, name: 'Выполняются', value: 'on_the_way', class: 'on_the_way-order' },
-                                    { key: 12, name: 'Paused', value: 'paused', class: 'on_the_way-order' },
-                                    { key: 12, name: 'Delivered', value: 'delivered', class: 'on_the_way-order' },
+                                    { key: 12, name: 'Пауза', value: 'paused', class: 'on_the_way-order' },
+                                    { key: 12, name: 'Довезён', value: 'delivered', class: 'on_the_way-order' },
                                     { key: 3, name: 'Завершенные', value: 'completed', class: 'completed-order' },
                                     { key: 4, name: 'Закрытые', value: 'closed', class: 'closed-order' },
                                     { key: 5, name: 'Отмененные', value: 'cancel', class: 'canceled-order' },
